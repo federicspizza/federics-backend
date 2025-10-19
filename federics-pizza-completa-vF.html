@@ -1674,6 +1674,81 @@ document.getElementById('closeHelpModal').addEventListener('click', () => {
 document.getElementById('helpModal').addEventListener('click', (e) => {
   if (e.target.id === 'helpModal') e.target.classList.add('hidden');
 });
+
+// === CONEXIÓN CON EL BACKEND PARA CREAR CUENTA ===
+const BACKEND_URL = 'https://federics-backend.onrender.com';
+
+// Manejar formulario de registro
+document.querySelector('#registerModal form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const userData = {
+    name: document.querySelector('#registerModal input[placeholder="Nombre"]').value,
+    email: document.querySelector('#registerModal input[placeholder="Correo electrónico"]').value,
+    password: document.querySelector('#registerModal input[placeholder="Contraseña"]').value,
+    phone: document.querySelector('#registerModal input[placeholder="Teléfono"]').value
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+    
+    if (response.ok) {
+      alert('✅ Cuenta creada exitosamente');
+      document.getElementById('registerModal').classList.add('hidden');
+      // Limpiar el formulario
+      document.querySelector('#registerModal form').reset();
+    } else {
+      alert(`❌ Error: ${result.message || 'No se pudo crear la cuenta'}`);
+    }
+  } catch (error) {
+    alert('❌ Error de conexión con el servidor');
+    console.error('Error:', error);
+  }
+});
+
+// Manejar formulario de login
+document.querySelector('#loginModal form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const loginData = {
+    email: document.querySelector('#loginModal input[placeholder="Correo electrónico"]').value,
+    password: document.querySelector('#loginModal input[placeholder="Contraseña"]').value
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginData)
+    });
+
+    const result = await response.json();
+    
+    if (response.ok) {
+      alert('✅ Inicio de sesión exitoso');
+      document.getElementById('loginModal').classList.add('hidden');
+      localStorage.setItem('token', result.token);
+      // Limpiar el formulario
+      document.querySelector('#loginModal form').reset();
+    } else {
+      alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
+    }
+  } catch (error) {
+    alert('❌ Error de conexión con el servidor');
+    console.error('Error:', error);
+  }
+});
+
 </script>
 
 </body>
