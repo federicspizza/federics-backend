@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Federic's Pizza - La Pizza Más Fresca</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+        body {
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .pizza-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-white">
+<header class="gradient-bg shadow-lg">
+<nav class="container mx-auto px-6 py-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<img alt="Federic's Pizza Logo" class="h-14 w-14 rounded-full pizza-bounce" src="https://i.imgur.com/EDWicBS.jpeg"/>
+<h1 class="text-3xl font-bold text-white">Federic's Pizza</h1>
+</div>
+<div class="hidden md:flex space-x-8">
+<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#cuenta" id="accountButton">Cuenta</a>
+<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#inicio">Inicio</a>
+<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#menu">Menú</a>
+<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#nosotros">Nosotros</a>
+<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#contacto">Contacto</a>
+<a class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButton">Ayuda</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2" id="cartButton">
+<span>🛒</span>
+<span id="cartCount">0</span>
+</button>
+<a href="#menu" class="bg-white text-orange-500 px-6 py-2 rounded-full font-semibold hover:bg-orange-50 transition-colors inline-block">Ordenar Ahora</a>
+</div>
+</div>
+</nav>
+</header>
+<section class="gradient-bg py-20" id="inicio">
+<div class="container mx-auto px-6 text-center">
+<img alt="Federic's Pizza Logo" class="mx-auto h-32 w-32 mb-6 pizza-bounce rounded-full" src="https://i.imgur.com/EDWicBS.jpeg"/>
+<h2 class="text-5xl font-bold text-white mb-6">¡La Pizza Más Fresca de la Ciudad!</h2>
+<p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+                Ingredientes frescos, sabores únicos y la mejor experiencia para jóvenes que aman la buena comida
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#menu" class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 hover-scale transition-all inline-block">Ver Menú 📋</a>
+<button class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-orange-500 transition-all">
+                    Delivery Gratis 🚚
+                </button>
+</div>
+</div>
+</section>
+<section class="py-16 bg-gray-50" id="menu">
+<div class="container mx-auto px-6">
+<h3 class="text-4xl font-bold text-center text-gray-800 mb-12">Nuestras Pizzas Favoritas</h3>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/color/96/000000/pizza.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">Margherita Clásica</h4>
+<p class="text-gray-600 mb-4">Tomate, mozzarella fresca, albahaca y amor</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$12.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/doodle/96/000000/pizza--v1.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">Pepperoni Suprema</h4>
+<p class="text-gray-600 mb-4">Pepperoni, queso extra y especias secretas</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$15.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/emoji/96/000000/pizza-emoji.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">Veggie Deluxe</h4>
+<p class="text-gray-600 mb-4">Vegetales frescos, pimientos y champiñones</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$14.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/color/96/000000/pizza.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">BBQ Chicken</h4>
+<p class="text-gray-600 mb-4">Pollo BBQ, cebolla morada, cilantro y salsa especial</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$17.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/doodle/96/000000/pizza--v1.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">Hawaiana Tropical</h4>
+<p class="text-gray-600 mb-4">Jamón, piña fresca, queso mozzarella y un toque de coco</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$16.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-48 flex items-center justify-center">
+<div class="text-6xl"><img alt="Pizza" class="w-24 h-24 mx-auto" src="https://img.icons8.com/emoji/96/000000/pizza-emoji.png"/></div>
+</div>
+<div class="p-6">
+<h4 class="text-2xl font-bold text-gray-800 mb-2">Cuatro Quesos</h4>
+<p class="text-gray-600 mb-4">Mozzarella, parmesano, gorgonzola y queso de cabra</p>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold text-orange-500">$18.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                Agregar 🛒
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white">
+<div class="container mx-auto px-6">
+<h3 class="text-4xl font-bold text-center text-gray-800 mb-12">Complementa tu Pizza</h3>
+<div class="mb-16">
+<h4 class="text-3xl font-bold text-center text-orange-500 mb-8">🍟 Papas Crujientes</h4>
+<div class="flex justify-center">
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale max-w-sm">
+<div class="h-40 bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center">
+<div class="text-5xl">🍟</div>
+</div>
+<div class="p-6">
+<h5 class="text-xl font-bold text-gray-800 mb-2">Papas Clásicas</h5>
+<p class="text-gray-600 mb-4">Papas doradas y crujientes - ¡Personalízalas!</p>
+<div class="flex justify-between items-center">
+<span class="text-xl font-bold text-orange-500">$4.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                    Agregar 🛒
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-16">
+<h4 class="text-3xl font-bold text-center text-orange-500 mb-8">🍗 Alitas Picantes</h4>
+<div class="flex justify-center">
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale max-w-sm">
+<div class="h-40 bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center">
+<div class="text-5xl">🍗</div>
+</div>
+<div class="p-6">
+<h5 class="text-xl font-bold text-gray-800 mb-2">Alitas de Pollo</h5>
+<p class="text-gray-600 mb-4">Jugosas alitas con tu sabor favorito - ¡Elige tamaño y sabor!</p>
+<div class="flex justify-between items-center">
+<span class="text-xl font-bold text-orange-500">$8.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                    Agregar 🛒
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-16">
+<h4 class="text-3xl font-bold text-center text-orange-500 mb-8">🥖 Panes de Ajo</h4>
+<div class="flex justify-center">
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale max-w-sm">
+<div class="h-40 bg-gradient-to-br from-yellow-300 to-yellow-500 flex items-center justify-center">
+<div class="text-5xl">🥖</div>
+</div>
+<div class="p-6">
+<h5 class="text-xl font-bold text-gray-800 mb-2">Pan de Ajo Artesanal</h5>
+<p class="text-gray-600 mb-4">Pan fresco con mantequilla de ajo - ¡Elige piezas y tamaño!</p>
+<div class="flex justify-between items-center">
+<span class="text-xl font-bold text-orange-500">$3.99 MXN</span>
+<button class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                    Agregar 🛒
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-3xl font-bold text-center text-orange-500 mb-8">🥤 Refrescos Helados</h4>
+<div class="grid md:grid-cols-4 gap-6">
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-32 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+<div class="text-4xl">🥤</div>
+</div>
+<div class="p-4">
+<h5 class="text-lg font-bold text-gray-800 mb-2">Coca-Cola</h5>
+<p class="text-sm text-gray-600 mb-3">Clásica y refrescante</p>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-orange-500">$2.99 MXN</span>
+<button class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm hover:bg-orange-600 transition-colors">
+                                    + 🛒
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-32 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+<div class="text-4xl">🥤</div>
+</div>
+<div class="p-4">
+<h5 class="text-lg font-bold text-gray-800 mb-2">Fanta Naranja</h5>
+<p class="text-sm text-gray-600 mb-3">Sabor cítrico explosivo</p>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-orange-500">$2.99 MXN</span>
+<button class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm hover:bg-orange-600 transition-colors">
+                                    + 🛒
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-32 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+<div class="text-4xl">🥤</div>
+</div>
+<div class="p-4">
+<h5 class="text-lg font-bold text-gray-800 mb-2">Sprite</h5>
+<p class="text-sm text-gray-600 mb-3">Lima-limón burbujeante</p>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-orange-500">$2.99 MXN</span>
+<button class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm hover:bg-orange-600 transition-colors">
+                                    + 🛒
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover-scale">
+<div class="h-32 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+<div class="text-4xl">💧</div>
+</div>
+<div class="p-4">
+<h5 class="text-lg font-bold text-gray-800 mb-2">Agua Natural</h5>
+<p class="text-sm text-gray-600 mb-3">Pura y refrescante</p>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-orange-500">$1.99 MXN</span>
+<button class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm hover:bg-orange-600 transition-colors">
+                                    + 🛒
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white" id="nosotros">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12">
+<h3 class="text-4xl font-bold text-gray-800 mb-6">Nuestra Historia</h3>
+<div class="max-w-4xl mx-auto">
+<p class="text-lg text-gray-600 mb-6">
+                        Todo comenzó en 2018 cuando Federico, un joven de 22 años apasionado por la cocina, decidió abandonar sus estudios de ingeniería para perseguir su sueño: crear la pizzería más cool de la ciudad. 🎓➡️🍕
+                    </p>
+<p class="text-lg text-gray-600 mb-6">
+                        Con solo $500 en el bolsillo y una receta secreta heredada de su abuela italiana, Federico transformó un pequeño local abandonado en el corazón del barrio universitario. Sus amigos lo llamaban loco, pero él sabía que tenía algo especial entre las manos.
+                    </p>
+<p class="text-lg text-gray-600 mb-8">
+                        Hoy, 6 años después, Federic's Pizza se ha convertido en el lugar favorito de estudiantes, jóvenes profesionales y cualquiera que busque una pizza auténtica con ese toque rebelde que nos caracteriza. ¡Somos más que una pizzería, somos una comunidad! 🤘
+                    </p>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div>
+<h3 class="text-3xl font-bold text-gray-800 mb-6">¿Por Qué Federic's?</h3>
+<div class="space-y-4">
+<div class="flex items-center space-x-4">
+<div class="text-3xl">🔥</div>
+<div>
+<h4 class="font-semibold text-lg">Ingredientes Frescos</h4>
+<p class="text-gray-600">Seleccionamos los mejores ingredientes cada día</p>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="text-3xl">⚡</div>
+<div>
+<h4 class="font-semibold text-lg">Entrega Rápida</h4>
+<p class="text-gray-600">Tu pizza caliente en menos de 30 minutos</p>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="text-3xl">💝</div>
+<div>
+<h4 class="font-semibold text-lg">Precios Justos</h4>
+<p class="text-gray-600">Calidad premium a precios de estudiante</p>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center">
+<div class="text-9xl mb-4">🍕</div>
+<p class="text-xl text-gray-600 italic">"La pizza que une a los amigos"</p>
+<p class="text-sm text-orange-500 mt-2 font-semibold">- Federico, Fundador</p>
+</div>
+</div>
+</div>
+</section>
+<section class="gradient-bg py-16" id="contacto">
+<div class="container mx-auto px-6 text-center">
+<h3 class="text-4xl font-bold text-white mb-8">¡Contáctanos!</h3>
+<div class="grid md:grid-cols-3 gap-8 mb-8">
+<div class="bg-white bg-opacity-20 rounded-2xl p-6">
+<div class="text-4xl mb-4">📱</div>
+<h4 class="font-semibold text-white mb-2">Teléfono</h4>
+<p class="text-orange-100">+52 (246) 330 9000</p>
+</div>
+<div class="bg-white bg-opacity-20 rounded-2xl p-6">
+<div class="text-4xl mb-4">📍</div>
+<h4 class="font-semibold text-white mb-2">Ubicación</h4>
+<a class="text-orange-100 hover:text-white transition-colors underline" href="https://maps.app.goo.gl/VRicEsPeYx9MD5ge9?g_st=ipc" rel="noopener noreferrer" target="_blank">
+                        123 Pizza Street, Ciudad
+                    </a>
+</div>
+<div class="bg-white bg-opacity-20 rounded-2xl p-6">
+<div class="text-4xl mb-4">⏰</div>
+<h4 class="font-semibold text-white mb-2">Horarios</h4>
+<p class="text-orange-100">Lun-Dom: 11AM - 11PM</p>
+</div>
+</div>
+<a href="#menu" class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 hover-scale transition-all inline-block">¡Ordena Tu Pizza Ahora! 🍕</a>
+</div>
+</section>
+<footer class="bg-gray-800 text-white py-8">
+<div class="container mx-auto px-6 text-center">
+<div class="flex items-center justify-center space-x-3 mb-4">
+<img alt="Federic's Pizza Logo" class="h-10 w-10 rounded-full" src="https://i.imgur.com/EDWicBS.jpeg"/>
+<h5 class="text-2xl font-bold">Federic's Pizza</h5>
+</div>
+<p class="text-gray-400 mb-4">La mejor pizza para la mejor gente joven</p>
+<div class="flex justify-center space-x-6">
+<a class="text-orange-400 hover:text-orange-300 transition-colors" href="https://www.instagram.com/federics_pizza?igsh=MWVjZnYxanZoNzl4Nw%3D%3D&amp;utm_source=qr" rel="noopener noreferrer" target="_blank">Instagram 📸</a>
+</div>
+<p class="text-gray-500 mt-6">© 2024 Federic's Pizza. Todos los derechos reservados.</p>
+</div>
+</footer>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="cartModal">
+<div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Tu Carrito 🛒</h3>
+<p class="text-orange-100">Revisa tus deliciosas selecciones</p>
+</div>
+<div class="p-6">
+<div class="space-y-4 mb-6" id="cartItems">
+</div>
+<div class="text-center py-8 text-gray-500" id="emptyCart">
+<div class="text-6xl mb-4">🍕</div>
+<p class="text-lg">Tu carrito está vacío</p>
+<p class="text-sm">¡Agrega algunas pizzas deliciosas!</p>
+</div>
+<div class="border-t pt-4 mb-6 hidden" id="cartSummary">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total del Carrito:</span>
+<span class="text-orange-500" id="cartTotal">$0.00 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="closeCart">
+                        Seguir Comprando
+                    </button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="checkoutCart">
+                        Proceder al Pago 💳
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="friesModal">
+<div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Personaliza tus Papas</h3>
+<div class="text-4xl mb-2">🍟</div>
+<p class="text-lg">Papas Clásicas</p>
+</div>
+<div class="p-6">
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Tamaño 📏</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="friesSize" type="radio" value="pequeño"/>
+<span>Pequeño - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="friesSize" type="radio" value="mediano"/>
+<span>Mediano - +$1.50 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="friesSize" type="radio" value="grande"/>
+<span>Grande - +$2.50 MXN</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Extras Deliciosos 🧀</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Queso Cheddar - +$2.00 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Tocino Crujiente - +$2.50 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Sal de Ajo - +$0.50 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Sal de Mar - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Parmesano - +$1.50 MXN</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Cantidad 🔢</h4>
+<div class="flex items-center space-x-4">
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="decreaseFriesQty">-</button>
+<span class="text-xl font-semibold" id="friesQuantity">1</span>
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="increaseFriesQty">+</button>
+</div>
+</div>
+<div class="border-t pt-4 mb-6">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total:</span>
+<span class="text-orange-500" id="friesTotalPrice">$4.99 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelFriesCustomize">
+                        Cancelar
+                    </button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="addFriesToCart">
+                        Agregar al Carrito 🛒
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="drinkModal">
+<div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Personaliza tu Refresco</h3>
+<div class="text-4xl mb-2">🥤</div>
+<p class="text-lg" id="modalDrinkName"></p>
+</div>
+<div class="p-6">
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Tamaño 📏</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="drinkSize" type="radio" value="pequeño"/>
+<span>Pequeño (12oz) - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="drinkSize" type="radio" value="mediano"/>
+<span>Mediano (16oz) - +$0.50 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="drinkSize" type="radio" value="grande"/>
+<span>Grande (20oz) - +$1.00 MXN</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Cantidad de Hielo 🧊</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="ice" type="radio" value="sin-hielo"/>
+<span>Sin Hielo</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="ice" type="radio" value="poco-hielo"/>
+<span>Poco Hielo</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="ice" type="radio" value="hielo-normal"/>
+<span>Hielo Normal</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="ice" type="radio" value="mucho-hielo"/>
+<span>Mucho Hielo</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Cantidad 🔢</h4>
+<div class="flex items-center space-x-4">
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="decreaseDrinkQty">-</button>
+<span class="text-xl font-semibold" id="drinkQuantity">1</span>
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="increaseDrinkQty">+</button>
+</div>
+</div>
+<div class="border-t pt-4 mb-6">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total:</span>
+<span class="text-orange-500" id="drinkTotalPrice">$2.99 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelDrinkCustomize">
+                        Cancelar
+                    </button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="addDrinkToCart">
+                        Agregar al Carrito 🛒
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="wingsModal">
+<div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Personaliza tus Alitas</h3>
+<div class="text-4xl mb-2">🍗</div>
+<p class="text-lg">Alitas de Pollo</p>
+</div>
+<div class="p-6">
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Tamaño 📏</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="wingsSize" type="radio" value="pequeño"/>
+<span>Pequeño (6 piezas) - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsSize" type="radio" value="mediano"/>
+<span>Mediano (12 piezas) - +$4.00 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsSize" type="radio" value="grande"/>
+<span>Grande (18 piezas) - +$8.00 MXN</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Sabor 🌶️</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="wingsFlavor" type="radio" value="buffalo"/>
+<span>Buffalo Clásico - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsFlavor" type="radio" value="bbq"/>
+<span>BBQ Ahumado - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsFlavor" type="radio" value="honey-mustard"/>
+<span>Miel y Mostaza - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsFlavor" type="radio" value="teriyaki"/>
+<span>Teriyaki - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsFlavor" type="radio" value="habanero"/>
+<span>Habanero Picante 🔥 - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="wingsFlavor" type="radio" value="lemon-pepper"/>
+<span>Limón y Pimienta - Incluido</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Cantidad 🔢</h4>
+<div class="flex items-center space-x-4">
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="decreaseWingsQty">-</button>
+<span class="text-xl font-semibold" id="wingsQuantity">1</span>
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full hover:bg-orange-600 transition-colors" id="increaseWingsQty">+</button>
+</div>
+</div>
+<div class="border-t pt-4 mb-6">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total:</span>
+<span class="text-orange-500" id="wingsTotalPrice">$8.99 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelWingsCustomize">
+                        Cancelar
+                    </button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="addWingsToCart">
+                        Agregar al Carrito 🛒
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="breadModal">
+<div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Personaliza tu Pan de Ajo</h3>
+<div class="text-4xl mb-2">🥖</div>
+<p class="text-lg">Pan de Ajo Artesanal</p>
+</div>
+<div class="p-6">
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Número de Piezas 🔢</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="breadPieces" type="radio" value="4-piezas"/>
+<span>4 Piezas - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="breadPieces" type="radio" value="8-piezas"/>
+<span>8 Piezas - +$3.00 MXN</span>
+</label>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="font-semibold text-lg mb-3 text-gray-800">Complementos Deliciosos 🧀</h4>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Queso Mozzarella Derretido - +$1.50 MXN</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Orégano - Incluido</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" type="checkbox"/>
+<span>Pepperoni - +$2.00 MXN</span>
+</label>
+</div>
+</div>
+<div class="border-t pt-4 mb-6">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total:</span>
+<span class="text-orange-500" id="breadTotalPrice">$3.99 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelBreadCustomize">
+                        Cancelar
+                    </button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="addBreadToCart">
+                        Agregar al Carrito 🛒
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Modal logic (omitted for brevity, as it was not changed)
+        document.getElementById('cartButton').addEventListener('click', function() {
+            document.getElementById('cartModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeCart').addEventListener('click', function() {
+            document.getElementById('cartModal').classList.add('hidden');
+        });
+
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('friesModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('drinkModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('wingsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+                resetWingsModal();
+            }
+        });
+
+        document.getElementById('breadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+                resetBreadModal();
+            }
+        });
+    </script>
+<!-- Modal de Cuenta -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="accountModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95" id="accountModalContent">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Tu Cuenta 👤</h3>
+<p class="text-orange-100">Elige una opción</p>
+</div>
+<div class="p-6 text-center space-y-4">
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="openRegister">Crear Cuenta 📝</button>
+<button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="openLogin">Iniciar Sesión 🔐</button>
+<button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cancelar</button>
+</div>
+</div>
+</div>
+<!-- Modal Crear Cuenta -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="registerModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Crear Cuenta 📝</h3>
+<p class="text-orange-100">Completa tus datos básicos</p>
+</div>
+<form class="p-6 space-y-4">
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Apellidos" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Teléfono" required="" type="tel"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Registrar</button>
+<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeRegister" type="button">Cancelar</button>
+</form>
+</div>
+</div>
+<!-- Modal Iniciar Sesión -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="loginModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Iniciar Sesión 🔐</h3>
+<p class="text-orange-100">Ingresa tus datos</p>
+</div>
+<form class="p-6 space-y-4">
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" maxlength="4" placeholder="Código de 4 dígitos" required="" type="text"/>
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Entrar</button>
+<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeLogin" type="button">Cancelar</button>
+</form>
+</div>
+</div>
+<script>
+document.getElementById('accountButton').addEventListener('click', () => {
+  const modal = document.getElementById('accountModal');
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.children[0].classList.replace('scale-95', 'scale-100'), 10);
+});
+
+document.getElementById('closeAccountModal').addEventListener('click', () => {
+  const modal = document.getElementById('accountModal');
+  modal.classList.add('hidden');
+});
+
+// Abrir formularios
+document.getElementById('openRegister').addEventListener('click', () => {
+  document.getElementById('accountModal').classList.add('hidden');
+  document.getElementById('registerModal').classList.remove('hidden');
+});
+
+document.getElementById('openLogin').addEventListener('click', () => {
+  document.getElementById('accountModal').classList.add('hidden');
+  document.getElementById('loginModal').classList.remove('hidden');
+});
+
+// Cerrar formularios
+document.getElementById('closeRegister').addEventListener('click', () => {
+  document.getElementById('registerModal').classList.add('hidden');
+});
+
+document.getElementById('closeLogin').addEventListener('click', () => {
+  document.getElementById('loginModal').classList.add('hidden');
+});
+
+// Cerrar si se hace clic fuera del contenido
+['accountModal', 'registerModal', 'loginModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target.id === id) e.target.classList.add('hidden');
+  });
+});
+</script>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="deliveryModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Dirección de Entrega 🚚</h3>
+<p class="text-orange-100">Completa los datos para tu entrega</p>
+</div>
+<form class="p-6 space-y-4" id="deliveryForm">
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="calle" placeholder="Nombre de la calle" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="colonia" placeholder="Colonia" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="municipio" placeholder="Municipio" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="numeroInterior" placeholder="Número interior (opcional)" type="text"/>
+<textarea class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="descripcion" placeholder="Descripción del sitio (por ejemplo, color del portón, referencia, etc.)"></textarea>
+<label class="flex items-center space-x-2">
+<input class="text-orange-500" id="guardarDireccion" type="checkbox"/>
+<span class="text-gray-700 text-sm">Guardar esta dirección para futuras entregas</span>
+</label>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelDelivery" type="button">Cancelar</button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Guardar Dirección 💾</button>
+</div>
+</form>
+</div>
+</div><script>
+// Abrir modal de Delivery Gratis
+document.querySelectorAll('button').forEach(btn => {
+    // Skip buttons that are inside modals (ids ending with 'Modal')
+    if (btn.closest && btn.closest('[id$="Modal"]')) return;
+  if (btn.textContent.includes('Delivery Gratis')) {
+    btn.addEventListener('click', () => {
+      document.getElementById('deliveryModal').classList.remove('hidden');
+      setTimeout(() => {
+        document.querySelector('#deliveryModal > div').classList.replace('scale-95', 'scale-100');
+      }, 10);
+    });
+  }
+});
+
+// Cerrar modal
+document.getElementById('cancelDelivery').addEventListener('click', () => {
+  document.getElementById('deliveryModal').classList.add('hidden');
+});
+
+// Guardar dirección
+const form = document.getElementById('deliveryForm');
+const inputs = ['calle', 'colonia', 'municipio', 'numeroInterior', 'descripcion'];
+
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = JSON.parse(localStorage.getItem('direccionEntrega') || '{}');
+  for (let id of inputs) if (saved[id]) document.getElementById(id).value = saved[id];
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (document.getElementById('guardarDireccion').checked) {
+    const data = {};
+    inputs.forEach(id => data[id] = document.getElementById(id).value);
+    localStorage.setItem('direccionEntrega', JSON.stringify(data));
+    alert('Dirección guardada correctamente ✅');
+  } else {
+    alert('Dirección registrada temporalmente ✅');
+  }
+  document.getElementById('deliveryModal').classList.add('hidden');
+});
+</script>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="pizzaModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2" id="pizzaModalTitle">Personaliza tu Pizza</h3>
+<p class="text-orange-100">Elige tamaño, masa, extras y cantidad</p>
+</div>
+<form class="p-6 space-y-4" id="pizzaForm">
+<div>
+<label class="block text-sm font-semibold mb-1">Tamaño</label>
+<select class="w-full border rounded-lg px-4 py-2" id="pizzaSize">
+<option value="chica">Chica - $120</option>
+<option value="mediana">Mediana - $150</option>
+<option value="grande">Grande - $180</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1">Tipo de masa</label>
+<div class="space-y-2">
+<label class="flex items-center space-x-3 cursor-pointer">
+<input checked="" class="text-orange-500" name="pizzaCrust" type="radio" value="tradicional"/>
+<span>Tradicional</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="pizzaCrust" type="radio" value="delgada"/>
+<span>Delgada y crujiente (+$10)</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer">
+<input class="text-orange-500" name="pizzaCrust" type="radio" value="gruesa"/>
+<span>Gruesa con queso (+$25)</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1">Extras (cada uno suma)</label>
+<div class="grid grid-cols-2 gap-2">
+<label class="flex items-center space-x-2"><input class="extra-checkbox text-orange-500" type="checkbox" value="queso-extra"/> <span>Queso extra (+$15)</span></label>
+<label class="flex items-center space-x-2"><input class="extra-checkbox text-orange-500" type="checkbox" value="pepperoni"/> <span>Pepperoni (+$20)</span></label>
+<label class="flex items-center space-x-2"><input class="extra-checkbox text-orange-500" type="checkbox" value="champinones"/> <span>Champiñones (+$10)</span></label>
+<label class="flex items-center space-x-2"><input class="extra-checkbox text-orange-500" type="checkbox" value="jamon"/> <span>Jamón (+$15)</span></label>
+<label class="flex items-center space-x-2"><input class="extra-checkbox text-orange-500" type="checkbox" value="tocino"/> <span>Tocino (+$20)</span></label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1">Cantidad</label>
+<div class="flex items-center space-x-4">
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full" id="decreasePizzaQty" type="button">-</button>
+<span class="text-xl font-semibold" id="pizzaQuantity">1</span>
+<button class="bg-orange-500 text-white w-10 h-10 rounded-full" id="increasePizzaQty" type="button">+</button>
+</div>
+</div>
+<div class="border-t pt-4">
+<div class="flex justify-between items-center text-xl font-bold">
+<span>Total:</span>
+<span class="text-orange-500" id="pizzaTotalPrice">$120.00 MXN</span>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelPizza" type="button">Cancelar</button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="addPizzaToCart" type="submit">Agregar al Carrito 🛒</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+// === Price tables (MXN) ===
+const PRICE = {
+  pizzas: {chica:120, mediana:150, grande:180},
+  crust: {tradicional:0, delgada:10, gruesa:25},
+  pizzaExtras: { 'queso-extra':15, 'pepperoni':20, 'champinones':10, 'jamon':15, 'tocino':20 },
+  fries: {pequena:45, mediana:55, grande:65, extras: {'cheddar':10, 'tocino':15, 'sal-ajo':5, 'parmesano':8}},
+  wings: {p6:90, p12:130, p18:170, extras: {'ranch':10, 'blue-cheese':15, 'apio':5}},
+  bread: {p4:35, p8:50, p12:65, extras: {'mozzarella':10, 'pepperoni':15}},
+  drinks: {chico:25, mediano:30, grande:35}
+};
+
+// Utility: format MXN
+function fmt(n){ return '$' + Number(n).toFixed(2) + ' MXN'; }
+
+// Cart storage
+let cart = [];
+
+// Update cart UI
+function updateCartUI(){
+  const cartItems = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const cartCountEl = document.getElementById('cartCount');
+  const cartSummary = document.getElementById('cartSummary');
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-start bg-gray-50 p-3 rounded-lg shadow-sm';
+    const left = document.createElement('div');
+    left.innerHTML = '<div class="font-semibold text-gray-800">'+item.name+'</div><div class="text-sm text-gray-600">'+item.detail+'</div>';
+    const right = document.createElement('div');
+    right.className = 'text-right';
+    right.innerHTML = '<div class="font-bold text-orange-500">'+fmt(item.total)+'</div><div class="text-sm"><button data-idx="'+idx+'" class="removeItem text-xs text-gray-500 hover:text-red-500">Eliminar</button></div>';
+    div.appendChild(left);
+    div.appendChild(right);
+    cartItems.appendChild(div);
+    total += item.total;
+  });
+  if(cart.length>0){
+    cartSummary.classList.remove('hidden');
+    document.getElementById('emptyCart').classList.add('hidden');
+  } else {
+    cartSummary.classList.add('hidden');
+    document.getElementById('emptyCart').classList.remove('hidden');
+  }
+  cartTotalEl.textContent = fmt(total);
+  cartCountEl.textContent = cart.length;
+  // attach remove handlers
+  document.querySelectorAll('.removeItem').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const i = Number(e.target.getAttribute('data-idx'));
+      cart.splice(i,1);
+      updateCartUI();
+    });
+  });
+}
+
+// Generic function to open modal
+function openModal(id){
+  const modal = document.getElementById(id);
+  modal.classList.remove('hidden');
+  setTimeout(()=>{
+    const inner = modal.querySelector('div > div') || modal.querySelector('div');
+    if(inner) inner.classList.replace('scale-95','scale-100');
+  }, 10);
+}
+
+// Generic to close modal
+function closeModal(id){
+  const modal = document.getElementById(id);
+  if(modal) modal.classList.add('hidden');
+}
+
+// === Pizza modal logic ===
+let currentPizzaName = '';
+document.getElementById('pizzaModal') && (function(){
+  const pizzaModal = document.getElementById('pizzaModal');
+  const title = document.getElementById('pizzaModalTitle');
+  const sizeSel = document.getElementById('pizzaSize');
+  const crustRadios = document.getElementsByName('pizzaCrust');
+  const extrasChecks = document.querySelectorAll('.extra-checkbox');
+  const qtyEl = document.getElementById('pizzaQuantity');
+  let qty = 1;
+  const priceEl = document.getElementById('pizzaTotalPrice');
+
+  function calcPizzaTotal(){
+    const size = sizeSel.value;
+    let base = PRICE.pizzas[size];
+    // crust
+    let crust = Array.from(crustRadios).find(r=>r.checked).value;
+    base += PRICE.crust[crust] || 0;
+    // extras
+    let extraSum = 0;
+    extrasChecks.forEach(ch => { if(ch.checked){ extraSum += PRICE.pizzaExtras[ch.value] || 0; }});
+    const total = (base + extraSum) * qty;
+    priceEl.textContent = fmt(total);
+    return total;
+  }
+
+  document.getElementById('increasePizzaQty').addEventListener('click', ()=>{ qty++; qtyEl.textContent = qty; calcPizzaTotal(); });
+  document.getElementById('decreasePizzaQty').addEventListener('click', ()=>{ if(qty>1) qty--; qtyEl.textContent = qty; calcPizzaTotal(); });
+  sizeSel.addEventListener('change', calcPizzaTotal);
+  crustRadios.forEach(r => r.addEventListener('change', calcPizzaTotal));
+  extrasChecks.forEach(c => c.addEventListener('change', calcPizzaTotal));
+
+  document.getElementById('cancelPizza').addEventListener('click', ()=> closeModal('pizzaModal'));
+
+  // When pizza form submitted -> add to cart
+  document.getElementById('pizzaForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const size = sizeSel.value;
+    const crust = Array.from(crustRadios).find(r=>r.checked).value;
+    const extras = Array.from(extrasChecks).filter(c=>c.checked).map(c=>c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+    const total = calcPizzaTotal();
+    const detail = 'Tamaño: ' + size + ' | Masa: ' + crust + (extras.length?(' | Extras: '+extras.join(', ')):'') + ' | Cantidad: '+qty;
+    cart.push({ name: currentPizzaName || 'Pizza', detail, total });
+    updateCartUI();
+    closeModal('pizzaModal');
+  });
+
+  // expose function to open pizza modal with name
+  window.openPizzaModal = function(name){
+    currentPizzaName = name;
+    title.textContent = 'Personaliza: ' + name;
+    qty = 1; qtyEl.textContent = qty;
+    // reset choices
+    sizeSel.value = 'chica';
+    crustRadios[0].checked = true;
+    extrasChecks.forEach(c=> c.checked = false);
+    calcPizzaTotal();
+    openModal('pizzaModal');
+  };
+})();
+
+// === Fries modal logic ===
+(function(){
+  const friesModal = document.getElementById('friesModal');
+  if(!friesModal) return;
+  const qtyEl = document.getElementById('friesQuantity');
+  let qty = Number(qtyEl.textContent || '1');
+  const dec = document.getElementById('decreaseFriesQty');
+  const inc = document.getElementById('increaseFriesQty');
+  const extras = Array.from(friesModal.querySelectorAll('input[type=checkbox]'));
+  // add data-value attributes mapping to our extras keys if missing
+  // we will consider text content to map to keys
+  function mapExtraCheckbox(ch){
+    const txt = ch.nextSibling ? ch.nextSibling.textContent.toLowerCase() : '';
+    if(txt.includes('cheddar')) ch.dataset.key='cheddar';
+    if(txt.includes('tocino')) ch.dataset.key='tocino';
+    if(txt.includes('sal de ajo')||txt.includes('sal de ajo')) ch.dataset.key='sal-ajo';
+    if(txt.includes('parmesano')) ch.dataset.key='parmesano';
+  }
+  extras.forEach(mapExtraCheckbox);
+
+  const totalEl = document.getElementById('friesTotalPrice');
+  function calcFries(){
+    // size radio: name friesSize
+    const size = document.querySelector('input[name="friesSize"]:checked').value;
+    let baseKey = size; // pequeño mediano grande in file: values are pequeño, mediano, grande
+    let base = PRICE.fries.pequena;
+    if(baseKey.includes('mediano')) base = PRICE.fries.mediana;
+    if(baseKey.includes('grande')) base = PRICE.fries.grande;
+    let extraSum = 0;
+    extras.forEach(ch => { if(ch.checked && ch.dataset.key) extraSum += PRICE.fries.extras[ch.dataset.key] || 0; });
+    const total = (base + extraSum) * qty;
+    totalEl.textContent = fmt(total);
+    return total;
+  }
+  inc.addEventListener('click', ()=>{ qty++; qtyEl.textContent = qty; calcFries(); });
+  dec.addEventListener('click', ()=>{ if(qty>1) qty--; qtyEl.textContent = qty; calcFries(); });
+  document.querySelectorAll('input[name="friesSize"]').forEach(r=> r.addEventListener('change', calcFries));
+  extras.forEach(ch=> ch.addEventListener('change', calcFries));
+  // add to cart
+  document.getElementById('addFriesToCart').addEventListener('click', ()=>{
+    const size = document.querySelector('input[name="friesSize"]:checked').value;
+    const chosenExtras = extras.filter(c=>c.checked).map(c=> c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+    const total = calcFries();
+    const detail = 'Tamaño: '+size+' | Extras: '+(chosenExtras.length?chosenExtras.join(', '):'Ninguno')+' | Cantidad: '+qty;
+    cart.push({ name: 'Papas Crujientes', detail, total });
+    updateCartUI();
+    closeModal('friesModal');
+  });
+})();
+
+// === Drink modal logic ===
+(function(){
+  const drinkModal = document.getElementById('drinkModal');
+  if(!drinkModal) return;
+  const qtyEl = document.getElementById('drinkQuantity');
+  let qty = Number(qtyEl.textContent || '1');
+  document.getElementById('increaseDrinkQty').addEventListener('click', ()=>{ qty++; qtyEl.textContent = qty; calcDrink(); });
+  document.getElementById('decreaseDrinkQty').addEventListener('click', ()=>{ if(qty>1) qty--; qtyEl.textContent = qty; calcDrink(); });
+  const totalEl = document.getElementById('drinkTotalPrice');
+  function calcDrink(){
+    const size = document.querySelector('input[name="drinkSize"]:checked').value;
+    let base = PRICE.drinks.chico;
+    if(size==='mediano') base = PRICE.drinks.mediano;
+    if(size==='grande') base = PRICE.drinks.grande;
+    // no price for ice options
+    const total = base * qty;
+    totalEl.textContent = fmt(total);
+    return total;
+  }
+  document.querySelectorAll('input[name="drinkSize"]').forEach(r=> r.addEventListener('change', calcDrink));
+  document.querySelectorAll('input[name="ice"]').forEach(r=> r.addEventListener('change', ()=>{}));
+  document.getElementById('addDrinkToCart').addEventListener('click', ()=>{
+    const size = document.querySelector('input[name="drinkSize"]:checked').value;
+    const ice = document.querySelector('input[name="ice"]:checked').value;
+    const total = calcDrink();
+    const detail = 'Tamaño: '+size+' | Hielo: '+ice+' | Cantidad: '+qty;
+    cart.push({ name: 'Refresco', detail, total });
+    updateCartUI();
+    closeModal('drinkModal');
+  });
+  // initial calc
+  calcDrink();
+})();
+
+// === Wings modal logic ===
+(function(){
+  const wModal = document.getElementById('wingsModal');
+  if(!wModal) return;
+  const qtyEl = document.getElementById('wingsQuantity');
+  let qty = Number(qtyEl.textContent || '1');
+  document.getElementById('increaseWingsQty').addEventListener('click', ()=>{ qty++; qtyEl.textContent = qty; calcWings(); });
+  document.getElementById('decreaseWingsQty').addEventListener('click', ()=>{ if(qty>1) qty--; qtyEl.textContent = qty; calcWings(); });
+  const totalEl = document.getElementById('wingsTotalPrice');
+  function calcWings(){
+    const size = document.querySelector('input[name="wingsSize"]:checked').value;
+    let base = PRICE.wings.p6;
+    if(size.includes('mediano')||size.includes('12')) base = PRICE.wings.p12;
+    if(size.includes('grande')||size.includes('18')) base = PRICE.wings.p18;
+    // extras
+    const extras = Array.from(wModal.querySelectorAll('input[type=checkbox]')).filter(c=>c.checked).map(c=> c.value);
+    let extraSum = 0;
+    extras.forEach(k => { if(PRICE.wings.extras[k]) extraSum += PRICE.wings.extras[k]; });
+    const total = (base + extraSum) * qty;
+    totalEl.textContent = fmt(total);
+    return total;
+  }
+  document.querySelectorAll('input[name="wingsSize"]').forEach(r=> r.addEventListener('change', calcWings));
+  document.querySelectorAll('input[name="wingsFlavor"]').forEach(r=> r.addEventListener('change', calcWings));
+  Array.from(wModal.querySelectorAll('input[type=checkbox]')).forEach(c=> c.addEventListener('change', calcWings));
+  document.getElementById('addWingsToCart').addEventListener('click', ()=>{
+    const size = document.querySelector('input[name="wingsSize"]:checked').value;
+    const flavor = document.querySelector('input[name="wingsFlavor"]:checked').value;
+    const extras = Array.from(wModal.querySelectorAll('input[type=checkbox]')).filter(c=>c.checked).map(c=> c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+    const total = calcWings();
+    const detail = 'Tamaño: '+size+' | Sabor: '+flavor+' | Extras: '+(extras.length?extras.join(', '):'Ninguno')+' | Cantidad: '+qty;
+    cart.push({ name: 'Alitas', detail, total });
+    updateCartUI();
+    closeModal('wingsModal');
+  });
+})();
+
+// === Bread modal logic ===
+(function(){
+  const bModal = document.getElementById('breadModal');
+  if(!bModal) return;
+  const totalEl = document.getElementById('breadTotalPrice');
+  const qtyRadios = document.getElementsByName('breadPieces');
+  function calcBread(){
+    const pieces = Array.from(qtyRadios).find(r=>r.checked).value;
+    let base = PRICE.bread.p4;
+    if(pieces.includes('8')) base = PRICE.bread.p8;
+    if(pieces.includes('12')) base = PRICE.bread.p12;
+    let extraSum = 0;
+    Array.from(bModal.querySelectorAll('input[type=checkbox]')).forEach(ch=> { if(ch.checked){ const txt = ch.nextSibling ? ch.nextSibling.textContent.toLowerCase() : ''; if(txt.includes('mozzarella')) extraSum += PRICE.bread.extras['mozzarella']; if(txt.includes('pepperoni')) extraSum += PRICE.bread.extras['pepperoni']; }});
+    const total = base + extraSum;
+    totalEl.textContent = fmt(total);
+    return total;
+  }
+  Array.from(qtyRadios).forEach(r=> r.addEventListener('change', calcBread));
+  Array.from(bModal.querySelectorAll('input[type=checkbox]')).forEach(c=> c.addEventListener('change', calcBread));
+  document.getElementById('addBreadToCart').addEventListener('click', ()=>{
+    const pieces = Array.from(qtyRadios).find(r=>r.checked).value;
+    const extras = Array.from(bModal.querySelectorAll('input[type=checkbox]')).filter(c=>c.checked).map(c=> c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+    const total = calcBread();
+    const detail = 'Piezas: '+pieces+' | Extras: '+(extras.length?extras.join(', '):'Ninguno');
+    cart.push({ name: 'Pan de Ajo', detail, total });
+    updateCartUI();
+    closeModal('breadModal');
+  });
+  calcBread();
+})();
+
+// === Hook product "Agregar" buttons to open proper modal ===
+(function(){
+  // find product cards with buttons that have text 'Agregar' and attach
+  document.querySelectorAll('button').forEach(btn => {
+    // Skip buttons that are inside modals (ids ending with 'Modal')
+    if (btn.closest && btn.closest('[id$="Modal"]')) return;
+    if(btn.textContent && btn.textContent.includes('Agregar')){
+      btn.addEventListener('click', (e)=>{
+        // find nearest product title
+        let node = e.target;
+        while(node && node !== document.body){
+          // look for h4 or h5 within this node
+          const h4 = node.querySelector && (node.querySelector('h4') || node.querySelector('h5') || node.querySelector('h3'));
+          if(h4){
+            const name = h4.textContent.trim();
+            // decide category by section or name keywords
+            const lower = name.toLowerCase();
+            if(lower.includes('papa') || lower.includes('papas')) {
+              openModal('friesModal');
+              return;
+            }
+            if(lower.includes('alitas') || lower.includes('alita')) {
+              // optionally set modal state
+              openModal('wingsModal');
+              return;
+            }
+            if(lower.includes('pan') || lower.includes('ajo')) {
+              openModal('breadModal');
+              return;
+            }
+            if(lower.includes('refresco') || lower.includes('coca') || lower.includes('sprite') || lower.includes('fanta') || lower.includes('agua')) {
+              openModal('drinkModal');
+              return;
+            }
+            // otherwise treat as pizza
+            window.openPizzaModal(name);
+            return;
+          }
+          node = node.parentNode;
+        }
+        // fallback: pizza modal
+        window.openPizzaModal('Pizza');
+      });
+    }
+  });
+})();
+
+// initialize cart UI if any saved (no persistence currently)
+updateCartUI();
+
+// reopen cart modal when checkout clicked (existing behavior kept)
+document.getElementById('checkoutCart') && document.getElementById('checkoutCart').addEventListener('click', ()=>{
+  // For now, just show cart modal (it's already openable with cart button). 
+  // We can later integrate with payment.
+  alert('Procediendo al pago... (simulación)');
+});
+</script><script>
+// === Activar funcionalidad completa para botones de refrescos ===
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent && (btn.textContent.includes('Refresco') || btn.textContent.includes('Coca') || btn.textContent.includes('Fanta') || btn.textContent.includes('Sprite') || btn.textContent.includes('Agua'))) {
+    btn.addEventListener('click', (e) => {
+      openModal('drinkModal');
+    });
+  }
+});
+</script>
+<script>
+// === Conectar los botones de Refrescos Helados con su modal ===
+document.querySelectorAll('#menu button, section button').forEach(btn => {
+  if (btn.textContent.includes('+ 🛒')) {
+    btn.addEventListener('click', (e) => {
+      const card = e.target.closest('.p-4');
+      const drinkName = card.querySelector('h5')?.textContent.trim() || 'Refresco';
+      document.getElementById('modalDrinkName').textContent = drinkName;
+
+      // Asignar precio base según el refresco
+      let basePrice = 25; // Default
+      if (drinkName.toLowerCase().includes('agua')) basePrice = 15;
+      if (drinkName.toLowerCase().includes('fanta')) basePrice = 25;
+      if (drinkName.toLowerCase().includes('sprite')) basePrice = 25;
+      if (drinkName.toLowerCase().includes('coca')) basePrice = 25;
+
+      // Guardar precio base en dataset
+      document.getElementById('drinkModal').dataset.basePrice = basePrice;
+
+      // Reinicia valores por si quedó de otra bebida
+      document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.checked = r.value === 'pequeño');
+      document.querySelectorAll('input[name="ice"]').forEach(r => r.checked = r.value === 'hielo-normal');
+      document.getElementById('drinkQuantity').textContent = '1';
+
+      // Mostrar precio inicial
+      const totalPriceEl = document.getElementById('drinkTotalPrice');
+      totalPriceEl.textContent = '$' + basePrice.toFixed(2) + ' MXN';
+
+      // Mostrar modal
+      document.getElementById('drinkModal').classList.remove('hidden');
+      setTimeout(() => {
+        document.querySelector('#drinkModal > div').classList.replace('scale-95', 'scale-100');
+      }, 10);
+    });
+  }
+});
+
+// Ajustar el cálculo dinámico de precio en el modal de bebida
+(function(){
+  const modal = document.getElementById('drinkModal');
+  if(!modal) return;
+  const qtyEl = document.getElementById('drinkQuantity');
+  const totalEl = document.getElementById('drinkTotalPrice');
+
+  function calcDrink(){
+    const base = Number(modal.dataset.basePrice || 25);
+    const size = document.querySelector('input[name="drinkSize"]:checked').value;
+    let extra = 0;
+    if(size === 'mediano') extra = 5;
+    if(size === 'grande') extra = 10;
+    const qty = Number(qtyEl.textContent);
+    const total = (base + extra) * qty;
+    totalEl.textContent = '$' + total.toFixed(2) + ' MXN';
+    return total;
+  }
+
+  document.getElementById('increaseDrinkQty').addEventListener('click', () => {
+    qtyEl.textContent = Number(qtyEl.textContent) + 1;
+    calcDrink();
+  });
+  document.getElementById('decreaseDrinkQty').addEventListener('click', () => {
+    const val = Number(qtyEl.textContent);
+    if(val > 1) qtyEl.textContent = val - 1;
+    calcDrink();
+  });
+  document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.addEventListener('change', calcDrink));
+  calcDrink();
+})();
+</script>
+
+
+<script>
+// === Mejora: hacer que todos los botones de "Cancelar" cierren su modal correspondiente ===
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent.trim().toLowerCase() === 'cancelar') {
+    btn.addEventListener('click', () => {
+      const modal = btn.closest('[id$="Modal"]');
+      if (modal) modal.classList.add('hidden');
+    });
+  }
+});
+
+// === Mejora: Formato MXN en precios ya manejado en todo el código ===
+// (Las funciones de formato existentes ya usan pesos, se mantiene fmt() con MXN).
+
+// === Modal de Pago ===
+const pagoModalHTML = `
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="paymentModal">
+  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+    <div class="gradient-bg p-6 text-white text-center">
+      <h3 class="text-2xl font-bold mb-2">Método de Pago 💳</h3>
+      <p class="text-orange-100">Elige cómo deseas pagar tu pedido</p>
+    </div>
+    <div class="p-6 space-y-4">
+      <button id="payWithCard" class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">💳 Pagar con Tarjeta</button>
+      <button id="payOnDelivery" class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors">💵 Pagar al Recibir</button>
+      <button id="cancelPayment" class="w-full text-gray-500 hover:text-gray-700 transition-colors">Cancelar</button>
+    </div>
+  </div>
+</div>
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="cardFormModal">
+  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+    <div class="gradient-bg p-6 text-white text-center">
+      <h3 class="text-2xl font-bold mb-2">Pago con Tarjeta 💳</h3>
+      <p class="text-orange-100">Introduce los datos de tu tarjeta</p>
+    </div>
+    <form class="p-6 space-y-4" id="cardForm">
+      <input type="text" id="cardName" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre en la tarjeta" required />
+      <input type="text" id="cardNumber" maxlength="16" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Número de tarjeta (16 dígitos)" required />
+      <div class="flex space-x-3">
+        <input type="text" id="cardExp" maxlength="5" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="MM/AA" required />
+        <input type="text" id="cardCVV" maxlength="3" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="CVV" required />
+      </div>
+      <div class="flex space-x-3">
+        <button type="button" id="cancelCardForm" class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors">Cancelar</button>
+        <button type="submit" class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">Confirmar Pago ✅</button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+// Insert modals to DOM if not exist
+document.body.insertAdjacentHTML('beforeend', pagoModalHTML);
+
+// Abrir modal de pago al presionar "Proceder al Pago"
+document.getElementById('checkoutCart')?.addEventListener('click', () => {
+  document.getElementById('paymentModal').classList.remove('hidden');
+  setTimeout(() => document.querySelector('#paymentModal > div').classList.replace('scale-95','scale-100'), 10);
+});
+
+// Botones del modal de pago
+document.getElementById('cancelPayment').addEventListener('click', ()=> document.getElementById('paymentModal').classList.add('hidden'));
+document.getElementById('payWithCard').addEventListener('click', ()=>{
+  document.getElementById('paymentModal').classList.add('hidden');
+  document.getElementById('cardFormModal').classList.remove('hidden');
+  setTimeout(() => document.querySelector('#cardFormModal > div').classList.replace('scale-95','scale-100'), 10);
+});
+document.getElementById('payOnDelivery').addEventListener('click', ()=>{
+  localStorage.setItem('metodoPago', 'pago_al_recibir');
+  alert('✅ Pedido confirmado. Pagarás al recibir tu pedido.');
+  document.getElementById('paymentModal').classList.add('hidden');
+  document.getElementById('cartModal').classList.add('hidden');
+  localStorage.removeItem('cart'); // limpia carrito simulado
+});
+
+// Formulario de tarjeta
+const form = document.getElementById('cardForm');
+form.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('cardName').value.trim();
+  const number = document.getElementById('cardNumber').value.trim();
+  const exp = document.getElementById('cardExp').value.trim();
+  const cvv = document.getElementById('cardCVV').value.trim();
+  if(name && number.length === 16 && exp.length === 5 && cvv.length === 3){
+    const cardData = {name, number, exp};
+    localStorage.setItem('tarjetaGuardada', JSON.stringify(cardData));
+    alert('💳 Pago realizado con éxito y guardado localmente ✅');
+    document.getElementById('cardFormModal').classList.add('hidden');
+    document.getElementById('cartModal').classList.add('hidden');
+  } else {
+    alert('⚠️ Verifica los datos de tu tarjeta.');
+  }
+});
+document.getElementById('cancelCardForm').addEventListener('click', ()=>{
+  document.getElementById('cardFormModal').classList.add('hidden');
+});
+</script>
+
+
+<script>
+// === Fix universal cancel buttons ===
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent.trim().toLowerCase().includes('cancelar')) {
+    btn.onclick = () => {
+      const modal = btn.closest('[id$="Modal"]');
+      if (modal) modal.classList.add('hidden');
+    };
+  }
+});
+
+// === Ensure Proceed to Payment opens modal ===
+const checkoutBtn = document.getElementById('checkoutCart');
+if (checkoutBtn) {
+  checkoutBtn.onclick = () => {
+    const paymentModal = document.getElementById('paymentModal');
+    if (paymentModal) {
+      paymentModal.classList.remove('hidden');
+      setTimeout(() => paymentModal.querySelector('div').classList.replace('scale-95','scale-100'), 10);
+    }
+  };
+}
+
+// === Ensure cancel buttons work inside payment modals ===
+['cancelPayment','cancelCardForm'].forEach(id => {
+  const btn = document.getElementById(id);
+  if (btn) btn.onclick = () => btn.closest('[id$="Modal"]').classList.add('hidden');
+});
+</script>
+
+
+<!-- Modal de Ayuda -->
+<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center" id="helpModal">
+  <div class="bg-white w-full h-full overflow-y-auto rounded-none relative">
+    <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
+      <h3 class="text-2xl font-bold">Centro de Ayuda</h3>
+      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200">&times;</button>
+    </div>
+    <div class="p-6 text-gray-800">
+      
+
+  <!-- Header -->
+  <header class="gradient-bg shadow-lg">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="https://i.imgur.com/EDWicBS.jpeg" alt="Logo" class="h-12 w-12 rounded-full">
+        <h1 class="text-2xl font-bold text-white">Federic's Pizza</h1>
+      </div>
+      <div class="space-x-6 hidden md:flex">
+        <a href="federics-pizza-v13.html#inicio" class="text-white hover:text-orange-200 font-medium">Inicio</a>
+        <a href="federics-pizza-v13.html#menu" class="text-white hover:text-orange-200 font-medium">Menú</a>
+        <a href="federics-pizza-v13.html#nosotros" class="text-white hover:text-orange-200 font-medium">Nosotros</a>
+        <a href="federics-pizza-v13.html#contacto" class="text-white hover:text-orange-200 font-medium">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg py-16 text-center text-white">
+    <h2 class="text-5xl font-bold mb-4">Centro de Ayuda</h2>
+    <p class="text-lg text-orange-100 max-w-2xl mx-auto mb-6">
+      ¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes sobre nuestros productos y servicios.
+    </p>
+
+    <div class="relative max-w-xl mx-auto">
+      <input id="searchInput" type="text" placeholder="Buscar en el centro de ayuda..." class="w-full px-6 py-3 rounded-full shadow-lg text-gray-800 focus:outline-none focus:ring-4 focus:ring-orange-400">
+      <button onclick="searchContent()" class="absolute right-2 top-2 bg-orange-600 text-white px-4 py-1 rounded-full hover:bg-orange-700 transition">Buscar</button>
+    </div>
+  </section>
+
+  <!-- Contenido principal -->
+  <main class="container mx-auto px-6 py-12">
+    <div id="resultsContainer" class="mb-8 hidden">
+      <h3 class="text-2xl font-semibold text-orange-600 mb-4">Resultados:</h3>
+      <ul id="resultsList" class="list-disc pl-6 text-gray-700"></ul>
+    </div>
+
+    <div id="helpContent" class="grid md:grid-cols-2 gap-8">
+      <!-- Card 1 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">🍕 Menú y productos</h3>
+        <p class="text-gray-600 mb-2 font-semibold">Información sobre pizzas, pastas, bebidas y postres</p>
+        <p>Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos. Todos nuestros productos se preparan con ingredientes frescos y de la más alta calidad.</p>
+        <p class="mt-3"><strong>Opciones vegetarianas, veganas y sin gluten:</strong> Tenemos opciones para todos los gustos y necesidades dietéticas.</p>
+        <p class="mt-2"><strong>Tamaños disponibles:</strong> Personal (20cm), Mediana (30cm) y Familiar (40cm).</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">🚚 Pedidos y entregas</h3>
+        <p><strong>Cómo hacer un pedido:</strong> A través de la web, app o al +52 (246) 330 9000.</p>
+        <p><strong>Tiempos de entrega:</strong> 30-45 min aprox.</p>
+        <p><strong>Cobertura:</strong> Zona centro y colonias cercanas. Delivery gratis desde $200.</p>
+        <p><strong>Recoger en local:</strong> 123 Pizza Street, Ciudad.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">💳 Pagos y facturación</h3>
+        <p><strong>Métodos aceptados:</strong> Efectivo, tarjetas y apps (Mercado Pago, PayPal).</p>
+        <p><strong>Factura:</strong> Solicítala al hacer el pedido o después contactando soporte.</p>
+        <p><strong>Reembolsos:</strong> Dentro de las 2 horas posteriores a la entrega.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">🎁 Promociones y cupones</h3>
+        <p><strong>Usar un cupón:</strong> Ingresa el código al finalizar tu compra.</p>
+        <p><strong>Promos especiales:</strong> Martes 2x1 en Margherita, Jueves 30% en pastas.</p>
+        <p><strong>Fidelidad:</strong> 10 puntos por cada $100, pizza gratis al llegar a 100 puntos.</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">🔒 Privacidad y seguridad</h3>
+        <p><strong>Protección de datos:</strong> Tus datos están protegidos con cifrado SSL.</p>
+        <p><strong>Políticas de uso:</strong> Consulta los términos en el pie de página.</p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">👤 Cuenta y registro</h3>
+        <p><strong>Cómo registrarse:</strong> Haz clic en “Crear cuenta” y verifica tu correo.</p>
+        <p><strong>Recuperar contraseña:</strong> Usa el enlace “¿Olvidaste tu contraseña?”.</p>
+        <p><strong>Modificar direcciones:</strong> Desde “Mis direcciones” en tu cuenta.</p>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-2xl font-bold mb-3">📋 Secciones adicionales</h3>
+        <p><strong>Reportar problema:</strong> Llama o envía WhatsApp al +52 (246) 330 9000.</p>
+        <p><strong>Políticas:</strong> Cumplimos con normas de higiene y tiempos estimados.</p>
+        <p><strong>Atención al cliente:</strong> 11AM a 11PM, correo: ayuda@federicspizza.com</p>
+        <p><strong>Empleo:</strong> Envía tu CV a empleo@federicspizza.com.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function searchContent() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('#helpContent .card');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const resultsList = document.getElementById('resultsList');
+      resultsList.innerHTML = '';
+      let found = false;
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(input) && input.trim() !== '') {
+          const title = card.querySelector('h3').innerText;
+          const li = document.createElement('li');
+          li.textContent = title;
+          resultsList.appendChild(li);
+          found = true;
+        }
+      });
+
+      resultsContainer.classList.toggle('hidden', !found);
+      if (!found && input.trim() !== '') {
+        resultsList.innerHTML = '<li>No se encontraron resultados.</li>';
+        resultsContainer.classList.remove('hidden');
+      }
+    }
+  </script>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('helpButton').addEventListener('click', () => {
+  document.getElementById('helpModal').classList.remove('hidden');
+});
+document.getElementById('closeHelpModal').addEventListener('click', () => {
+  document.getElementById('helpModal').classList.add('hidden');
+});
+document.getElementById('helpModal').addEventListener('click', (e) => {
+  if (e.target.id === 'helpModal') e.target.classList.add('hidden');
+});
+</script>
+
+</body>
+</html>
