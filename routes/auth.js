@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login
+// Login (esta parte va justo debajo del registro)
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
