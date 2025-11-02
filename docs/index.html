@@ -798,11 +798,29 @@
 <form class="p-6 space-y-4">
 <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
 <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" maxlength="4" placeholder="Código de 4 dígitos" required="" type="text"/>
 <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Entrar</button>
 <button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeLogin" type="button">Cancelar</button>
 </form>
 </div>
+</div>
+<!-- Modal de Verificación de Código -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="verifyCodeModal">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Verificación de Código 🔐</h3>
+            <p class="text-orange-100">Ingresa el código de 4 dígitos enviado a tu correo</p>
+        </div>
+        <form class="p-6 space-y-4">
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                   maxlength="4" placeholder="Código de 4 dígitos" required type="text"/>
+            <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">
+                Verificar Código
+            </button>
+            <button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeVerifyCode" type="button">
+                Cancelar
+            </button>
+        </form>
+    </div>
 </div>
 <script>
 document.getElementById('accountButton').addEventListener('click', () => {
@@ -1665,90 +1683,195 @@ if (checkoutBtn) {
 </div>
 
 <script>
-document.getElementById('helpButton').addEventListener('click', () => {
-  document.getElementById('helpModal').classList.remove('hidden');
-});
-document.getElementById('closeHelpModal').addEventListener('click', () => {
-  document.getElementById('helpModal').classList.add('hidden');
-});
-document.getElementById('helpModal').addEventListener('click', (e) => {
-  if (e.target.id === 'helpModal') e.target.classList.add('hidden');
-});
-
-// === CONEXIÓN CON EL BACKEND PARA CREAR CUENTA ===
+// === CONEXIÓN CON EL BACKEND - SISTEMA COMPLETO DE AUTENTICACIÓN ===
 const BACKEND_URL = 'https://federics-backend.onrender.com';
 
-// Manejar formulario de registro
+// Estado global del usuario
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+// Actualizar UI según estado de login
+function updateAuthUI() {
+    const accountButton = document.getElementById('accountButton');
+    const accountModal = document.getElementById('accountModal');
+    
+    if (currentUser) {
+        // Usuario logueado - mostrar nombre
+        accountButton.innerHTML = `👋 ${currentUser.nombre}`;
+        
+        // Modificar el modal de cuenta para usuario logueado
+        accountModal.innerHTML = `
+            <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+                <div class="gradient-bg p-6 text-white text-center">
+                    <h3 class="text-2xl font-bold mb-2">¡Hola ${currentUser.nombre}! 👋</h3>
+                    <p class="text-orange-100">Bienvenido a Federic's Pizza</p>
+                </div>
+                <div class="p-6 text-center space-y-4">
+                    <div class="text-left bg-gray-50 p-4 rounded-lg">
+                        <p><strong>Nombre:</strong> ${currentUser.nombre} ${currentUser.apellidos}</p>
+                        <p><strong>Email:</strong> ${currentUser.email}</p>
+                        <p><strong>Teléfono:</strong> ${currentUser.telefono}</p>
+                    </div>
+                    <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="viewOrders">Mis Pedidos 📋</button>
+                    <button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="logoutButton">Cerrar Sesión 🚪</button>
+                    <button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cerrar</button>
+                </div>
+            </div>
+        `;
+        
+        // Re-asignar event listeners para el nuevo modal
+        document.getElementById('logoutButton').addEventListener('click', logout);
+        document.getElementById('closeAccountModal').addEventListener('click', () => {
+            document.getElementById('accountModal').classList.add('hidden');
+        });
+        
+    } else {
+        // Usuario no logueado - mostrar opciones normales
+        accountButton.textContent = 'Cuenta';
+    }
+}
+
+// Función para cerrar sesión
+function logout() {
+    localStorage.removeItem('currentUser');
+    currentUser = null;
+    updateAuthUI();
+    document.getElementById('accountModal').classList.add('hidden');
+    alert('✅ Sesión cerrada correctamente');
+}
+
+// REGISTRO DE USUARIO
 document.querySelector('#registerModal form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const userData = {
-    name: document.querySelector('#registerModal input[placeholder="Nombre"]').value,
-    email: document.querySelector('#registerModal input[placeholder="Correo electrónico"]').value,
-    password: document.querySelector('#registerModal input[placeholder="Contraseña"]').value,
-    phone: document.querySelector('#registerModal input[placeholder="Teléfono"]').value
-  };
-
-  try {
-    const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData)
-    });
-
-    const result = await response.json();
+    e.preventDefault();
     
-    if (response.ok) {
-      alert('✅ Cuenta creada exitosamente');
-      document.getElementById('registerModal').classList.add('hidden');
-      // Limpiar el formulario
-      document.querySelector('#registerModal form').reset();
-    } else {
-      alert(`❌ Error: ${result.message || 'No se pudo crear la cuenta'}`);
+    const userData = {
+        nombre: document.querySelector('#registerModal input[placeholder="Nombre"]').value,
+        apellidos: document.querySelector('#registerModal input[placeholder="Apellidos"]').value,
+        telefono: document.querySelector('#registerModal input[placeholder="Teléfono"]').value,
+        email: document.querySelector('#registerModal input[placeholder="Correo electrónico"]').value,
+        password: document.querySelector('#registerModal input[placeholder="Contraseña"]').value
+    };
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert('✅ Cuenta creada exitosamente. Se ha enviado un correo de verificación.');
+            document.getElementById('registerModal').classList.add('hidden');
+            document.querySelector('#registerModal form').reset();
+        } else {
+            alert(`❌ Error: ${result.message || 'No se pudo crear la cuenta'}`);
+        }
+    } catch (error) {
+        alert('❌ Error de conexión con el servidor');
+        console.error('Error:', error);
     }
-  } catch (error) {
-    alert('❌ Error de conexión con el servidor');
-    console.error('Error:', error);
-  }
 });
 
-// Manejar formulario de login
+// LOGIN DE USUARIO (Paso 1: Enviar credenciales)
 document.querySelector('#loginModal form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const loginData = {
-    email: document.querySelector('#loginModal input[placeholder="Correo electrónico"]').value,
-    password: document.querySelector('#loginModal input[placeholder="Contraseña"]').value
-  };
-
-  try {
-    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginData)
-    });
-
-    const result = await response.json();
+    e.preventDefault();
     
-    if (response.ok) {
-      alert('✅ Inicio de sesión exitoso');
-      document.getElementById('loginModal').classList.add('hidden');
-      localStorage.setItem('token', result.token);
-      // Limpiar el formulario
-      document.querySelector('#loginModal form').reset();
-    } else {
-      alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
+    const loginData = {
+        email: document.querySelector('#loginModal input[placeholder="Correo electrónico"]').value,
+        password: document.querySelector('#loginModal input[placeholder="Contraseña"]').value
+    };
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData)
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+            // Guardar email temporal para la verificación
+            localStorage.setItem('tempEmail', loginData.email);
+            
+            alert('✅ Código de verificación enviado a tu correo');
+            document.getElementById('loginModal').classList.add('hidden');
+            
+            // Mostrar modal de verificación de código
+            document.getElementById('verifyCodeModal').classList.remove('hidden');
+            document.querySelector('#loginModal form').reset();
+        } else {
+            alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
+        }
+    } catch (error) {
+        alert('❌ Error de conexión con el servidor');
+        console.error('Error:', error);
     }
-  } catch (error) {
-    alert('❌ Error de conexión con el servidor');
-    console.error('Error:', error);
-  }
 });
 
+// VERIFICACIÓN DE CÓDIGO (Paso 2: Verificar código)
+document.querySelector('#verifyCodeModal form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const verifyData = {
+        email: localStorage.getItem('tempEmail'),
+        codigo: document.querySelector('#verifyCodeModal input[placeholder="Código de 4 dígitos"]').value
+    };
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/verify-code`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(verifyData)
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+            // Guardar usuario en localStorage
+            currentUser = {
+                nombre: result.nombre,
+                apellidos: result.apellidos || '',
+                email: verifyData.email,
+                telefono: result.telefono || '',
+                token: result.token
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            localStorage.removeItem('tempEmail');
+            
+            alert('✅ Inicio de sesión exitoso');
+            document.getElementById('verifyCodeModal').classList.add('hidden');
+            document.querySelector('#verifyCodeModal form').reset();
+            
+            // Actualizar UI
+            updateAuthUI();
+        } else {
+            alert(`❌ Error: ${result.message || 'Código incorrecto'}`);
+        }
+    } catch (error) {
+        alert('❌ Error de conexión con el servidor');
+        console.error('Error:', error);
+    }
+});
+
+// Cerrar modal de verificación
+document.getElementById('closeVerifyCode').addEventListener('click', () => {
+    document.getElementById('verifyCodeModal').classList.add('hidden');
+    localStorage.removeItem('tempEmail');
+});
+
+// Inicializar UI al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    updateAuthUI();
+});
 </script>
 
 </body>

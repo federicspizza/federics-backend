@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   apellidos: String,
   telefono: String,
   email: { type: String, unique: true },
-  password: String
+  password: String,
+  codigoTemporal: String 
 });
 
 export default mongoose.model("User", userSchema);
+
