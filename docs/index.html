@@ -80,12 +80,12 @@
 
 <!-- Menú de navegación para desktop -->
 <div class="hidden md:flex space-x-6 lg:space-x-8">
-<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#cuenta" id="accountButton">Cuenta</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#inicio">Inicio</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#menu">Menú</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#nosotros">Nosotros</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#contacto">Contacto</a>
-<a class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButton">Ayuda</a>
+<button class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="accountButton">Cuenta</button>
+<button class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButton">Ayuda</button>
 </div>
 
 <!-- Botones de carrito y ordenar (desktop) -->
@@ -101,12 +101,12 @@
 <!-- Menú móvil desplegable -->
 <div id="mobileMenu" class="mobile-menu hidden md:hidden mt-4 bg-white bg-opacity-10 rounded-lg p-4">
 <div class="flex flex-col space-y-4">
-<a class="text-white hover:text-orange-200 font-medium transition-colors" href="#cuenta" id="accountButtonMobile">Cuenta</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#inicio">Inicio</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#menu">Menú</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#nosotros">Nosotros</a>
 <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#contacto">Contacto</a>
-<a class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButtonMobile">Ayuda</a>
+<button class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer text-left" id="accountButtonMobile">Cuenta</button>
+<button class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer text-left" id="helpButtonMobile">Ayuda</button>
 <div class="flex items-center space-x-4 pt-2">
 <button class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2" id="cartButtonMobile">
 <span>🛒</span>
@@ -129,7 +129,7 @@
 </p>
 <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
 <a href="#menu" class="bg-white text-orange-500 px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-orange-50 hover-scale transition-all inline-block">Ver Menú 📋</a>
-<button class="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-white hover:text-orange-500 transition-all">
+<button class="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-white hover:text-orange-500 transition-all delivery-button">
     Delivery Gratis 🚚
 </button>
 </div>
@@ -141,7 +141,7 @@
 <div class="container mx-auto px-4 md:px-6">
 <h3 class="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-8 md:mb-12">Nuestras Pizzas Favoritas</h3>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-<!-- Card de pizza mejorada -->
+<!-- Cards de pizza mejoradas -->
 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
 <div class="h-40 md:h-48 flex items-center justify-center">
 <div class="text-6xl"><img alt="Pizza" class="w-20 h-20 md:w-24 md:h-24 mx-auto" src="https://img.icons8.com/color/96/000000/pizza.png"/></div>
@@ -151,14 +151,13 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Tomate, mozzarella fresca, albahaca y amor</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$12.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Margherita Clásica" data-price="12.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
 </div>
 </div>
 
-<!-- Resto de cards de pizza con estructura similar -->
 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
 <div class="h-40 md:h-48 flex items-center justify-center">
 <div class="text-6xl"><img alt="Pizza" class="w-20 h-20 md:w-24 md:h-24 mx-auto" src="https://img.icons8.com/doodle/96/000000/pizza--v1.png"/></div>
@@ -168,7 +167,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Pepperoni, queso extra y especias secretas</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$15.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Pepperoni Suprema" data-price="15.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
@@ -184,7 +183,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Vegetales frescos, pimientos y champiñones</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$14.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Veggie Deluxe" data-price="14.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
@@ -200,7 +199,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Pollo BBQ, cebolla morada, cilantro y salsa especial</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$17.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="BBQ Chicken" data-price="17.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
@@ -216,7 +215,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Jamón, piña fresca, queso mozzarella y un toque de coco</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$16.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Hawaiana Tropical" data-price="16.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
@@ -232,7 +231,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Mozzarella, parmesano, gorgonzola y queso de cabra</p>
 <div class="flex justify-between items-center">
 <span class="text-xl md:text-2xl font-bold text-orange-500">$18.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Cuatro Quesos" data-price="18.99" data-type="pizza">
     Agregar 🛒
 </button>
 </div>
@@ -258,7 +257,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Papas doradas y crujientes - ¡Personalízalas!</p>
 <div class="flex justify-between items-center">
 <span class="text-lg md:text-xl font-bold text-orange-500">$4.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Papas Clásicas" data-price="4.99" data-type="acompanamiento">
     Agregar 🛒
 </button>
 </div>
@@ -279,7 +278,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Jugosas alitas con tu sabor favorito - ¡Elige tamaño y sabor!</p>
 <div class="flex justify-between items-center">
 <span class="text-lg md:text-xl font-bold text-orange-500">$8.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Alitas de Pollo" data-price="8.99" data-type="acompanamiento">
     Agregar 🛒
 </button>
 </div>
@@ -300,7 +299,7 @@
 <p class="text-gray-600 mb-4 text-sm md:text-base">Pan fresco con mantequilla de ajo - ¡Elige piezas y tamaño!</p>
 <div class="flex justify-between items-center">
 <span class="text-lg md:text-xl font-bold text-orange-500">$3.99 MXN</span>
-<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base">
+<button class="bg-orange-500 text-white px-3 md:px-4 py-2 rounded-full hover:bg-orange-600 transition-colors text-sm md:text-base add-to-cart-btn" data-product="Pan de Ajo Artesanal" data-price="3.99" data-type="acompanamiento">
     Agregar 🛒
 </button>
 </div>
@@ -321,7 +320,7 @@
 <p class="text-xs md:text-sm text-gray-600 mb-3">Clásica y refrescante</p>
 <div class="flex justify-between items-center">
 <span class="text-base md:text-lg font-bold text-orange-500">$2.99 MXN</span>
-<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors">
+<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors add-to-cart-btn" data-product="Coca-Cola" data-price="2.99" data-type="bebida">
     + 🛒
 </button>
 </div>
@@ -337,7 +336,7 @@
 <p class="text-xs md:text-sm text-gray-600 mb-3">Sabor cítrico explosivo</p>
 <div class="flex justify-between items-center">
 <span class="text-base md:text-lg font-bold text-orange-500">$2.99 MXN</span>
-<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors">
+<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors add-to-cart-btn" data-product="Fanta Naranja" data-price="2.99" data-type="bebida">
     + 🛒
 </button>
 </div>
@@ -353,7 +352,7 @@
 <p class="text-xs md:text-sm text-gray-600 mb-3">Lima-limón burbujeante</p>
 <div class="flex justify-between items-center">
 <span class="text-base md:text-lg font-bold text-orange-500">$2.99 MXN</span>
-<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors">
+<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors add-to-cart-btn" data-product="Sprite" data-price="2.99" data-type="bebida">
     + 🛒
 </button>
 </div>
@@ -369,7 +368,7 @@
 <p class="text-xs md:text-sm text-gray-600 mb-3">Pura y refrescante</p>
 <div class="flex justify-between items-center">
 <span class="text-base md:text-lg font-bold text-orange-500">$1.99 MXN</span>
-<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors">
+<button class="bg-orange-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm hover:bg-orange-600 transition-colors add-to-cart-btn" data-product="Agua Natural" data-price="1.99" data-type="bebida">
     + 🛒
 </button>
 </div>
@@ -475,101 +474,425 @@
 </div>
 </footer>
 
-<!-- Script para el menú móvil y mejoras de responsividad -->
-<script>
-// Toggle del menú móvil
-document.getElementById('mobileMenuButton').addEventListener('click', function() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('hidden');
-});
+<!-- ========== MODALES ========== -->
 
-// Cerrar menú móvil al hacer clic en un enlace
-document.querySelectorAll('#mobileMenu a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.getElementById('mobileMenu').classList.add('hidden');
-    });
-});
+<!-- Modal del Carrito -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="cartModal">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto modal-content">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Tu Carrito 🛒</h3>
+            <p class="text-orange-100">Revisa tus deliciosas selecciones</p>
+        </div>
+        <div class="p-6">
+            <div class="space-y-4 mb-6" id="cartItems"></div>
+            <div class="text-center py-8 text-gray-500" id="emptyCart">
+                <div class="text-6xl mb-4">🍕</div>
+                <p class="text-lg">Tu carrito está vacío</p>
+                <p class="text-sm">¡Agrega algunas pizzas deliciosas!</p>
+            </div>
+            <div class="border-t pt-4 mb-6 hidden" id="cartSummary">
+                <div class="flex justify-between items-center text-xl font-bold">
+                    <span>Total del Carrito:</span>
+                    <span class="text-orange-500" id="cartTotal">$0.00 MXN</span>
+                </div>
+            </div>
+            <div class="flex space-x-3">
+                <button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="closeCart">
+                    Seguir Comprando
+                </button>
+                <button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="checkoutCart">
+                    Proceder al Pago 💳
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-// Sincronizar contadores del carrito
-function updateCartCounts() {
-    const count = document.getElementById('cartCount').textContent;
-    document.getElementById('cartCountMobile').textContent = count;
-}
-
-// Inicializar contadores
-updateCartCounts();
-
-// Botones del carrito (móvil y desktop)
-document.getElementById('cartButtonMobile').addEventListener('click', function() {
-    document.getElementById('cartModal').classList.remove('hidden');
-    document.getElementById('mobileMenu').classList.add('hidden');
-});
-
-document.getElementById('helpButtonMobile').addEventListener('click', function() {
-    document.getElementById('helpModal').classList.remove('hidden');
-    document.getElementById('mobileMenu').classList.add('hidden');
-});
-
-document.getElementById('accountButtonMobile').addEventListener('click', function() {
-    document.getElementById('accountModal').classList.remove('hidden');
-    document.getElementById('mobileMenu').classList.add('hidden');
-});
-
-// Ajustar modales para móviles
-function adjustModalsForMobile() {
-    const modals = document.querySelectorAll('[id$="Modal"]');
-    modals.forEach(modal => {
-        if (window.innerWidth < 768) {
-            const modalContent = modal.querySelector('div');
-            if (modalContent) {
-                modalContent.classList.add('modal-content');
-            }
-        } else {
-            const modalContent = modal.querySelector('div');
-            if (modalContent) {
-                modalContent.classList.remove('modal-content');
-            }
-        }
-    });
-}
-
-// Ejecutar al cargar y al redimensionar
-window.addEventListener('load', adjustModalsForMobile);
-window.addEventListener('resize', adjustModalsForMobile);
-
-// El resto de tu código JavaScript existente se mantiene igual...
-// Solo agregamos las funciones de responsividad arriba
-
-// Modal logic (existing code)
-document.getElementById('cartButton').addEventListener('click', function() {
-    document.getElementById('cartModal').classList.remove('hidden');
-});
-
-document.getElementById('closeCart').addEventListener('click', function() {
-    document.getElementById('cartModal').classList.add('hidden');
-});
-
-document.getElementById('cartModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.add('hidden');
-    }
-});
-
-// ... resto del código JavaScript existente
-</script>
-
-<!-- El resto de tu código HTML (modales, scripts, etc.) se mantiene igual -->
-<!-- Solo asegúrate de que los modales tengan la clase 'modal-content' para móviles -->
-
-<!-- Modal de Cuenta (sin cambios) -->
+<!-- Modal de Cuenta -->
 <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="accountModal">
-<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95 modal-content" id="accountModalContent">
-<!-- ... contenido del modal ... -->
-</div>
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95 modal-content">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Tu Cuenta 👤</h3>
+            <p class="text-orange-100">Elige una opción</p>
+        </div>
+        <div class="p-6 text-center space-y-4">
+            <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="openRegister">Crear Cuenta 📝</button>
+            <button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="openLogin">Iniciar Sesión 🔐</button>
+            <button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cancelar</button>
+        </div>
+    </div>
 </div>
 
-<!-- Los demás modales siguen igual pero con la clase modal-content agregada -->
-<!-- ... resto de modales ... -->
+<!-- Modal Crear Cuenta -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="registerModal">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95 modal-content">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Crear Cuenta 📝</h3>
+            <p class="text-orange-100">Completa tus datos básicos</p>
+        </div>
+        <form class="p-6 space-y-4" id="registerForm">
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre" required type="text"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Apellidos" required type="text"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Teléfono" required type="tel"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required type="email"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required type="password"/>
+            <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Registrar</button>
+            <button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeRegister" type="button">Cancelar</button>
+        </form>
+    </div>
+</div>
 
+<!-- Modal Iniciar Sesión -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="loginModal">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95 modal-content">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Iniciar Sesión 🔐</h3>
+            <p class="text-orange-100">Ingresa tus datos</p>
+        </div>
+        <form class="p-6 space-y-4" id="loginForm">
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required type="email"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required type="password"/>
+            <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Entrar</button>
+            <button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeLogin" type="button">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Delivery -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="deliveryModal">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95 modal-content">
+        <div class="gradient-bg p-6 text-white text-center">
+            <h3 class="text-2xl font-bold mb-2">Dirección de Entrega 🚚</h3>
+            <p class="text-orange-100">Completa los datos para tu entrega</p>
+        </div>
+        <form class="p-6 space-y-4" id="deliveryForm">
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="calle" placeholder="Nombre de la calle" required type="text"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="colonia" placeholder="Colonia" required type="text"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="municipio" placeholder="Municipio" required type="text"/>
+            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="numeroInterior" placeholder="Número interior (opcional)" type="text"/>
+            <textarea class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" id="descripcion" placeholder="Descripción del sitio (por ejemplo, color del portón, referencia, etc.)"></textarea>
+            <label class="flex items-center space-x-2">
+                <input class="text-orange-500" id="guardarDireccion" type="checkbox"/>
+                <span class="text-gray-700 text-sm">Guardar esta dirección para futuras entregas</span>
+            </label>
+            <div class="flex space-x-3">
+                <button class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors" id="cancelDelivery" type="button">Cancelar</button>
+                <button class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Guardar Dirección 💾</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Ayuda -->
+<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center" id="helpModal">
+    <div class="bg-white w-full h-full overflow-y-auto rounded-none relative">
+        <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
+            <h3 class="text-2xl font-bold">Centro de Ayuda</h3>
+            <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200">&times;</button>
+        </div>
+        <div class="p-6 text-gray-800">
+            <!-- Contenido del centro de ayuda -->
+            <h2 class="text-3xl font-bold mb-4">Centro de Ayuda</h2>
+            <p class="text-lg mb-6">¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes sobre nuestros productos y servicios.</p>
+            
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">🍕 Menú y productos</h3>
+                    <p>Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">🚚 Pedidos y entregas</h3>
+                    <p>Realiza tu pedido a través de nuestra web, app o llamando al +52 (246) 330 9000. Tiempo de entrega: 30-45 min aprox.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">💳 Pagos y facturación</h3>
+                    <p>Aceptamos efectivo, tarjetas y apps de pago. Solicita tu factura al hacer el pedido.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SCRIPT UNIFICADO ========== -->
+<script>
+// Esperar a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== VARIABLES GLOBALES =====
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // ===== INICIALIZACIÓN =====
+    init();
+    
+    function init() {
+        updateCartUI();
+        setupEventListeners();
+        loadSavedAddress();
+    }
+    
+    // ===== CONFIGURACIÓN DE EVENT LISTENERS =====
+    function setupEventListeners() {
+        // Menú móvil
+        document.getElementById('mobileMenuButton').addEventListener('click', toggleMobileMenu);
+        
+        // Cerrar menú móvil al hacer clic en un enlace
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Botones del carrito
+        document.getElementById('cartButton').addEventListener('click', () => openModal('cartModal'));
+        document.getElementById('cartButtonMobile').addEventListener('click', () => {
+            openModal('cartModal');
+            closeMobileMenu();
+        });
+        
+        // Cerrar modal del carrito
+        document.getElementById('closeCart').addEventListener('click', () => closeModal('cartModal'));
+        
+        // Botón de delivery
+        document.querySelector('.delivery-button').addEventListener('click', () => openModal('deliveryModal'));
+        
+        // Botones de ayuda
+        document.getElementById('helpButton').addEventListener('click', () => openModal('helpModal'));
+        document.getElementById('helpButtonMobile').addEventListener('click', () => {
+            openModal('helpModal');
+            closeMobileMenu();
+        });
+        
+        // Botones de cuenta
+        document.getElementById('accountButton').addEventListener('click', () => openModal('accountModal'));
+        document.getElementById('accountButtonMobile').addEventListener('click', () => {
+            openModal('accountModal');
+            closeMobileMenu();
+        });
+        
+        // Cerrar modales con botones "Cancelar"
+        document.querySelectorAll('button[id^="close"], button[id*="Cancel"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('[id$="Modal"]');
+                if (modal) closeModal(modal.id);
+            });
+        });
+        
+        // Cerrar modales al hacer clic fuera
+        document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+        
+        // Agregar productos al carrito
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('add-to-cart-btn')) {
+                const product = e.target.getAttribute('data-product');
+                const price = parseFloat(e.target.getAttribute('data-price'));
+                const type = e.target.getAttribute('data-type');
+                addToCart(product, price, type);
+            }
+        });
+        
+        // Eliminar items del carrito (usando delegación de eventos)
+        document.getElementById('cartItems').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('remove-item')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                removeFromCart(index);
+            }
+        });
+        
+        // Proceder al pago
+        document.getElementById('checkoutCart').addEventListener('click', checkout);
+        
+        // Formularios
+        document.getElementById('deliveryForm').addEventListener('submit', saveDeliveryAddress);
+        document.getElementById('openRegister').addEventListener('click', () => {
+            closeModal('accountModal');
+            openModal('registerModal');
+        });
+        document.getElementById('openLogin').addEventListener('click', () => {
+            closeModal('accountModal');
+            openModal('loginModal');
+        });
+        document.getElementById('closeRegister').addEventListener('click', () => closeModal('registerModal'));
+        document.getElementById('closeLogin').addEventListener('click', () => closeModal('loginModal'));
+        document.getElementById('cancelDelivery').addEventListener('click', () => closeModal('deliveryModal'));
+        document.getElementById('closeHelpModal').addEventListener('click', () => closeModal('helpModal'));
+        
+        // Ajustar modales para móviles
+        window.addEventListener('resize', adjustModalsForMobile);
+    }
+    
+    // ===== FUNCIONES DE INTERFAZ =====
+    
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.classList.toggle('hidden');
+    }
+    
+    function closeMobileMenu() {
+        document.getElementById('mobileMenu').classList.add('hidden');
+    }
+    
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+    }
+    
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+    }
+    
+    function adjustModalsForMobile() {
+        const modals = document.querySelectorAll('[id$="Modal"]');
+        modals.forEach(modal => {
+            if (window.innerWidth < 768) {
+                const modalContent = modal.querySelector('div');
+                if (modalContent) {
+                    modalContent.classList.add('w-11/12', 'mx-auto');
+                }
+            } else {
+                const modalContent = modal.querySelector('div');
+                if (modalContent) {
+                    modalContent.classList.remove('w-11/12', 'mx-auto');
+                }
+            }
+        });
+    }
+    
+    // ===== FUNCIONALIDAD DEL CARRITO =====
+    
+    function addToCart(product, price, type) {
+        cart.push({
+            id: Date.now(),
+            name: product,
+            price: price,
+            type: type,
+            quantity: 1
+        });
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+        showNotification(`${product} agregado al carrito`);
+    }
+    
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    }
+    
+    function updateCartUI() {
+        const cartItems = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const cartCountEl = document.getElementById('cartCount');
+        const cartCountMobileEl = document.getElementById('cartCountMobile');
+        const cartSummary = document.getElementById('cartSummary');
+        const emptyCart = document.getElementById('emptyCart');
+        
+        cartItems.innerHTML = '';
+        let total = 0;
+        
+        if (cart.length === 0) {
+            emptyCart.classList.remove('hidden');
+            cartSummary.classList.add('hidden');
+        } else {
+            emptyCart.classList.add('hidden');
+            cartSummary.classList.remove('hidden');
+            
+            cart.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-start bg-gray-50 p-3 rounded-lg shadow-sm';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-semibold text-gray-800">${item.name}</div>
+                        <div class="text-sm text-gray-600">$${item.price.toFixed(2)} MXN</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-orange-500">$${(item.price * item.quantity).toFixed(2)} MXN</div>
+                        <div class="text-sm">
+                            <button class="remove-item text-xs text-gray-500 hover:text-red-500" data-index="${index}">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(div);
+                total += item.price * item.quantity;
+            });
+        }
+        
+        cartTotalEl.textContent = `$${total.toFixed(2)} MXN`;
+        cartCountEl.textContent = cart.length;
+        cartCountMobileEl.textContent = cart.length;
+    }
+    
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Tu carrito está vacío');
+            return;
+        }
+        // Aquí iría la lógica de pago
+        alert('Procediendo al pago...');
+        // Por ahora, limpiamos el carrito
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+        closeModal('cartModal');
+    }
+    
+    // ===== NOTIFICACIONES =====
+    
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+    
+    // ===== MANEJO DE FORMULARIOS =====
+    
+    function loadSavedAddress() {
+        const inputs = ['calle', 'colonia', 'municipio', 'numeroInterior', 'descripcion'];
+        const saved = JSON.parse(localStorage.getItem('direccionEntrega') || '{}');
+        
+        for (let id of inputs) {
+            if (saved[id]) document.getElementById(id).value = saved[id];
+        }
+    }
+    
+    function saveDeliveryAddress(e) {
+        e.preventDefault();
+        const inputs = ['calle', 'colonia', 'municipio', 'numeroInterior', 'descripcion'];
+        const data = {};
+        
+        inputs.forEach(id => {
+            data[id] = document.getElementById(id).value;
+        });
+        
+        if (document.getElementById('guardarDireccion').checked) {
+            localStorage.setItem('direccionEntrega', JSON.stringify(data));
+            alert('Dirección guardada correctamente ✅');
+        } else {
+            alert('Dirección registrada temporalmente ✅');
+        }
+        closeModal('deliveryModal');
+    }
+    
+    // Inicializar ajustes de modales
+    adjustModalsForMobile();
+});
+</script>
 </body>
 </html>
