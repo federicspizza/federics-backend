@@ -803,25 +803,6 @@
 </form>
 </div>
 </div>
-<!-- Modal de Verificación de Código -->
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="verifyCodeModal">
-    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
-        <div class="gradient-bg p-6 text-white text-center">
-            <h3 class="text-2xl font-bold mb-2">Verificación de Código 🔐</h3>
-            <p class="text-orange-100">Ingresa el código de 4 dígitos enviado a tu correo</p>
-        </div>
-        <form class="p-6 space-y-4">
-            <input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" 
-                   maxlength="4" placeholder="Código de 4 dígitos" required type="text"/>
-            <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">
-                Verificar Código
-            </button>
-            <button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeVerifyCode" type="button">
-                Cancelar
-            </button>
-        </form>
-    </div>
-</div>
 <script>
 document.getElementById('accountButton').addEventListener('click', () => {
   const modal = document.getElementById('accountModal');
@@ -1683,7 +1664,7 @@ if (checkoutBtn) {
 </div>
 
 <script>
-// === CONEXIÓN CON EL BACKEND - SISTEMA COMPLETO DE AUTENTICACIÓN ===
+// === CONEXIÓN CON EL BACKEND - SISTEMA SIMPLIFICADO ===
 const BACKEND_URL = 'https://federics-backend.onrender.com';
 
 // Estado global del usuario
@@ -1763,7 +1744,7 @@ document.querySelector('#registerModal form').addEventListener('submit', async (
         const result = await response.json();
         
         if (response.ok) {
-            alert('✅ Cuenta creada exitosamente. Se ha enviado un correo de verificación.');
+            alert('✅ Cuenta creada exitosamente.');
             document.getElementById('registerModal').classList.add('hidden');
             document.querySelector('#registerModal form').reset();
         } else {
@@ -1775,7 +1756,7 @@ document.querySelector('#registerModal form').addEventListener('submit', async (
     }
 });
 
-// LOGIN DE USUARIO (Paso 1: Enviar credenciales)
+// ✅ LOGIN DIRECTO (SIN CÓDIGO DE VERIFICACIÓN)
 document.querySelector('#loginModal form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -1796,15 +1777,18 @@ document.querySelector('#loginModal form').addEventListener('submit', async (e) 
         const result = await response.json();
         
         if (response.ok) {
-            // Guardar email temporal para la verificación
-            localStorage.setItem('tempEmail', loginData.email);
+            // ✅ GUARDAR USUARIO Y TOKEN DIRECTAMENTE
+            currentUser = result.user;
+            currentUser.token = result.token;
             
-            alert('✅ Código de verificación enviado a tu correo');
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            alert('✅ ' + result.message);
             document.getElementById('loginModal').classList.add('hidden');
-            
-            // Mostrar modal de verificación de código
-            document.getElementById('verifyCodeModal').classList.remove('hidden');
             document.querySelector('#loginModal form').reset();
+            
+            // Actualizar UI
+            updateAuthUI();
         } else {
             alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
         }
@@ -1814,59 +1798,9 @@ document.querySelector('#loginModal form').addEventListener('submit', async (e) 
     }
 });
 
-// VERIFICACIÓN DE CÓDIGO (Paso 2: Verificar código)
-document.querySelector('#verifyCodeModal form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const verifyData = {
-        email: localStorage.getItem('tempEmail'),
-        codigo: document.querySelector('#verifyCodeModal input[placeholder="Código de 4 dígitos"]').value
-    };
+// ❌ ELIMINADA COMPLETAMENTE: La función de verificación de código
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/verify-code`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(verifyData)
-        });
-
-        const result = await response.json();
-        
-        if (response.ok) {
-            // Guardar usuario en localStorage
-            currentUser = {
-                nombre: result.nombre,
-                apellidos: result.apellidos || '',
-                email: verifyData.email,
-                telefono: result.telefono || '',
-                token: result.token
-            };
-            
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            localStorage.removeItem('tempEmail');
-            
-            alert('✅ Inicio de sesión exitoso');
-            document.getElementById('verifyCodeModal').classList.add('hidden');
-            document.querySelector('#verifyCodeModal form').reset();
-            
-            // Actualizar UI
-            updateAuthUI();
-        } else {
-            alert(`❌ Error: ${result.message || 'Código incorrecto'}`);
-        }
-    } catch (error) {
-        alert('❌ Error de conexión con el servidor');
-        console.error('Error:', error);
-    }
-});
-
-// Cerrar modal de verificación
-document.getElementById('closeVerifyCode').addEventListener('click', () => {
-    document.getElementById('verifyCodeModal').classList.add('hidden');
-    localStorage.removeItem('tempEmail');
-});
+// ❌ ELIMINADA COMPLETAMENTE: El event listener para closeVerifyCode
 
 // Inicializar UI al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
