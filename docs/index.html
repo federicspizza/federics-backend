@@ -46,17 +46,26 @@
             transform: scale(1.05);
         }
 
-@media (max-width: 768px) {
-    #mobileMenu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-        padding: 1rem;
-        z-index: 40;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+/* Asegurar que el nav tenga posición relativa para el menú absoluto */
+header nav {
+    position: relative;
+}
+
+/* Estilos específicos para el menú móvil */
+#mobileMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    padding: 1rem;
+    z-index: 50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Asegurar que el menú móvil esté oculto por defecto */
+#mobileMenu.hidden {
+    display: none;
 }
 
         @media (max-width: 640px) {
@@ -1835,24 +1844,23 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-    // Menú móvil - VERSIÓN CORREGIDA
+    // Menú móvil - VERSIÓN MEJORADA Y CORREGIDA
     document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevenir que el evento se propague
+        e.stopPropagation();
         
-        // Crear o obtener menú móvil
         let mobileMenu = document.getElementById('mobileMenu');
         if (!mobileMenu) {
             mobileMenu = document.createElement('div');
             mobileMenu.id = 'mobileMenu';
-            mobileMenu.className = 'md:hidden';
+            mobileMenu.className = 'md:hidden hidden'; // Iniciar oculto
             mobileMenu.innerHTML = `
                 <div class="flex flex-col space-y-4 p-4">
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#cuenta" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Cuenta</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#inicio" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Inicio</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#menu" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Menú</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#nosotros" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Nosotros</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#contacto" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Contacto</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center cursor-pointer" id="helpButtonMobile" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Ayuda</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#cuenta" onclick="closeMobileMenu()">Cuenta</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#inicio" onclick="closeMobileMenu()">Inicio</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#menu" onclick="closeMobileMenu()">Menú</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#contacto" onclick="closeMobileMenu()">Contacto</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3 cursor-pointer" onclick="openHelpFromMobile()">Ayuda</a>
                     
                     <!-- CARRITO MÓVIL -->
                     <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
@@ -1861,18 +1869,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </button>
                 </div>
             `;
-            document.querySelector('nav').appendChild(mobileMenu);
+            document.querySelector('header nav').appendChild(mobileMenu);
             
             // Agregar funcionalidad al carrito móvil
             document.getElementById('mobileCartButton').addEventListener('click', function() {
                 document.getElementById('cartModal').classList.remove('hidden');
-                document.getElementById('mobileMenu').classList.add('hidden');
-            });
-            
-            // Ayuda móvil
-            document.getElementById('helpButtonMobile').addEventListener('click', function() {
-                document.getElementById('helpModal').classList.remove('hidden');
-                document.getElementById('mobileMenu').classList.add('hidden');
+                closeMobileMenu();
             });
         }
         
@@ -1887,7 +1889,21 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenu.classList.toggle('hidden');
     });
 
-    // Cerrar menú al hacer clic fuera - VERSIÓN MEJORADA
+    // Función para cerrar menú móvil
+    function closeMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+        }
+    }
+
+    // Función para abrir ayuda desde móvil
+    function openHelpFromMobile() {
+        document.getElementById('helpModal').classList.remove('hidden');
+        closeMobileMenu();
+    }
+
+    // Cerrar menú al hacer clic fuera
     document.addEventListener('click', function(event) {
         const mobileMenu = document.getElementById('mobileMenu');
         const menuButton = document.getElementById('mobileMenuButton');
