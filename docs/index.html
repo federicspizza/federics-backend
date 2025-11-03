@@ -783,16 +783,17 @@
             }
         });
 
-document.getElementById('wingsModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.add('hidden');
-        // ❌ ELIMINADO: resetWingsModal() no existe
-    }
-});
+        document.getElementById('wingsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+                resetWingsModal();
+            }
+        });
 
         document.getElementById('breadModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.add('hidden');
+                resetBreadModal();
             }
         });
     </script>
@@ -1025,10 +1026,7 @@ const PRICE = {
 function fmt(n){ return '$' + Number(n).toFixed(2) + ' MXN'; }
 
 // Cart storage
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // ✅ CON PERSISTENCIA
-
-// En updateCartUI agregar:
-localStorage.setItem('cart', JSON.stringify(cart));
+let cart = [];
 
 // Update cart UI
 function updateCartUI(){
@@ -1515,10 +1513,7 @@ document.getElementById('payOnDelivery').addEventListener('click', ()=>{
   alert('✅ Pedido confirmado. Pagarás al recibir tu pedido.');
   document.getElementById('paymentModal').classList.add('hidden');
   document.getElementById('cartModal').classList.add('hidden');
-// En paymentModal
-cart = []; // ✅ LIMPIAR VARIABLE
-updateCartUI(); // ✅ ACTUALIZAR UI
-localStorage.removeItem('cart'); // ✅ OPCIONAL: LIMPIAR STORAGE
+  localStorage.removeItem('cart'); // limpia carrito simulado
 });
 
 // Formulario de tarjeta
@@ -1547,13 +1542,12 @@ document.getElementById('cancelCardForm').addEventListener('click', ()=>{
 
 <script>
 // === Fix universal cancel buttons ===
-// ELIMINAR DUPLICADOS - mantener solo una instancia
 document.querySelectorAll('button').forEach(btn => {
-  if (btn.textContent.includes('Delivery Gratis') && !btn.hasListener) {
-    btn.hasListener = true;
-    btn.addEventListener('click', () => {
-      document.getElementById('deliveryModal').classList.remove('hidden');
-    });
+  if (btn.textContent.trim().toLowerCase().includes('cancelar')) {
+    btn.onclick = () => {
+      const modal = btn.closest('[id$="Modal"]');
+      if (modal) modal.classList.add('hidden');
+    };
   }
 });
 
@@ -1578,6 +1572,12 @@ if (checkoutBtn) {
 
 
 <!-- Modal de Ayuda -->
+<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center" id="helpModal">
+  <div class="bg-white w-full h-full overflow-y-auto rounded-none relative">
+    <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
+      <h3 class="text-2xl font-bold">Centro de Ayuda</h3>
+      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200">&times;</button>
+    </div>
     <div class="p-6 text-gray-800">
       
 
