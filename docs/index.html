@@ -89,24 +89,8 @@
 <img alt="Federic's Pizza Logo" class="h-10 w-10 md:h-14 md:w-14 rounded-full pizza-bounce" src="https://i.imgur.com/EDWicBS.jpeg"/>
 <h1 class="text-3xl font-bold text-white">Federic's Pizza</h1>
 </div>
-<!-- Menú móvil -->
 <div class="md:hidden">
-  <button id="mobileMenuButton" class="text-white text-2xl">☰</button>
-  
-  <!-- Contenido del menú hamburguesa -->
-  <div id="mobileMenu" class="hidden flex flex-col space-y-4 mt-4 text-white text-center">
-    <a href="#cuenta" id="accountButtonMobile">Cuenta</a>
-    <a href="#inicio">Inicio</a>
-    <a href="#menu">Menú</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#contacto">Contacto</a>
-    <a href="#ayuda" id="helpButtonMobile">Ayuda</a>
-    <!-- Botón del carrito dentro del menú -->
-    <button id="mobileCartButton" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center justify-center space-x-2">
-      <span>🛒</span>
-      <span id="mobileCartCount">0</span>
-    </button>
-  </div>
+    <button id="mobileMenuButton" class="text-white text-2xl">☰</button>
 </div>
 
 <div class="hidden md:flex space-x-8">
@@ -799,17 +783,16 @@
             }
         });
 
-        document.getElementById('wingsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-                resetWingsModal();
-            }
-        });
+document.getElementById('wingsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+        // ❌ ELIMINADO: resetWingsModal() no existe
+    }
+});
 
         document.getElementById('breadModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.add('hidden');
-                resetBreadModal();
             }
         });
     </script>
@@ -1042,7 +1025,10 @@ const PRICE = {
 function fmt(n){ return '$' + Number(n).toFixed(2) + ' MXN'; }
 
 // Cart storage
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || []; // ✅ CON PERSISTENCIA
+
+// En updateCartUI agregar:
+localStorage.setItem('cart', JSON.stringify(cart));
 
 // Update cart UI
 function updateCartUI(){
@@ -1529,7 +1515,10 @@ document.getElementById('payOnDelivery').addEventListener('click', ()=>{
   alert('✅ Pedido confirmado. Pagarás al recibir tu pedido.');
   document.getElementById('paymentModal').classList.add('hidden');
   document.getElementById('cartModal').classList.add('hidden');
-  localStorage.removeItem('cart'); // limpia carrito simulado
+// En paymentModal
+cart = []; // ✅ LIMPIAR VARIABLE
+updateCartUI(); // ✅ ACTUALIZAR UI
+localStorage.removeItem('cart'); // ✅ OPCIONAL: LIMPIAR STORAGE
 });
 
 // Formulario de tarjeta
@@ -1558,12 +1547,13 @@ document.getElementById('cancelCardForm').addEventListener('click', ()=>{
 
 <script>
 // === Fix universal cancel buttons ===
+// ELIMINAR DUPLICADOS - mantener solo una instancia
 document.querySelectorAll('button').forEach(btn => {
-  if (btn.textContent.trim().toLowerCase().includes('cancelar')) {
-    btn.onclick = () => {
-      const modal = btn.closest('[id$="Modal"]');
-      if (modal) modal.classList.add('hidden');
-    };
+  if (btn.textContent.includes('Delivery Gratis') && !btn.hasListener) {
+    btn.hasListener = true;
+    btn.addEventListener('click', () => {
+      document.getElementById('deliveryModal').classList.remove('hidden');
+    });
   }
 });
 
@@ -1588,12 +1578,6 @@ if (checkoutBtn) {
 
 
 <!-- Modal de Ayuda -->
-<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center" id="helpModal">
-  <div class="bg-white w-full h-full overflow-y-auto rounded-none relative">
-    <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
-      <h3 class="text-2xl font-bold">Centro de Ayuda</h3>
-      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200">&times;</button>
-    </div>
     <div class="p-6 text-gray-800">
       
 
@@ -1872,24 +1856,77 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-
 <script>
-  // Mostrar / ocultar menú móvil
-  const menuBtn = document.getElementById('mobileMenuButton');
-  const mobileMenu = document.getElementById('mobileMenu');
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
+    // Menú móvil - VERSIÓN CORREGIDA
+    document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevenir que el evento se propague
+        
+        // Crear o obtener menú móvil
+        let mobileMenu = document.getElementById('mobileMenu');
+        if (!mobileMenu) {
+            mobileMenu = document.createElement('div');
+            mobileMenu.id = 'mobileMenu';
+            mobileMenu.className = 'md:hidden';
+            mobileMenu.innerHTML = `
+                <div class="flex flex-col space-y-4 p-4">
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#cuenta" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Cuenta</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#inicio" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Inicio</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#menu" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Menú</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#nosotros" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Nosotros</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#contacto" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Contacto</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center cursor-pointer" id="helpButtonMobile" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Ayuda</a>
+                    
+                    <!-- CARRITO MÓVIL -->
+                    <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
+                        <span>🛒 Carrito</span>
+                        <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
+                    </button>
+                </div>
+            `;
+            document.querySelector('nav').appendChild(mobileMenu);
+            
+            // Agregar funcionalidad al carrito móvil
+            document.getElementById('mobileCartButton').addEventListener('click', function() {
+                document.getElementById('cartModal').classList.remove('hidden');
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+            
+            // Ayuda móvil
+            document.getElementById('helpButtonMobile').addEventListener('click', function() {
+                document.getElementById('helpModal').classList.remove('hidden');
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        }
+        
+        // Actualizar contador del carrito móvil
+        const mobileCartCount = document.getElementById('mobileCartCount');
+        const cartCount = document.getElementById('cartCount');
+        if (mobileCartCount && cartCount) {
+            mobileCartCount.textContent = cartCount.textContent;
+        }
+        
+        // Mostrar/ocultar menú
+        mobileMenu.classList.toggle('hidden');
+    });
 
-  // Sincronizar el carrito móvil con el principal
-  const mainCartButton = document.getElementById('cartButton');
-  const mobileCartButton = document.getElementById('mobileCartButton');
+    // Cerrar menú al hacer clic fuera - VERSIÓN MEJORADA
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuButton = document.getElementById('mobileMenuButton');
+        
+        if (mobileMenu && !mobileMenu.contains(event.target) && event.target !== menuButton) {
+            mobileMenu.classList.add('hidden');
+        }
+    });
 
-  mobileCartButton.addEventListener('click', () => {
-    mainCartButton.click(); // Abre el mismo modal del carrito
-  });
+    // Prevenir que el menú se cierre al hacer clic dentro
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu && mobileMenu.contains(event.target)) {
+            event.stopPropagation();
+        }
+    });
 </script>
-
 
 </body>
 </html>
