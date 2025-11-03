@@ -1864,23 +1864,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#nosotros">Nosotros</a>
                     <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#contacto">Contacto</a>
                     <a class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButtonMobile">Ayuda</a>
+                    
+                    <!-- CARRITO MÓVIL -->
+                    <button class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center" id="mobileCartButton">
+                        <span>🛒 Carrito</span>
+                        <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
+                    </button>
                 </div>
             `;
             document.querySelector('nav').appendChild(mobileMenu);
+            
+            // Agregar funcionalidad al carrito móvil
+            document.getElementById('mobileCartButton').addEventListener('click', function() {
+                document.getElementById('cartModal').classList.remove('hidden');
+                mobileMenu.classList.add('hidden'); // Cerrar menú al abrir carrito
+            });
+        }
+        
+        // Actualizar contador del carrito móvil
+        const mobileCartCount = document.getElementById('mobileCartCount');
+        const cartCount = document.getElementById('cartCount');
+        if (mobileCartCount && cartCount) {
+            mobileCartCount.textContent = cartCount.textContent;
         }
         
         // Mostrar/ocultar menú
         mobileMenu.classList.toggle('hidden');
-    });
-
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(event) {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuButton = document.getElementById('mobileMenuButton');
-        
-        if (mobileMenu && !mobileMenu.contains(event.target) && !menuButton.contains(event.target)) {
-            mobileMenu.classList.add('hidden');
-        }
     });
 </script>
 
