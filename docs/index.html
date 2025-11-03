@@ -46,17 +46,18 @@
             transform: scale(1.05);
         }
 
-            @media (max-width: 768px) {
-        #mobileMenu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            padding: 1rem;
-            z-index: 40;
-        }
+@media (max-width: 768px) {
+    #mobileMenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+        padding: 1rem;
+        z-index: 40;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+}
 
         @media (max-width: 640px) {
     #cartModal > div,
@@ -76,6 +77,7 @@
         max-height: 90vh;
     }
 }
+
     </style>
 
 </head>
@@ -1032,6 +1034,13 @@ function updateCartUI(){
   const cartTotalEl = document.getElementById('cartTotal');
   const cartCountEl = document.getElementById('cartCount');
   const cartSummary = document.getElementById('cartSummary');
+  
+  // ✅ NUEVO: Sincronizar contador móvil
+  const mobileCartCount = document.getElementById('mobileCartCount');
+  if (mobileCartCount) {
+    mobileCartCount.textContent = cart.length;
+  }
+  
   cartItems.innerHTML = '';
   let total = 0;
   cart.forEach((item, idx) => {
@@ -1848,25 +1857,27 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-    // Menú móvil
-    document.getElementById('mobileMenuButton').addEventListener('click', function() {
-        // Crear menú móvil si no existe
+    // Menú móvil - VERSIÓN CORREGIDA
+    document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevenir que el evento se propague
+        
+        // Crear o obtener menú móvil
         let mobileMenu = document.getElementById('mobileMenu');
         if (!mobileMenu) {
             mobileMenu = document.createElement('div');
             mobileMenu.id = 'mobileMenu';
             mobileMenu.className = 'md:hidden';
             mobileMenu.innerHTML = `
-                <div class="flex flex-col space-y-4">
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#cuenta">Cuenta</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#inicio">Inicio</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#menu">Menú</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#nosotros">Nosotros</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors" href="#contacto">Contacto</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors cursor-pointer" id="helpButtonMobile">Ayuda</a>
+                <div class="flex flex-col space-y-4 p-4">
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#cuenta" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Cuenta</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#inicio" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Inicio</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#menu" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Menú</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#nosotros" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Nosotros</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center" href="#contacto" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Contacto</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center cursor-pointer" id="helpButtonMobile" onclick="document.getElementById('mobileMenu').classList.add('hidden')">Ayuda</a>
                     
                     <!-- CARRITO MÓVIL -->
-                    <button class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center" id="mobileCartButton">
+                    <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
                         <span>🛒 Carrito</span>
                         <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
                     </button>
@@ -1877,7 +1888,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Agregar funcionalidad al carrito móvil
             document.getElementById('mobileCartButton').addEventListener('click', function() {
                 document.getElementById('cartModal').classList.remove('hidden');
-                mobileMenu.classList.add('hidden'); // Cerrar menú al abrir carrito
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+            
+            // Ayuda móvil
+            document.getElementById('helpButtonMobile').addEventListener('click', function() {
+                document.getElementById('helpModal').classList.remove('hidden');
+                document.getElementById('mobileMenu').classList.add('hidden');
             });
         }
         
@@ -1890,6 +1907,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Mostrar/ocultar menú
         mobileMenu.classList.toggle('hidden');
+    });
+
+    // Cerrar menú al hacer clic fuera - VERSIÓN MEJORADA
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuButton = document.getElementById('mobileMenuButton');
+        
+        if (mobileMenu && !mobileMenu.contains(event.target) && event.target !== menuButton) {
+            mobileMenu.classList.add('hidden');
+        }
+    });
+
+    // Prevenir que el menú se cierre al hacer clic dentro
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu && mobileMenu.contains(event.target)) {
+            event.stopPropagation();
+        }
     });
 </script>
 
