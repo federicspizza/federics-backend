@@ -94,19 +94,20 @@
   <button id="mobileMenuButton" class="text-white text-2xl">☰</button>
   
   <!-- Contenido del menú hamburguesa -->
-  <div id="mobileMenu" class="hidden flex flex-col space-y-4 mt-4 text-white text-center">
-    <a href="#cuenta" id="accountButtonMobile">Cuenta</a>
-    <a href="#inicio">Inicio</a>
-    <a href="#menu">Menú</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#contacto">Contacto</a>
-    <a href="#ayuda" id="helpButtonMobile">Ayuda</a>
+<div id="mobileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
+    <a href="#cuenta" class="block px-4 py-2 text-gray-800 hover:bg-orange-100" id="accountButtonMobile">Cuenta</a>
+    <a href="#inicio" class="block px-4 py-2 text-gray-800 hover:bg-orange-100">Inicio</a>
+    <a href="#menu" class="block px-4 py-2 text-gray-800 hover:bg-orange-100">Menú</a>
+    <a href="#nosotros" class="block px-4 py-2 text-gray-800 hover:bg-orange-100">Nosotros</a>
+    <a href="#contacto" class="block px-4 py-2 text-gray-800 hover:bg-orange-100">Contacto</a>
+    <a href="#ayuda" class="block px-4 py-2 text-gray-800 hover:bg-orange-100" id="helpButtonMobile">Ayuda</a>
     <!-- Botón del carrito dentro del menú -->
-    <button id="mobileCartButton" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center justify-center space-x-2">
-      <span>🛒</span>
-      <span id="mobileCartCount">0</span>
-    </button>
-  </div>
+    <div class="px-4 py-2">
+        <button id="mobileCartButton" class="w-full bg-orange-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center space-x-2">
+            <span>🛒</span>
+            <span id="mobileCartCount">0</span>
+        </button>
+    </div>
 </div>
 
 <div class="hidden md:flex space-x-8">
@@ -1727,6 +1728,7 @@ if (checkoutBtn) {
   </div>
 </div>
 
+<!-- Al final de tu archivo HTML, antes de cerrar </body> -->
 <script>
 // === CONEXIÓN CON EL BACKEND - SISTEMA SIMPLIFICADO ===
 const BACKEND_URL = 'https://federics-backend.onrender.com';
@@ -1784,107 +1786,123 @@ function logout() {
     alert('✅ Sesión cerrada correctamente');
 }
 
-// REGISTRO DE USUARIO
-document.querySelector('#registerModal form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const userData = {
-        nombre: document.querySelector('#registerModal input[placeholder="Nombre"]').value,
-        apellidos: document.querySelector('#registerModal input[placeholder="Apellidos"]').value,
-        telefono: document.querySelector('#registerModal input[placeholder="Teléfono"]').value,
-        email: document.querySelector('#registerModal input[placeholder="Correo electrónico"]').value,
-        password: document.querySelector('#registerModal input[placeholder="Contraseña"]').value
-    };
-
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData)
-        });
-
-        const result = await response.json();
-        
-        if (response.ok) {
-            alert('✅ Cuenta creada exitosamente.');
-            document.getElementById('registerModal').classList.add('hidden');
-            document.querySelector('#registerModal form').reset();
-        } else {
-            alert(`❌ Error: ${result.message || 'No se pudo crear la cuenta'}`);
-        }
-    } catch (error) {
-        alert('❌ Error de conexión con el servidor');
-        console.error('Error:', error);
-    }
-});
-
-// ✅ LOGIN DIRECTO (SIN CÓDIGO DE VERIFICACIÓN)
-document.querySelector('#loginModal form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const loginData = {
-        email: document.querySelector('#loginModal input[placeholder="Correo electrónico"]').value,
-        password: document.querySelector('#loginModal input[placeholder="Contraseña"]').value
-    };
-
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData)
-        });
-
-        const result = await response.json();
-        
-        if (response.ok) {
-            // ✅ GUARDAR USUARIO Y TOKEN DIRECTAMENTE
-            currentUser = result.user;
-            currentUser.token = result.token;
-            
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
-            alert('✅ ' + result.message);
-            document.getElementById('loginModal').classList.add('hidden');
-            document.querySelector('#loginModal form').reset();
-            
-            // Actualizar UI
-            updateAuthUI();
-        } else {
-            alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
-        }
-    } catch (error) {
-        alert('❌ Error de conexión con el servidor');
-        console.error('Error:', error);
-    }
-});
-
-// ❌ ELIMINADA COMPLETAMENTE: La función de verificación de código
-
-// ❌ ELIMINADA COMPLETAMENTE: El event listener para closeVerifyCode
-
-// Inicializar UI al cargar la página
+// Inicializar todo cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     updateAuthUI();
+    
+    // === MENÚ HAMBURGUESA ===
+    const menuBtn = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Prevenir que el clic dentro del menú lo cierre
+        mobileMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // === Sincronizar el carrito móvil con el principal ===
+    const mainCartButton = document.getElementById('cartButton');
+    const mobileCartButton = document.getElementById('mobileCartButton');
+    
+    if (mobileCartButton && mainCartButton) {
+        mobileCartButton.addEventListener('click', () => {
+            mainCartButton.click();
+        });
+    }
+    
+    // === REGISTRO DE USUARIO ===
+    const registerForm = document.querySelector('#registerModal form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = {
+                nombre: document.querySelector('#registerModal input[placeholder="Nombre"]').value,
+                apellidos: document.querySelector('#registerModal input[placeholder="Apellidos"]').value,
+                telefono: document.querySelector('#registerModal input[placeholder="Teléfono"]').value,
+                email: document.querySelector('#registerModal input[placeholder="Correo electrónico"]').value,
+                password: document.querySelector('#registerModal input[placeholder="Contraseña"]').value
+            };
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Cuenta creada exitosamente.');
+                    document.getElementById('registerModal').classList.add('hidden');
+                    document.querySelector('#registerModal form').reset();
+                } else {
+                    alert(`❌ Error: ${result.message || 'No se pudo crear la cuenta'}`);
+                }
+            } catch (error) {
+                alert('❌ Error de conexión con el servidor');
+                console.error('Error:', error);
+            }
+        });
+    }
+    
+    // === LOGIN DIRECTO ===
+    const loginForm = document.querySelector('#loginModal form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const loginData = {
+                email: document.querySelector('#loginModal input[placeholder="Correo electrónico"]').value,
+                password: document.querySelector('#loginModal input[placeholder="Contraseña"]').value
+            };
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    currentUser = result.user;
+                    currentUser.token = result.token;
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    alert('✅ ' + result.message);
+                    document.getElementById('loginModal').classList.add('hidden');
+                    document.querySelector('#loginModal form').reset();
+                    
+                    updateAuthUI();
+                } else {
+                    alert(`❌ Error: ${result.message || 'Credenciales incorrectas'}`);
+                }
+            } catch (error) {
+                alert('❌ Error de conexión con el servidor');
+                console.error('Error:', error);
+            }
+        });
+    }
 });
-
-  // Mostrar / ocultar menú móvil
-  const menuBtn = document.getElementById('mobileMenuButton');
-  const mobileMenu = document.getElementById('mobileMenu');
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-
-  // Sincronizar el carrito móvil con el principal
-  const mainCartButton = document.getElementById('cartButton');
-  const mobileCartButton = document.getElementById('mobileCartButton');
-
-  mobileCartButton.addEventListener('click', () => {
-    mainCartButton.click(); // Abre el mismo modal del carrito
-  });
 </script>
 
 
