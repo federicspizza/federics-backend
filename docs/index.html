@@ -89,8 +89,24 @@
 <img alt="Federic's Pizza Logo" class="h-10 w-10 md:h-14 md:w-14 rounded-full pizza-bounce" src="https://i.imgur.com/EDWicBS.jpeg"/>
 <h1 class="text-3xl font-bold text-white">Federic's Pizza</h1>
 </div>
+<!-- Menú móvil -->
 <div class="md:hidden">
-    <button id="mobileMenuButton" class="text-white text-2xl">☰</button>
+  <button id="mobileMenuButton" class="text-white text-2xl">☰</button>
+  
+  <!-- Contenido del menú hamburguesa -->
+  <div id="mobileMenu" class="hidden flex flex-col space-y-4 mt-4 text-white text-center">
+    <a href="#cuenta" id="accountButtonMobile">Cuenta</a>
+    <a href="#inicio">Inicio</a>
+    <a href="#menu">Menú</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#ayuda" id="helpButtonMobile">Ayuda</a>
+    <!-- Botón del carrito dentro del menú -->
+    <button id="mobileCartButton" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center justify-center space-x-2">
+      <span>🛒</span>
+      <span id="mobileCartCount">0</span>
+    </button>
+  </div>
 </div>
 
 <div class="hidden md:flex space-x-8">
@@ -1927,6 +1943,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 </script>
+
+<script>
+  // Mostrar / ocultar menú móvil
+  const menuBtn = document.getElementById('mobileMenuButton');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Sincronizar el carrito móvil con el principal
+  const mainCartButton = document.getElementById('cartButton');
+  const mobileCartButton = document.getElementById('mobileCartButton');
+
+  mobileCartButton.addEventListener('click', () => {
+    mainCartButton.click(); // Abre el mismo modal del carrito
+  });
+</script>
+
 
 </body>
 </html>
