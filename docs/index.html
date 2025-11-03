@@ -1571,112 +1571,90 @@ if (checkoutBtn) {
 </script>
 
 
-<!-- Modal de Ayuda -->
-<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center" id="helpModal">
-  <div class="bg-white w-full h-full overflow-y-auto rounded-none relative">
+<!-- Modal de Ayuda - Versión Mejorada -->
+<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-2 sm:p-4" id="helpModal">
+  <div class="bg-white w-full h-full sm:h-5/6 sm:max-w-4xl sm:rounded-2xl overflow-y-auto relative flex flex-col">
+    <!-- Header sticky -->
     <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
-      <h3 class="text-2xl font-bold">Centro de Ayuda</h3>
-      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200">&times;</button>
+      <h3 class="text-xl sm:text-2xl font-bold">Centro de Ayuda</h3>
+      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200 w-8 h-8 flex items-center justify-center">×</button>
     </div>
-    <div class="p-6 text-gray-800">
-      
+    
+    <!-- Contenido -->
+    <div class="flex-1 p-4 sm:p-6 text-gray-800 overflow-y-auto">
+      <!-- Hero Section -->
+      <section class="gradient-bg py-8 sm:py-12 text-center text-white rounded-2xl mb-6 sm:mb-8">
+        <div class="container mx-auto px-4">
+          <h2 class="text-2xl sm:text-4xl font-bold mb-4">Centro de Ayuda</h2>
+          <p class="text-sm sm:text-lg text-orange-100 max-w-2xl mx-auto mb-4 sm:mb-6">
+            ¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes
+          </p>
+          <div class="relative max-w-xl mx-auto">
+            <input id="searchInput" type="text" placeholder="Buscar en el centro de ayuda..." 
+                   class="w-full px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base">
+            <button onclick="searchContent()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-3 sm:px-4 py-1 rounded-full hover:bg-orange-700 transition text-sm">Buscar</button>
+          </div>
+        </div>
+      </section>
 
-  <!-- Header -->
-  <header class="gradient-bg shadow-lg">
-    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <img src="https://i.imgur.com/EDWicBS.jpeg" alt="Logo" class="h-12 w-12 rounded-full">
-        <h1 class="text-2xl font-bold text-white">Federic's Pizza</h1>
+      <!-- Resultados de búsqueda -->
+      <div id="resultsContainer" class="mb-6 hidden">
+        <h3 class="text-lg sm:text-xl font-semibold text-orange-600 mb-3">Resultados:</h3>
+        <ul id="resultsList" class="list-disc pl-5 text-gray-700 space-y-1"></ul>
       </div>
-      <div class="space-x-6 hidden md:flex">
-        <a href="federics-pizza-v13.html#inicio" class="text-white hover:text-orange-200 font-medium">Inicio</a>
-        <a href="federics-pizza-v13.html#menu" class="text-white hover:text-orange-200 font-medium">Menú</a>
-        <a href="federics-pizza-v13.html#nosotros" class="text-white hover:text-orange-200 font-medium">Nosotros</a>
-        <a href="federics-pizza-v13.html#contacto" class="text-white hover:text-orange-200 font-medium">Contacto</a>
-      </div>
-    </nav>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="gradient-bg py-16 text-center text-white">
-    <h2 class="text-5xl font-bold mb-4">Centro de Ayuda</h2>
-    <p class="text-lg text-orange-100 max-w-2xl mx-auto mb-6">
-      ¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes sobre nuestros productos y servicios.
-    </p>
+      <!-- Contenido principal -->
+      <main class="container mx-auto">
+        <div id="helpContent" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <!-- Card 1 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🍕 Menú y productos</h3>
+            <p class="text-gray-600 text-sm sm:text-base mb-2">Información sobre pizzas, pastas, bebidas y postres</p>
+            <p class="text-sm sm:text-base">Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos.</p>
+            <p class="mt-2 text-sm sm:text-base"><strong>Opciones vegetarianas, veganas y sin gluten:</strong> Tenemos opciones para todos los gustos.</p>
+          </div>
 
-    <div class="relative max-w-xl mx-auto">
-      <input id="searchInput" type="text" placeholder="Buscar en el centro de ayuda..." class="w-full px-6 py-3 rounded-full shadow-lg text-gray-800 focus:outline-none focus:ring-4 focus:ring-orange-400">
-      <button onclick="searchContent()" class="absolute right-2 top-2 bg-orange-600 text-white px-4 py-1 rounded-full hover:bg-orange-700 transition">Buscar</button>
+          <!-- Card 2 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🚚 Pedidos y entregas</h3>
+            <p class="text-sm sm:text-base"><strong>Cómo hacer un pedido:</strong> Web, app o teléfono</p>
+            <p class="text-sm sm:text-base"><strong>Tiempos de entrega:</strong> 30-45 min aprox.</p>
+            <p class="text-sm sm:text-base"><strong>Cobertura:</strong> Zona centro y colonias cercanas</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">💳 Pagos y facturación</h3>
+            <p class="text-sm sm:text-base"><strong>Métodos aceptados:</strong> Efectivo, tarjetas y apps</p>
+            <p class="text-sm sm:text-base"><strong>Factura:</strong> Solicítala al hacer el pedido</p>
+            <p class="text-sm sm:text-base"><strong>Reembolsos:</strong> Dentro de las 2 horas</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🎁 Promociones y cupones</h3>
+            <p class="text-sm sm:text-base"><strong>Usar un cupón:</strong> Ingresa el código al finalizar</p>
+            <p class="text-sm sm:text-base"><strong>Promos especiales:</strong> Martes 2x1, Jueves 30% descuento</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🔒 Privacidad y seguridad</h3>
+            <p class="text-sm sm:text-base"><strong>Protección de datos:</strong> Cifrado SSL</p>
+            <p class="text-sm sm:text-base"><strong>Políticas de uso:</strong> Consulta términos en pie de página</p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">👤 Cuenta y registro</h3>
+            <p class="text-sm sm:text-base"><strong>Cómo registrarse:</strong> Crear cuenta y verificar correo</p>
+            <p class="text-sm sm:text-base"><strong>Recuperar contraseña:</strong> Enlace "¿Olvidaste tu contraseña?"</p>
+          </div>
+        </div>
+      </main>
     </div>
-  </section>
-
-  <!-- Contenido principal -->
-  <main class="container mx-auto px-6 py-12">
-    <div id="resultsContainer" class="mb-8 hidden">
-      <h3 class="text-2xl font-semibold text-orange-600 mb-4">Resultados:</h3>
-      <ul id="resultsList" class="list-disc pl-6 text-gray-700"></ul>
-    </div>
-
-    <div id="helpContent" class="grid md:grid-cols-2 gap-8">
-      <!-- Card 1 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">🍕 Menú y productos</h3>
-        <p class="text-gray-600 mb-2 font-semibold">Información sobre pizzas, pastas, bebidas y postres</p>
-        <p>Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos. Todos nuestros productos se preparan con ingredientes frescos y de la más alta calidad.</p>
-        <p class="mt-3"><strong>Opciones vegetarianas, veganas y sin gluten:</strong> Tenemos opciones para todos los gustos y necesidades dietéticas.</p>
-        <p class="mt-2"><strong>Tamaños disponibles:</strong> Personal (20cm), Mediana (30cm) y Familiar (40cm).</p>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">🚚 Pedidos y entregas</h3>
-        <p><strong>Cómo hacer un pedido:</strong> A través de la web, app o al +52 (246) 330 9000.</p>
-        <p><strong>Tiempos de entrega:</strong> 30-45 min aprox.</p>
-        <p><strong>Cobertura:</strong> Zona centro y colonias cercanas. Delivery gratis desde $200.</p>
-        <p><strong>Recoger en local:</strong> 123 Pizza Street, Ciudad.</p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">💳 Pagos y facturación</h3>
-        <p><strong>Métodos aceptados:</strong> Efectivo, tarjetas y apps (Mercado Pago, PayPal).</p>
-        <p><strong>Factura:</strong> Solicítala al hacer el pedido o después contactando soporte.</p>
-        <p><strong>Reembolsos:</strong> Dentro de las 2 horas posteriores a la entrega.</p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">🎁 Promociones y cupones</h3>
-        <p><strong>Usar un cupón:</strong> Ingresa el código al finalizar tu compra.</p>
-        <p><strong>Promos especiales:</strong> Martes 2x1 en Margherita, Jueves 30% en pastas.</p>
-        <p><strong>Fidelidad:</strong> 10 puntos por cada $100, pizza gratis al llegar a 100 puntos.</p>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">🔒 Privacidad y seguridad</h3>
-        <p><strong>Protección de datos:</strong> Tus datos están protegidos con cifrado SSL.</p>
-        <p><strong>Políticas de uso:</strong> Consulta los términos en el pie de página.</p>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">👤 Cuenta y registro</h3>
-        <p><strong>Cómo registrarse:</strong> Haz clic en “Crear cuenta” y verifica tu correo.</p>
-        <p><strong>Recuperar contraseña:</strong> Usa el enlace “¿Olvidaste tu contraseña?”.</p>
-        <p><strong>Modificar direcciones:</strong> Desde “Mis direcciones” en tu cuenta.</p>
-      </div>
-
-      <!-- Card 7 -->
-      <div class="card bg-white shadow-md rounded-2xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-2xl font-bold mb-3">📋 Secciones adicionales</h3>
-        <p><strong>Reportar problema:</strong> Llama o envía WhatsApp al +52 (246) 330 9000.</p>
-        <p><strong>Políticas:</strong> Cumplimos con normas de higiene y tiempos estimados.</p>
-        <p><strong>Atención al cliente:</strong> 11AM a 11PM, correo: ayuda@federicspizza.com</p>
-        <p><strong>Empleo:</strong> Envía tu CV a empleo@federicspizza.com.</p>
-      </div>
-    </div>
-  </main>
+  </div>
+</div>
 
   <script>
     function searchContent() {
@@ -1926,6 +1904,75 @@ document.addEventListener('DOMContentLoaded', function() {
             event.stopPropagation();
         }
     });
+
+    document.getElementById('helpButton').addEventListener('click', () => {
+  document.getElementById('helpModal').classList.remove('hidden');
+
+  // === Funcionalidad del modal de ayuda ===
+document.getElementById('helpButton').addEventListener('click', () => {
+    document.getElementById('helpModal').classList.remove('hidden');
+});
+
+// Cerrar modal de ayuda
+document.getElementById('closeHelpModal').addEventListener('click', () => {
+    document.getElementById('helpModal').classList.add('hidden');
+});
+
+// Cerrar modal al hacer clic fuera del contenido
+document.getElementById('helpModal').addEventListener('click', (e) => {
+    if (e.target.id === 'helpModal') {
+        e.target.classList.add('hidden');
+    }
+});
+
+// Función de búsqueda para el centro de ayuda
+function searchContent() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('#helpContent .card');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const resultsList = document.getElementById('resultsList');
+    resultsList.innerHTML = '';
+    let found = false;
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(input) && input.trim() !== '') {
+            const title = card.querySelector('h3').innerText;
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="#" class="text-orange-500 hover:text-orange-600" onclick="scrollToCard('${title}')">${title}</a>`;
+            resultsList.appendChild(li);
+            found = true;
+        }
+    });
+
+    resultsContainer.classList.toggle('hidden', !found);
+    if (!found && input.trim() !== '') {
+        resultsList.innerHTML = '<li class="text-gray-500">No se encontraron resultados.</li>';
+        resultsContainer.classList.remove('hidden');
+    }
+}
+
+// Función para scroll a la tarjeta específica
+function scrollToCard(title) {
+    const cards = document.querySelectorAll('#helpContent .card');
+    cards.forEach(card => {
+        if (card.querySelector('h3').innerText === title) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            card.style.backgroundColor = '#fef3cd';
+            setTimeout(() => {
+                card.style.backgroundColor = '';
+            }, 2000);
+        }
+    });
+}
+
+// Cerrar modal con tecla Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('helpModal').classList.contains('hidden')) {
+        document.getElementById('helpModal').classList.add('hidden');
+    }
+});
+});
 </script>
 
 </body>
