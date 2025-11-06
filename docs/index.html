@@ -1043,12 +1043,12 @@ function updateCartUI(){
   const cartTotalEl = document.getElementById('cartTotal');
   const cartCountEl = document.getElementById('cartCount');
   const cartSummary = document.getElementById('cartSummary');
-  
-  // ✅ NUEVO: Sincronizar contador móvil
-  const mobileCartCount = document.getElementById('mobileCartCount');
-  if (mobileCartCount) {
+
+  // ✅ ACTUALIZAR CONTADOR MÓVIL
+const mobileCartCount = document.getElementById('mobileCartCount');
+if (mobileCartCount) {
     mobileCartCount.textContent = cart.length;
-  }
+}
   
   cartItems.innerHTML = '';
   let total = 0;
@@ -1853,22 +1853,36 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu = document.createElement('div');
             mobileMenu.id = 'mobileMenu';
             mobileMenu.className = 'md:hidden hidden'; // Iniciar oculto
-            mobileMenu.innerHTML = `
-                <div class="flex flex-col space-y-4 p-4">
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#cuenta" onclick="closeMobileMenu()">Cuenta</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#inicio" onclick="closeMobileMenu()">Inicio</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#menu" onclick="closeMobileMenu()">Menú</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#contacto" onclick="closeMobileMenu()">Contacto</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3 cursor-pointer" onclick="openHelpFromMobile()">Ayuda</a>
-                    
-                    <!-- CARRITO MÓVIL -->
-                    <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
-                        <span>🛒 Carrito</span>
-                        <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
-                    </button>
-                </div>
-            `;
+           mobileMenu.innerHTML = `
+    <div class="flex flex-col space-y-4 p-4">
+        <button class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" id="mobileAccountButton">Cuenta</button>
+        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#inicio" onclick="closeMobileMenu()">Inicio</a>
+        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#menu" onclick="closeMobileMenu()">Menú</a>
+        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#contacto" onclick="closeMobileMenu()">Contacto</a>
+        <button class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3 cursor-pointer" onclick="openHelpFromMobile()">Ayuda</button>
+        
+        <!-- CARRITO MÓVIL CON CONTADOR -->
+        <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
+            <span>🛒 Carrito</span>
+            <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
+        </button>
+    </div>
+`;
+
+document.getElementById('mobileAccountButton').addEventListener('click', function() {
+    const modal = document.getElementById('accountModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            const modalContent = modal.querySelector('#accountModalContent');
+            if (modalContent) {
+                modalContent.classList.replace('scale-95', 'scale-100');
+            }
+        }, 10);
+    }
+    closeMobileMenu();
+});
             document.querySelector('header nav').appendChild(mobileMenu);
             
             // Agregar funcionalidad al carrito móvil
