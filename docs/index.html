@@ -1844,165 +1844,239 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-    // Menú móvil - VERSIÓN MEJORADA Y CORREGIDA
-    document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
-        e.stopPropagation();
+    // =============================================
+    // MENÚ MÓVIL - VERSIÓN 100% FUNCIONAL
+    // =============================================
+
+    // Variable global para el menú móvil
+    let mobileMenu = null;
+
+    // Función para inicializar el menú móvil
+    function initMobileMenu() {
+        mobileMenu = document.getElementById('mobileMenu');
         
-        let mobileMenu = document.getElementById('mobileMenu');
         if (!mobileMenu) {
             mobileMenu = document.createElement('div');
             mobileMenu.id = 'mobileMenu';
-            mobileMenu.className = 'md:hidden hidden'; // Iniciar oculto
-           mobileMenu.innerHTML = `
-    <div class="flex flex-col space-y-4 p-4">
-        <button class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" id="mobileAccountButton">Cuenta</button>
-        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#inicio" onclick="closeMobileMenu()">Inicio</a>
-        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#menu" onclick="closeMobileMenu()">Menú</a>
-        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
-        <a class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3" href="#contacto" onclick="closeMobileMenu()">Contacto</a>
-        <button class="text-white hover:text-orange-200 font-medium transition-colors text-center py-3 cursor-pointer" onclick="openHelpFromMobile()">Ayuda</button>
-        
-        <!-- CARRITO MÓVIL CON CONTADOR -->
-        <button class="bg-white bg-opacity-20 text-white px-4 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-2 justify-center mt-4" id="mobileCartButton">
-            <span>🛒 Carrito</span>
-            <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" id="mobileCartCount">0</span>
-        </button>
-    </div>
-`;
-
-document.getElementById('mobileAccountButton').addEventListener('click', function() {
-    const modal = document.getElementById('accountModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            const modalContent = modal.querySelector('#accountModalContent');
-            if (modalContent) {
-                modalContent.classList.replace('scale-95', 'scale-100');
-            }
-        }, 10);
-    }
-    closeMobileMenu();
-});
+            mobileMenu.className = 'md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg z-50';
+            
+            mobileMenu.innerHTML = `
+                <div class="flex flex-col space-y-4 p-6">
+                    <button class="mobile-account-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
+                        Cuenta 👤
+                    </button>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#inicio">Inicio</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#menu">Menú</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#nosotros">Nosotros</a>
+                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#contacto">Contacto</a>
+                    <button class="mobile-help-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
+                        Ayuda
+                    </button>
+                    
+                    <button class="mobile-cart-btn bg-white bg-opacity-20 text-white px-6 py-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-3 justify-center mt-4 text-lg">
+                        <span>🛒 Carrito</span>
+                        <span class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mobile-cart-count">0</span>
+                    </button>
+                </div>
+            `;
+            
             document.querySelector('header nav').appendChild(mobileMenu);
             
-            // Agregar funcionalidad al carrito móvil
-            document.getElementById('mobileCartButton').addEventListener('click', function() {
+            // Asignar eventos a los botones
+            assignMobileMenuEvents();
+            
+            // Ocultar el menú inicialmente
+            mobileMenu.classList.add('hidden');
+        }
+        
+        return mobileMenu;
+    }
+
+    // Función para asignar eventos del menú móvil
+    function assignMobileMenuEvents() {
+        if (!mobileMenu) return;
+        
+        // Botón cuenta móvil
+        const mobileAccountBtn = mobileMenu.querySelector('.mobile-account-btn');
+        if (mobileAccountBtn) {
+            mobileAccountBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('accountModal').classList.remove('hidden');
+                setTimeout(() => {
+                    const modalContent = document.querySelector('#accountModal > div');
+                    if (modalContent) {
+                        modalContent.classList.replace('scale-95', 'scale-100');
+                    }
+                }, 10);
+                closeMobileMenu();
+            });
+        }
+        
+        // Botón ayuda móvil
+        const mobileHelpBtn = mobileMenu.querySelector('.mobile-help-btn');
+        if (mobileHelpBtn) {
+            mobileHelpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('helpModal').classList.remove('hidden');
+                closeMobileMenu();
+            });
+        }
+        
+        // Botón carrito móvil
+        const mobileCartBtn = mobileMenu.querySelector('.mobile-cart-btn');
+        if (mobileCartBtn) {
+            mobileCartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 document.getElementById('cartModal').classList.remove('hidden');
                 closeMobileMenu();
             });
         }
         
+        // Enlaces que cierran el menú
+        const menuLinks = mobileMenu.querySelectorAll('a[href]');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                closeMobileMenu();
+            });
+        });
+    }
+
+    // Evento principal para el botón del menú hamburguesa
+    document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        // Inicializar el menú si no existe
+        if (!mobileMenu) {
+            mobileMenu = initMobileMenu();
+        }
+        
         // Actualizar contador del carrito móvil
-        const mobileCartCount = document.getElementById('mobileCartCount');
+        updateMobileCartCount();
+        
+        // Alternar visibilidad del menú
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Función para actualizar contador del carrito móvil
+    function updateMobileCartCount() {
+        if (!mobileMenu) return;
+        
+        const mobileCartCount = mobileMenu.querySelector('.mobile-cart-count');
         const cartCount = document.getElementById('cartCount');
         if (mobileCartCount && cartCount) {
             mobileCartCount.textContent = cartCount.textContent;
         }
-        
-        // Mostrar/ocultar menú
-        mobileMenu.classList.toggle('hidden');
-    });
+    }
 
     // Función para cerrar menú móvil
     function closeMobileMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
         if (mobileMenu) {
             mobileMenu.classList.add('hidden');
         }
     }
 
-    // Función para abrir ayuda desde móvil
-    function openHelpFromMobile() {
-        document.getElementById('helpModal').classList.remove('hidden');
-        closeMobileMenu();
-    }
-
     // Cerrar menú al hacer clic fuera
     document.addEventListener('click', function(event) {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuButton = document.getElementById('mobileMenuButton');
+        if (!mobileMenu) return;
         
-        if (mobileMenu && !mobileMenu.contains(event.target) && event.target !== menuButton) {
-            mobileMenu.classList.add('hidden');
+        const menuButton = document.getElementById('mobileMenuButton');
+        const isClickInsideMenu = mobileMenu.contains(event.target);
+        const isClickOnMenuButton = event.target === menuButton || menuButton.contains(event.target);
+        
+        if (!isClickInsideMenu && !isClickOnMenuButton) {
+            closeMobileMenu();
         }
     });
 
     // Prevenir que el menú se cierre al hacer clic dentro
-    document.addEventListener('click', function(event) {
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (mobileMenu && mobileMenu.contains(event.target)) {
+    if (mobileMenu) {
+        mobileMenu.addEventListener('click', function(event) {
             event.stopPropagation();
-        }
-    });
-
-    document.getElementById('helpButton').addEventListener('click', () => {
-  document.getElementById('helpModal').classList.remove('hidden');
-
-  // === Funcionalidad del modal de ayuda ===
-document.getElementById('helpButton').addEventListener('click', () => {
-    document.getElementById('helpModal').classList.remove('hidden');
-});
-
-// Cerrar modal de ayuda
-document.getElementById('closeHelpModal').addEventListener('click', () => {
-    document.getElementById('helpModal').classList.add('hidden');
-});
-
-// Cerrar modal al hacer clic fuera del contenido
-document.getElementById('helpModal').addEventListener('click', (e) => {
-    if (e.target.id === 'helpModal') {
-        e.target.classList.add('hidden');
+        });
     }
-});
 
-// Función de búsqueda para el centro de ayuda
-function searchContent() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const cards = document.querySelectorAll('#helpContent .card');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const resultsList = document.getElementById('resultsList');
-    resultsList.innerHTML = '';
-    let found = false;
+    // =============================================
+    // MODAL DE AYUDA - VERSIÓN CORREGIDA
+    // =============================================
 
-    cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(input) && input.trim() !== '') {
-            const title = card.querySelector('h3').innerText;
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="#" class="text-orange-500 hover:text-orange-600" onclick="scrollToCard('${title}')">${title}</a>`;
-            resultsList.appendChild(li);
-            found = true;
-        }
+    // Event listener para abrir ayuda
+    document.getElementById('helpButton').addEventListener('click', function() {
+        document.getElementById('helpModal').classList.remove('hidden');
     });
 
-    resultsContainer.classList.toggle('hidden', !found);
-    if (!found && input.trim() !== '') {
-        resultsList.innerHTML = '<li class="text-gray-500">No se encontraron resultados.</li>';
-        resultsContainer.classList.remove('hidden');
-    }
-}
-
-// Función para scroll a la tarjeta específica
-function scrollToCard(title) {
-    const cards = document.querySelectorAll('#helpContent .card');
-    cards.forEach(card => {
-        if (card.querySelector('h3').innerText === title) {
-            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            card.style.backgroundColor = '#fef3cd';
-            setTimeout(() => {
-                card.style.backgroundColor = '';
-            }, 2000);
-        }
-    });
-}
-
-// Cerrar modal con tecla Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !document.getElementById('helpModal').classList.contains('hidden')) {
+    // Event listener para cerrar ayuda
+    document.getElementById('closeHelpModal').addEventListener('click', function() {
         document.getElementById('helpModal').classList.add('hidden');
+    });
+
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('helpModal').addEventListener('click', function(e) {
+        if (e.target.id === 'helpModal') {
+            document.getElementById('helpModal').classList.add('hidden');
+        }
+    });
+
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !document.getElementById('helpModal').classList.contains('hidden')) {
+            document.getElementById('helpModal').classList.add('hidden');
+        }
+    });
+
+    // =============================================
+    // INICIALIZACIÓN AL CARGAR LA PÁGINA
+    // =============================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar el menú móvil
+        initMobileMenu();
+        
+        // Actualizar contador del carrito móvil
+        updateMobileCartCount();
+    });
+
+    // =============================================
+    // FUNCIONES DE BÚSQUEDA (mantener igual)
+    // =============================================
+
+    function searchContent() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.querySelectorAll('#helpContent .card');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultsList = document.getElementById('resultsList');
+        resultsList.innerHTML = '';
+        let found = false;
+
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (text.includes(input) && input.trim() !== '') {
+                const title = card.querySelector('h3').innerText;
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#" class="text-orange-500 hover:text-orange-600" onclick="scrollToCard('${title}')">${title}</a>`;
+                resultsList.appendChild(li);
+                found = true;
+            }
+        });
+
+        resultsContainer.classList.toggle('hidden', !found);
+        if (!found && input.trim() !== '') {
+            resultsList.innerHTML = '<li class="text-gray-500">No se encontraron resultados.</li>';
+            resultsContainer.classList.remove('hidden');
+        }
     }
-});
-});
+
+    function scrollToCard(title) {
+        const cards = document.querySelectorAll('#helpContent .card');
+        cards.forEach(card => {
+            if (card.querySelector('h3').innerText === title) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                card.style.backgroundColor = '#fef3cd';
+                setTimeout(() => {
+                    card.style.backgroundColor = '';
+                }, 2000);
+            }
+        });
+    }
 </script>
 
 </body>
