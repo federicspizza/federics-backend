@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
+import paymentRoutes from "./routes/payments.js"; // ✅ NUEVA LÍNEA
 
 dotenv.config();
 
@@ -21,25 +22,13 @@ mongoose
   .then(() => {
     console.log("✅ Conectado a MongoDB");
 
-    // Montamos las rutas solo después de conectar
+    // Montar rutas
     app.use("/api/auth", authRoutes);
+    app.use("/api/payments", paymentRoutes); // ✅ NUEVA LÍNEA
 
-    // ✅ Verificamos que las rutas sí están montadas correctamente
-    if (app._router) {
-      console.log("🧩 Rutas activas:");
-      app._router.stack.forEach((r) => {
-        if (r.route && r.route.path) {
-          console.log("→", r.route.path);
-        }
-      });
-    } else {
-      console.log("⚠️ No hay rutas cargadas aún");
-    }
-
-    const PORT = 3000;
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
       console.log(`🚀 Servidor en http://localhost:${PORT}`)
     );
   })
   .catch((err) => console.error("❌ Error de conexión:", err));
-
