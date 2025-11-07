@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,11 +79,73 @@ header nav {
     #deliveryModal > div,
     #pizzaModal > div,
     #paymentModal > div,
-    #cardFormModal > div {
+    #cardFormModal > div,
+    #paymentSuccessModal > div {
         margin: 1rem;
         width: calc(100% - 2rem);
         max-height: 90vh;
     }
+}
+
+/* Estilos mejorados para modales de pago en dispositivos móviles */
+@media (max-width: 640px) {
+  #paymentModal > div,
+  #cardFormModal > div,
+  #paymentSuccessModal > div {
+    margin: 0.5rem;
+    width: calc(100% - 1rem);
+    max-height: 95vh;
+    border-radius: 1rem;
+  }
+  
+  #cardForm input {
+    font-size: 16px; /* Previene zoom en iOS */
+    padding: 12px;
+  }
+  
+  .gradient-bg.p-6 {
+    padding: 1rem;
+  }
+  
+  .gradient-bg h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mejoras visuales para el formulario de pago */
+#cardForm input:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+#cardNumber {
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+
+/* Estilos para estados de carga */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #ff6b35;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
     </style>
@@ -760,134 +821,8 @@ header nav {
 </div>
 </div>
 </div>
-<script>
-        // Modal logic (omitted for brevity, as it was not changed)
-        document.getElementById('cartButton').addEventListener('click', function() {
-            document.getElementById('cartModal').classList.remove('hidden');
-        });
 
-        document.getElementById('closeCart').addEventListener('click', function() {
-            document.getElementById('cartModal').classList.add('hidden');
-        });
-
-        document.getElementById('cartModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('friesModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('drinkModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('wingsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-                resetWingsModal();
-            }
-        });
-
-        document.getElementById('breadModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.add('hidden');
-                resetBreadModal();
-            }
-        });
-    </script>
-<!-- Modal de Cuenta -->
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="accountModal">
-<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95" id="accountModalContent">
-<div class="gradient-bg p-6 text-white text-center">
-<h3 class="text-2xl font-bold mb-2">Tu Cuenta 👤</h3>
-<p class="text-orange-100">Elige una opción</p>
-</div>
-<div class="p-6 text-center space-y-4">
-<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="openRegister">Crear Cuenta 📝</button>
-<button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="openLogin">Iniciar Sesión 🔐</button>
-<button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cancelar</button>
-</div>
-</div>
-</div>
-<!-- Modal Crear Cuenta -->
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="registerModal">
-<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
-<div class="gradient-bg p-6 text-white text-center">
-<h3 class="text-2xl font-bold mb-2">Crear Cuenta 📝</h3>
-<p class="text-orange-100">Completa tus datos básicos</p>
-</div>
-<form class="p-6 space-y-4">
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre" required="" type="text"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Apellidos" required="" type="text"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Teléfono" required="" type="tel"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
-<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Registrar</button>
-<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeRegister" type="button">Cancelar</button>
-</form>
-</div>
-</div>
-<!-- Modal Iniciar Sesión -->
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="loginModal">
-<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
-<div class="gradient-bg p-6 text-white text-center">
-<h3 class="text-2xl font-bold mb-2">Iniciar Sesión 🔐</h3>
-<p class="text-orange-100">Ingresa tus datos</p>
-</div>
-<form class="p-6 space-y-4">
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
-<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
-<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Entrar</button>
-<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeLogin" type="button">Cancelar</button>
-</form>
-</div>
-</div>
-<script>
-document.getElementById('accountButton').addEventListener('click', () => {
-  const modal = document.getElementById('accountModal');
-  modal.classList.remove('hidden');
-  setTimeout(() => modal.children[0].classList.replace('scale-95', 'scale-100'), 10);
-});
-
-document.getElementById('closeAccountModal').addEventListener('click', () => {
-  const modal = document.getElementById('accountModal');
-  modal.classList.add('hidden');
-});
-
-// Abrir formularios
-document.getElementById('openRegister').addEventListener('click', () => {
-  document.getElementById('accountModal').classList.add('hidden');
-  document.getElementById('registerModal').classList.remove('hidden');
-});
-
-document.getElementById('openLogin').addEventListener('click', () => {
-  document.getElementById('accountModal').classList.add('hidden');
-  document.getElementById('loginModal').classList.remove('hidden');
-});
-
-// Cerrar formularios
-document.getElementById('closeRegister').addEventListener('click', () => {
-  document.getElementById('registerModal').classList.add('hidden');
-});
-
-document.getElementById('closeLogin').addEventListener('click', () => {
-  document.getElementById('loginModal').classList.add('hidden');
-});
-
-// Cerrar si se hace clic fuera del contenido
-['accountModal', 'registerModal', 'loginModal'].forEach(id => {
-  document.getElementById(id).addEventListener('click', e => {
-    if (e.target.id === id) e.target.classList.add('hidden');
-  });
-});
-</script>
+<!-- Modal de Dirección de Entrega -->
 <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="deliveryModal">
 <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
 <div class="gradient-bg p-6 text-white text-center">
@@ -910,48 +845,114 @@ document.getElementById('closeLogin').addEventListener('click', () => {
 </div>
 </form>
 </div>
-</div><script>
-// Abrir modal de Delivery Gratis
-document.querySelectorAll('button').forEach(btn => {
-    // Skip buttons that are inside modals (ids ending with 'Modal')
-    if (btn.closest && btn.closest('[id$="Modal"]')) return;
-  if (btn.textContent.includes('Delivery Gratis')) {
-    btn.addEventListener('click', () => {
-      document.getElementById('deliveryModal').classList.remove('hidden');
-      setTimeout(() => {
-        document.querySelector('#deliveryModal > div').classList.replace('scale-95', 'scale-100');
-      }, 10);
-    });
-  }
-});
+</div>
 
-// Cerrar modal
-document.getElementById('cancelDelivery').addEventListener('click', () => {
-  document.getElementById('deliveryModal').classList.add('hidden');
-});
+<!-- ========== NUEVOS MODALES DE PAGO MEJORADOS ========== -->
 
-// Guardar dirección
-const form = document.getElementById('deliveryForm');
-const inputs = ['calle', 'colonia', 'municipio', 'numeroInterior', 'descripcion'];
+<!-- Modal de Pago Mejorado -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="paymentModal">
+  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+    <div class="gradient-bg p-6 text-white text-center">
+      <h3 class="text-2xl font-bold mb-2">Método de Pago 💳</h3>
+      <p class="text-orange-100">Elige cómo deseas pagar tu pedido</p>
+    </div>
+    <div class="p-6 space-y-4">
+      <button id="payWithCard" class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center space-x-2">
+        <span>💳</span>
+        <span>Pagar con Tarjeta</span>
+      </button>
+      <button id="payWithSavedCard" class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors flex items-center justify-center space-x-2 hidden">
+        <span>💳</span>
+        <span>Usar Tarjeta Guardada</span>
+      </button>
+      <button id="payOnDelivery" class="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2">
+        <span>💵</span>
+        <span>Pagar al Recibir</span>
+      </button>
+      <button id="cancelPayment" class="w-full text-gray-500 hover:text-gray-700 transition-colors">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
 
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = JSON.parse(localStorage.getItem('direccionEntrega') || '{}');
-  for (let id of inputs) if (saved[id]) document.getElementById(id).value = saved[id];
-});
+<!-- Modal de Formulario de Tarjeta Mejorado -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="cardFormModal">
+  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+    <div class="gradient-bg p-6 text-white text-center">
+      <h3 class="text-2xl font-bold mb-2">Pago con Tarjeta 💳</h3>
+      <p class="text-orange-100">Introduce los datos de tu tarjeta</p>
+    </div>
+    <form class="p-6 space-y-4" id="cardForm">
+      <!-- Información de la tarjeta -->
+      <div class="bg-gray-50 p-4 rounded-lg mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-gray-600">Tarjeta</span>
+          <div class="flex space-x-2">
+            <span class="text-xl">💳</span>
+            <span class="text-xl">🔒</span>
+          </div>
+        </div>
+        
+        <div class="space-y-3">
+          <input type="text" id="cardName" class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre en la tarjeta" required />
+          
+          <input type="text" id="cardNumber" maxlength="19" class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="1234 5678 9012 3456" required />
+          
+          <div class="flex space-x-3">
+            <input type="text" id="cardExp" maxlength="5" class="flex-1 border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="MM/AA" required />
+            <input type="text" id="cardCVV" maxlength="3" class="flex-1 border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="CVV" required />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Opción para guardar tarjeta -->
+      <div class="flex items-center space-x-2 mb-4">
+        <input type="checkbox" id="saveCard" class="text-orange-500 rounded" checked />
+        <label for="saveCard" class="text-gray-700 text-sm">Guardar esta tarjeta para futuras compras</label>
+      </div>
+      
+      <!-- Información de seguridad -->
+      <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+        <p class="text-green-700 text-sm flex items-center justify-center space-x-1">
+          <span>🔒</span>
+          <span>Tus datos están protegidos con encriptación SSL</span>
+        </p>
+      </div>
+      
+      <div class="flex space-x-3">
+        <button type="button" id="cancelCardForm" class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center space-x-2">
+          <span>Confirmar Pago</span>
+          <span>✅</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (document.getElementById('guardarDireccion').checked) {
-    const data = {};
-    inputs.forEach(id => data[id] = document.getElementById(id).value);
-    localStorage.setItem('direccionEntrega', JSON.stringify(data));
-    alert('Dirección guardada correctamente ✅');
-  } else {
-    alert('Dirección registrada temporalmente ✅');
-  }
-  document.getElementById('deliveryModal').classList.add('hidden');
-});
-</script>
+<!-- Modal de Confirmación de Pago -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="paymentSuccessModal">
+  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+    <div class="gradient-bg p-6 text-white text-center">
+      <h3 class="text-2xl font-bold mb-2">¡Pago Exitoso! 🎉</h3>
+      <p class="text-orange-100">Tu pedido está en camino</p>
+    </div>
+    <div class="p-6 text-center">
+      <div class="text-6xl mb-4">✅</div>
+      <p class="text-gray-700 mb-2">Tu pago ha sido procesado correctamente</p>
+      <p class="text-gray-500 text-sm mb-6">Recibirás una confirmación por correo electrónico</p>
+      <button id="closePaymentSuccess" class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">
+        Continuar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FIN NUEVOS MODALES DE PAGO ========== -->
+
 <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="pizzaModal">
 <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
 <div class="gradient-bg p-6 text-white text-center">
@@ -1015,7 +1016,145 @@ form.addEventListener('submit', (e) => {
 </form>
 </div>
 </div>
+
+<!-- Modal de Ayuda - Versión Mejorada -->
+<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-2 sm:p-4" id="helpModal">
+  <div class="bg-white w-full h-full sm:h-5/6 sm:max-w-4xl sm:rounded-2xl overflow-y-auto relative flex flex-col">
+    <!-- Header sticky -->
+    <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
+      <h3 class="text-xl sm:text-2xl font-bold">Centro de Ayuda</h3>
+      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200 w-8 h-8 flex items-center justify-center">×</button>
+    </div>
+    
+    <!-- Contenido -->
+    <div class="flex-1 p-4 sm:p-6 text-gray-800 overflow-y-auto">
+      <!-- Hero Section -->
+      <section class="gradient-bg py-8 sm:py-12 text-center text-white rounded-2xl mb-6 sm:mb-8">
+        <div class="container mx-auto px-4">
+          <h2 class="text-2xl sm:text-4xl font-bold mb-4">Centro de Ayuda</h2>
+          <p class="text-sm sm:text-lg text-orange-100 max-w-2xl mx-auto mb-4 sm:mb-6">
+            ¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes
+          </p>
+          <div class="relative max-w-xl mx-auto">
+            <input id="searchInput" type="text" placeholder="Buscar en el centro de ayuda..." 
+                   class="w-full px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base">
+            <button onclick="searchContent()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-3 sm:px-4 py-1 rounded-full hover:bg-orange-700 transition text-sm">Buscar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resultados de búsqueda -->
+      <div id="resultsContainer" class="mb-6 hidden">
+        <h3 class="text-lg sm:text-xl font-semibold text-orange-600 mb-3">Resultados:</h3>
+        <ul id="resultsList" class="list-disc pl-5 text-gray-700 space-y-1"></ul>
+      </div>
+
+      <!-- Contenido principal -->
+      <main class="container mx-auto">
+        <div id="helpContent" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <!-- Card 1 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🍕 Menú y productos</h3>
+            <p class="text-gray-600 text-sm sm:text-base mb-2">Información sobre pizzas, pastas, bebidas y postres</p>
+            <p class="text-sm sm:text-base">Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos.</p>
+            <p class="mt-2 text-sm sm:text-base"><strong>Opciones vegetarianas, veganas y sin gluten:</strong> Tenemos opciones para todos los gustos.</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🚚 Pedidos y entregas</h3>
+            <p class="text-sm sm:text-base"><strong>Cómo hacer un pedido:</strong> Web, app o teléfono</p>
+            <p class="text-sm sm:text-base"><strong>Tiempos de entrega:</strong> 30-45 min aprox.</p>
+            <p class="text-sm sm:text-base"><strong>Cobertura:</strong> Zona centro y colonias cercanas</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">💳 Pagos y facturación</h3>
+            <p class="text-sm sm:text-base"><strong>Métodos aceptados:</strong> Efectivo, tarjetas y apps</p>
+            <p class="text-sm sm:text-base"><strong>Factura:</strong> Solicítala al hacer el pedido</p>
+            <p class="text-sm sm:text-base"><strong>Reembolsos:</strong> Dentro de las 2 horas</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🎁 Promociones y cupones</h3>
+            <p class="text-sm sm:text-base"><strong>Usar un cupón:</strong> Ingresa el código al finalizar</p>
+            <p class="text-sm sm:text-base"><strong>Promos especiales:</strong> Martes 2x1, Jueves 30% descuento</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">🔒 Privacidad y seguridad</h3>
+            <p class="text-sm sm:text-base"><strong>Protección de datos:</strong> Cifrado SSL</p>
+            <p class="text-sm sm:text-base"><strong>Políticas de uso:</strong> Consulta términos en pie de página</p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
+            <h3 class="text-lg sm:text-xl font-bold mb-2">👤 Cuenta y registro</h3>
+            <p class="text-sm sm:text-base"><strong>Cómo registrarse:</strong> Crear cuenta y verificar correo</p>
+            <p class="text-sm sm:text-base"><strong>Recuperar contraseña:</strong> Enlace "¿Olvidaste tu contraseña?"</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Cuenta -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="accountModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95" id="accountModalContent">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Tu Cuenta 👤</h3>
+<p class="text-orange-100">Elige una opción</p>
+</div>
+<div class="p-6 text-center space-y-4">
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="openRegister">Crear Cuenta 📝</button>
+<button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="openLogin">Iniciar Sesión 🔐</button>
+<button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cancelar</button>
+</div>
+</div>
+</div>
+<!-- Modal Crear Cuenta -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="registerModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Crear Cuenta 📝</h3>
+<p class="text-orange-100">Completa tus datos básicos</p>
+</div>
+<form class="p-6 space-y-4">
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Apellidos" required="" type="text"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Teléfono" required="" type="tel"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Registrar</button>
+<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeRegister" type="button">Cancelar</button>
+</form>
+</div>
+</div>
+<!-- Modal Iniciar Sesión -->
+<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300" id="loginModal">
+<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+<div class="gradient-bg p-6 text-white text-center">
+<h3 class="text-2xl font-bold mb-2">Iniciar Sesión 🔐</h3>
+<p class="text-orange-100">Ingresa tus datos</p>
+</div>
+<form class="p-6 space-y-4">
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Correo electrónico" required="" type="email"/>
+<input class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Contraseña" required="" type="password"/>
+<button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" type="submit">Entrar</button>
+<button class="w-full text-gray-500 hover:text-gray-700 transition-colors" id="closeLogin" type="button">Cancelar</button>
+</form>
+</div>
+</div>
+
 <script>
+// =============================================
+// CÓDIGO JAVASCRIPT PRINCIPAL
+// =============================================
+
 // === Price tables (MXN) ===
 const PRICE = {
   pizzas: {chica:120, mediana:150, grande:180},
@@ -1359,347 +1498,354 @@ document.getElementById('pizzaModal') && (function(){
 // initialize cart UI if any saved (no persistence currently)
 updateCartUI();
 
-// reopen cart modal when checkout clicked (existing behavior kept)
-document.getElementById('checkoutCart') && document.getElementById('checkoutCart').addEventListener('click', ()=>{
-  // For now, just show cart modal (it's already openable with cart button). 
-  // We can later integrate with payment.
-  alert('Procediendo al pago... (simulación)');
-});
-</script><script>
-// === Activar funcionalidad completa para botones de refrescos ===
-document.querySelectorAll('button').forEach(btn => {
-  if (btn.textContent && (btn.textContent.includes('Refresco') || btn.textContent.includes('Coca') || btn.textContent.includes('Fanta') || btn.textContent.includes('Sprite') || btn.textContent.includes('Agua'))) {
-    btn.addEventListener('click', (e) => {
-      openModal('drinkModal');
-    });
-  }
-});
-</script>
-<script>
-// === Conectar los botones de Refrescos Helados con su modal ===
-document.querySelectorAll('#menu button, section button').forEach(btn => {
-  if (btn.textContent.includes('+ 🛒')) {
-    btn.addEventListener('click', (e) => {
-      const card = e.target.closest('.p-4');
-      const drinkName = card.querySelector('h5')?.textContent.trim() || 'Refresco';
-      document.getElementById('modalDrinkName').textContent = drinkName;
-
-      // Asignar precio base según el refresco
-      let basePrice = 25; // Default
-      if (drinkName.toLowerCase().includes('agua')) basePrice = 15;
-      if (drinkName.toLowerCase().includes('fanta')) basePrice = 25;
-      if (drinkName.toLowerCase().includes('sprite')) basePrice = 25;
-      if (drinkName.toLowerCase().includes('coca')) basePrice = 25;
-
-      // Guardar precio base en dataset
-      document.getElementById('drinkModal').dataset.basePrice = basePrice;
-
-      // Reinicia valores por si quedó de otra bebida
-      document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.checked = r.value === 'pequeño');
-      document.querySelectorAll('input[name="ice"]').forEach(r => r.checked = r.value === 'hielo-normal');
-      document.getElementById('drinkQuantity').textContent = '1';
-
-      // Mostrar precio inicial
-      const totalPriceEl = document.getElementById('drinkTotalPrice');
-      totalPriceEl.textContent = '$' + basePrice.toFixed(2) + ' MXN';
-
-      // Mostrar modal
-      document.getElementById('drinkModal').classList.remove('hidden');
-      setTimeout(() => {
-        document.querySelector('#drinkModal > div').classList.replace('scale-95', 'scale-100');
-      }, 10);
-    });
-  }
-});
-
-// Ajustar el cálculo dinámico de precio en el modal de bebida
-(function(){
-  const modal = document.getElementById('drinkModal');
-  if(!modal) return;
-  const qtyEl = document.getElementById('drinkQuantity');
-  const totalEl = document.getElementById('drinkTotalPrice');
-
-  function calcDrink(){
-    const base = Number(modal.dataset.basePrice || 25);
-    const size = document.querySelector('input[name="drinkSize"]:checked').value;
-    let extra = 0;
-    if(size === 'mediano') extra = 5;
-    if(size === 'grande') extra = 10;
-    const qty = Number(qtyEl.textContent);
-    const total = (base + extra) * qty;
-    totalEl.textContent = '$' + total.toFixed(2) + ' MXN';
-    return total;
-  }
-
-  document.getElementById('increaseDrinkQty').addEventListener('click', () => {
-    qtyEl.textContent = Number(qtyEl.textContent) + 1;
-    calcDrink();
-  });
-  document.getElementById('decreaseDrinkQty').addEventListener('click', () => {
-    const val = Number(qtyEl.textContent);
-    if(val > 1) qtyEl.textContent = val - 1;
-    calcDrink();
-  });
-  document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.addEventListener('change', calcDrink));
-  calcDrink();
-})();
-</script>
-
-
-<script>
-// === Mejora: hacer que todos los botones de "Cancelar" cierren su modal correspondiente ===
-document.querySelectorAll('button').forEach(btn => {
-  if (btn.textContent.trim().toLowerCase() === 'cancelar') {
-    btn.addEventListener('click', () => {
-      const modal = btn.closest('[id$="Modal"]');
-      if (modal) modal.classList.add('hidden');
-    });
-  }
-});
-
-// === Mejora: Formato MXN en precios ya manejado en todo el código ===
-// (Las funciones de formato existentes ya usan pesos, se mantiene fmt() con MXN).
-
-// === Modal de Pago ===
-const pagoModalHTML = `
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="paymentModal">
-  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
-    <div class="gradient-bg p-6 text-white text-center">
-      <h3 class="text-2xl font-bold mb-2">Método de Pago 💳</h3>
-      <p class="text-orange-100">Elige cómo deseas pagar tu pedido</p>
-    </div>
-    <div class="p-6 space-y-4">
-      <button id="payWithCard" class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">💳 Pagar con Tarjeta</button>
-      <button id="payOnDelivery" class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors">💵 Pagar al Recibir</button>
-      <button id="cancelPayment" class="w-full text-gray-500 hover:text-gray-700 transition-colors">Cancelar</button>
-    </div>
-  </div>
-</div>
-<div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4" id="cardFormModal">
-  <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
-    <div class="gradient-bg p-6 text-white text-center">
-      <h3 class="text-2xl font-bold mb-2">Pago con Tarjeta 💳</h3>
-      <p class="text-orange-100">Introduce los datos de tu tarjeta</p>
-    </div>
-    <form class="p-6 space-y-4" id="cardForm">
-      <input type="text" id="cardName" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Nombre en la tarjeta" required />
-      <input type="text" id="cardNumber" maxlength="16" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Número de tarjeta (16 dígitos)" required />
-      <div class="flex space-x-3">
-        <input type="text" id="cardExp" maxlength="5" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="MM/AA" required />
-        <input type="text" id="cardCVV" maxlength="3" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="CVV" required />
-      </div>
-      <div class="flex space-x-3">
-        <button type="button" id="cancelCardForm" class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors">Cancelar</button>
-        <button type="submit" class="flex-1 bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">Confirmar Pago ✅</button>
-      </div>
-    </form>
-  </div>
-</div>
-`;
-
-// Insert modals to DOM if not exist
-document.body.insertAdjacentHTML('beforeend', pagoModalHTML);
-
-// Abrir modal de pago al presionar "Proceder al Pago"
-document.getElementById('checkoutCart')?.addEventListener('click', () => {
-  document.getElementById('paymentModal').classList.remove('hidden');
-  setTimeout(() => document.querySelector('#paymentModal > div').classList.replace('scale-95','scale-100'), 10);
-});
-
-// Botones del modal de pago
-document.getElementById('cancelPayment').addEventListener('click', ()=> document.getElementById('paymentModal').classList.add('hidden'));
-document.getElementById('payWithCard').addEventListener('click', ()=>{
-  document.getElementById('paymentModal').classList.add('hidden');
-  document.getElementById('cardFormModal').classList.remove('hidden');
-  setTimeout(() => document.querySelector('#cardFormModal > div').classList.replace('scale-95','scale-100'), 10);
-});
-document.getElementById('payOnDelivery').addEventListener('click', ()=>{
-  localStorage.setItem('metodoPago', 'pago_al_recibir');
-  alert('✅ Pedido confirmado. Pagarás al recibir tu pedido.');
-  document.getElementById('paymentModal').classList.add('hidden');
-  document.getElementById('cartModal').classList.add('hidden');
-  localStorage.removeItem('cart'); // limpia carrito simulado
-});
-
-// Formulario de tarjeta
-const form = document.getElementById('cardForm');
-form.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const name = document.getElementById('cardName').value.trim();
-  const number = document.getElementById('cardNumber').value.trim();
-  const exp = document.getElementById('cardExp').value.trim();
-  const cvv = document.getElementById('cardCVV').value.trim();
-  if(name && number.length === 16 && exp.length === 5 && cvv.length === 3){
-    const cardData = {name, number, exp};
-    localStorage.setItem('tarjetaGuardada', JSON.stringify(cardData));
-    alert('💳 Pago realizado con éxito y guardado localmente ✅');
-    document.getElementById('cardFormModal').classList.add('hidden');
-    document.getElementById('cartModal').classList.add('hidden');
-  } else {
-    alert('⚠️ Verifica los datos de tu tarjeta.');
-  }
-});
-document.getElementById('cancelCardForm').addEventListener('click', ()=>{
-  document.getElementById('cardFormModal').classList.add('hidden');
-});
-</script>
-
-
-<script>
-// === Fix universal cancel buttons ===
-document.querySelectorAll('button').forEach(btn => {
-  if (btn.textContent.trim().toLowerCase().includes('cancelar')) {
-    btn.onclick = () => {
-      const modal = btn.closest('[id$="Modal"]');
-      if (modal) modal.classList.add('hidden');
-    };
-  }
-});
-
-// === Ensure Proceed to Payment opens modal ===
-const checkoutBtn = document.getElementById('checkoutCart');
-if (checkoutBtn) {
-  checkoutBtn.onclick = () => {
-    const paymentModal = document.getElementById('paymentModal');
-    if (paymentModal) {
-      paymentModal.classList.remove('hidden');
-      setTimeout(() => paymentModal.querySelector('div').classList.replace('scale-95','scale-100'), 10);
-    }
-  };
-}
-
-// === Ensure cancel buttons work inside payment modals ===
-['cancelPayment','cancelCardForm'].forEach(id => {
-  const btn = document.getElementById(id);
-  if (btn) btn.onclick = () => btn.closest('[id$="Modal"]').classList.add('hidden');
-});
-</script>
-
-
-<!-- Modal de Ayuda - Versión Mejorada -->
-<div class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-2 sm:p-4" id="helpModal">
-  <div class="bg-white w-full h-full sm:h-5/6 sm:max-w-4xl sm:rounded-2xl overflow-y-auto relative flex flex-col">
-    <!-- Header sticky -->
-    <div class="gradient-bg text-white p-4 flex justify-between items-center sticky top-0 z-10">
-      <h3 class="text-xl sm:text-2xl font-bold">Centro de Ayuda</h3>
-      <button id="closeHelpModal" class="text-white text-2xl font-bold hover:text-orange-200 w-8 h-8 flex items-center justify-center">×</button>
-    </div>
-    
-    <!-- Contenido -->
-    <div class="flex-1 p-4 sm:p-6 text-gray-800 overflow-y-auto">
-      <!-- Hero Section -->
-      <section class="gradient-bg py-8 sm:py-12 text-center text-white rounded-2xl mb-6 sm:mb-8">
-        <div class="container mx-auto px-4">
-          <h2 class="text-2xl sm:text-4xl font-bold mb-4">Centro de Ayuda</h2>
-          <p class="text-sm sm:text-lg text-orange-100 max-w-2xl mx-auto mb-4 sm:mb-6">
-            ¿Tienes alguna pregunta? Encuentra respuestas a las consultas más comunes
-          </p>
-          <div class="relative max-w-xl mx-auto">
-            <input id="searchInput" type="text" placeholder="Buscar en el centro de ayuda..." 
-                   class="w-full px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base">
-            <button onclick="searchContent()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-3 sm:px-4 py-1 rounded-full hover:bg-orange-700 transition text-sm">Buscar</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Resultados de búsqueda -->
-      <div id="resultsContainer" class="mb-6 hidden">
-        <h3 class="text-lg sm:text-xl font-semibold text-orange-600 mb-3">Resultados:</h3>
-        <ul id="resultsList" class="list-disc pl-5 text-gray-700 space-y-1"></ul>
-      </div>
-
-      <!-- Contenido principal -->
-      <main class="container mx-auto">
-        <div id="helpContent" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          <!-- Card 1 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">🍕 Menú y productos</h3>
-            <p class="text-gray-600 text-sm sm:text-base mb-2">Información sobre pizzas, pastas, bebidas y postres</p>
-            <p class="text-sm sm:text-base">Ofrecemos una amplia variedad de pizzas artesanales, pastas caseras, bebidas refrescantes y postres deliciosos.</p>
-            <p class="mt-2 text-sm sm:text-base"><strong>Opciones vegetarianas, veganas y sin gluten:</strong> Tenemos opciones para todos los gustos.</p>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">🚚 Pedidos y entregas</h3>
-            <p class="text-sm sm:text-base"><strong>Cómo hacer un pedido:</strong> Web, app o teléfono</p>
-            <p class="text-sm sm:text-base"><strong>Tiempos de entrega:</strong> 30-45 min aprox.</p>
-            <p class="text-sm sm:text-base"><strong>Cobertura:</strong> Zona centro y colonias cercanas</p>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">💳 Pagos y facturación</h3>
-            <p class="text-sm sm:text-base"><strong>Métodos aceptados:</strong> Efectivo, tarjetas y apps</p>
-            <p class="text-sm sm:text-base"><strong>Factura:</strong> Solicítala al hacer el pedido</p>
-            <p class="text-sm sm:text-base"><strong>Reembolsos:</strong> Dentro de las 2 horas</p>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">🎁 Promociones y cupones</h3>
-            <p class="text-sm sm:text-base"><strong>Usar un cupón:</strong> Ingresa el código al finalizar</p>
-            <p class="text-sm sm:text-base"><strong>Promos especiales:</strong> Martes 2x1, Jueves 30% descuento</p>
-          </div>
-
-          <!-- Card 5 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">🔒 Privacidad y seguridad</h3>
-            <p class="text-sm sm:text-base"><strong>Protección de datos:</strong> Cifrado SSL</p>
-            <p class="text-sm sm:text-base"><strong>Políticas de uso:</strong> Consulta términos en pie de página</p>
-          </div>
-
-          <!-- Card 6 -->
-          <div class="card bg-white shadow-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-l-4 border-orange-500">
-            <h3 class="text-lg sm:text-xl font-bold mb-2">👤 Cuenta y registro</h3>
-            <p class="text-sm sm:text-base"><strong>Cómo registrarse:</strong> Crear cuenta y verificar correo</p>
-            <p class="text-sm sm:text-base"><strong>Recuperar contraseña:</strong> Enlace "¿Olvidaste tu contraseña?"</p>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
-</div>
-
-  <script>
-    function searchContent() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('#helpContent .card');
-      const resultsContainer = document.getElementById('resultsContainer');
-      const resultsList = document.getElementById('resultsList');
-      resultsList.innerHTML = '';
-      let found = false;
-
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(input) && input.trim() !== '') {
-          const title = card.querySelector('h3').innerText;
-          const li = document.createElement('li');
-          li.textContent = title;
-          resultsList.appendChild(li);
-          found = true;
-        }
-      });
-
-      resultsContainer.classList.toggle('hidden', !found);
-      if (!found && input.trim() !== '') {
-        resultsList.innerHTML = '<li>No se encontraron resultados.</li>';
-        resultsContainer.classList.remove('hidden');
-      }
-    }
-  </script>
-
-
-    </div>
-  </div>
-</div>
-
-<script>
 // === CONEXIÓN CON EL BACKEND - SISTEMA SIMPLIFICADO ===
 const BACKEND_URL = 'https://federics-backend.onrender.com';
 
 // Estado global del usuario
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+// === SISTEMA DE PAGO MEJORADO - CONEXIÓN CON BACKEND ===
+
+// Función para abrir modal de pago
+function openPaymentModal() {
+  // Verificar si hay productos en el carrito
+  if (cart.length === 0) {
+    alert('🛒 Tu carrito está vacío. Agrega productos antes de proceder al pago.');
+    return;
+  }
+  
+  const paymentModal = document.getElementById('paymentModal');
+  paymentModal.classList.remove('hidden');
+  
+  // Verificar si el usuario tiene tarjetas guardadas
+  checkSavedCards();
+  
+  setTimeout(() => {
+    const inner = paymentModal.querySelector('div');
+    if (inner) inner.classList.replace('scale-95', 'scale-100');
+  }, 10);
+}
+
+// Función para verificar tarjetas guardadas
+async function checkSavedCards() {
+  if (!currentUser) return;
+  
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/payments/cards`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}`
+      }
+    });
+    
+    if (response.ok) {
+      const cards = await response.json();
+      const savedCardBtn = document.getElementById('payWithSavedCard');
+      
+      if (cards.length > 0) {
+        savedCardBtn.classList.remove('hidden');
+        // Guardar la primera tarjeta para uso rápido
+        localStorage.setItem('savedCard', JSON.stringify(cards[0]));
+      } else {
+        savedCardBtn.classList.add('hidden');
+      }
+    }
+  } catch (error) {
+    console.error('Error al verificar tarjetas guardadas:', error);
+  }
+}
+
+// Función para formatear número de tarjeta
+function formatCardNumber(input) {
+  // Eliminar todos los espacios existentes
+  let value = input.value.replace(/\s+/g, '');
+  
+  // Agregar espacio cada 4 dígitos
+  value = value.replace(/(\d{4})/g, '$1 ').trim();
+  
+  // Actualizar el valor del input
+  input.value = value;
+}
+
+// Función para formatear fecha de expiración
+function formatExpiryDate(input) {
+  let value = input.value.replace(/\D/g, '');
+  
+  if (value.length >= 2) {
+    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+  }
+  
+  input.value = value;
+}
+
+// Event listeners para el sistema de pago
+document.addEventListener('DOMContentLoaded', function() {
+  // Abrir modal de pago al hacer clic en "Proceder al Pago"
+  document.getElementById('checkoutCart').addEventListener('click', openPaymentModal);
+  
+  // Formatear número de tarjeta en tiempo real
+  const cardNumberInput = document.getElementById('cardNumber');
+  if (cardNumberInput) {
+    cardNumberInput.addEventListener('input', function() {
+      formatCardNumber(this);
+    });
+  }
+  
+  // Formatear fecha de expiración en tiempo real
+  const cardExpInput = document.getElementById('cardExp');
+  if (cardExpInput) {
+    cardExpInput.addEventListener('input', function() {
+      formatExpiryDate(this);
+    });
+  }
+  
+  // Botones del modal de pago
+  document.getElementById('cancelPayment').addEventListener('click', () => {
+    document.getElementById('paymentModal').classList.add('hidden');
+  });
+  
+  // Pagar con tarjeta nueva
+  document.getElementById('payWithCard').addEventListener('click', () => {
+    document.getElementById('paymentModal').classList.add('hidden');
+    openCardForm();
+  });
+  
+  // Pagar con tarjeta guardada
+  document.getElementById('payWithSavedCard').addEventListener('click', () => {
+    payWithSavedCard();
+  });
+  
+  // Pagar al recibir
+  document.getElementById('payOnDelivery').addEventListener('click', () => {
+    processCashPayment();
+  });
+  
+  // Cancelar formulario de tarjeta
+  document.getElementById('cancelCardForm').addEventListener('click', () => {
+    document.getElementById('cardFormModal').classList.add('hidden');
+  });
+  
+  // Cerrar modal de éxito
+  document.getElementById('closePaymentSuccess').addEventListener('click', () => {
+    document.getElementById('paymentSuccessModal').classList.add('hidden');
+    document.getElementById('cartModal').classList.add('hidden');
+  });
+  
+  // Envío del formulario de tarjeta
+  const cardForm = document.getElementById('cardForm');
+  if (cardForm) {
+    cardForm.addEventListener('submit', processCardPayment);
+  }
+});
+
+// Función para abrir formulario de tarjeta
+function openCardForm() {
+  const cardFormModal = document.getElementById('cardFormModal');
+  cardFormModal.classList.remove('hidden');
+  
+  // Limpiar formulario
+  document.getElementById('cardForm').reset();
+  
+  setTimeout(() => {
+    const inner = cardFormModal.querySelector('div');
+    if (inner) inner.classList.replace('scale-95', 'scale-100');
+  }, 10);
+}
+
+// Función para procesar pago con tarjeta guardada
+async function payWithSavedCard() {
+  if (!currentUser) {
+    alert('❌ Debes iniciar sesión para usar una tarjeta guardada');
+    return;
+  }
+  
+  const savedCard = JSON.parse(localStorage.getItem('savedCard'));
+  if (!savedCard) {
+    alert('❌ No tienes tarjetas guardadas');
+    return;
+  }
+  
+  // Confirmar uso de tarjeta guardada
+  const confirmMessage = `¿Usar tarjeta terminada en ${savedCard.last4}?`;
+  if (!confirm(confirmMessage)) return;
+  
+  try {
+    // Procesar pago con tarjeta guardada
+    const paymentData = {
+      cardId: savedCard.id,
+      amount: calculateCartTotal(),
+      items: cart
+    };
+    
+    const response = await fetch(`${BACKEND_URL}/api/payments/process`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}`
+      },
+      body: JSON.stringify(paymentData)
+    });
+    
+    if (response.ok) {
+      showPaymentSuccess();
+    } else {
+      const error = await response.json();
+      alert(`❌ Error en el pago: ${error.message}`);
+    }
+  } catch (error) {
+    alert('❌ Error de conexión al procesar el pago');
+    console.error('Error:', error);
+  }
+}
+
+// Función para procesar pago con nueva tarjeta
+async function processCardPayment(e) {
+  e.preventDefault();
+  
+  if (!currentUser) {
+    alert('❌ Debes iniciar sesión para realizar un pago');
+    return;
+  }
+  
+  const cardData = {
+    cardHolder: document.getElementById('cardName').value.trim(),
+    cardNumber: document.getElementById('cardNumber').value.replace(/\s/g, ''),
+    expiryDate: document.getElementById('cardExp').value.trim(),
+    cvv: document.getElementById('cardCVV').value.trim(),
+    saveCard: document.getElementById('saveCard').checked
+  };
+  
+  // Validaciones básicas
+  if (!validateCardData(cardData)) return;
+  
+  try {
+    // Procesar pago
+    const paymentData = {
+      cardData: cardData,
+      amount: calculateCartTotal(),
+      items: cart
+    };
+    
+    const response = await fetch(`${BACKEND_URL}/api/payments/process`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}`
+      },
+      body: JSON.stringify(paymentData)
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      // Guardar tarjeta si el usuario lo solicitó
+      if (cardData.saveCard && result.cardSaved) {
+        localStorage.setItem('savedCard', JSON.stringify(result.savedCard));
+      }
+      
+      showPaymentSuccess();
+    } else {
+      alert(`❌ Error en el pago: ${result.message}`);
+    }
+  } catch (error) {
+    alert('❌ Error de conexión al procesar el pago');
+    console.error('Error:', error);
+  }
+}
+
+// Función para procesar pago en efectivo
+function processCashPayment() {
+  if (cart.length === 0) {
+    alert('❌ Tu carrito está vacío');
+    return;
+  }
+  
+  localStorage.setItem('metodoPago', 'efectivo');
+  
+  // Mostrar resumen de pedido
+  const total = calculateCartTotal();
+  const orderSummary = `
+    🍕 Pedido confirmado!
+    Total: $${total.toFixed(2)} MXN
+    Método: Pago al recibir
+    ⏰ Tiempo estimado: 30-45 min
+  `;
+  
+  alert(orderSummary);
+  
+  // Limpiar carrito y cerrar modales
+  cart = [];
+  updateCartUI();
+  document.getElementById('paymentModal').classList.add('hidden');
+  document.getElementById('cartModal').classList.add('hidden');
+}
+
+// Función para validar datos de tarjeta
+function validateCardData(cardData) {
+  if (cardData.cardHolder.length < 3) {
+    alert('❌ El nombre en la tarjeta debe tener al menos 3 caracteres');
+    return false;
+  }
+  
+  if (cardData.cardNumber.replace(/\D/g, '').length !== 16) {
+    alert('❌ El número de tarjeta debe tener 16 dígitos');
+    return false;
+  }
+  
+  if (!cardData.expiryDate.match(/^\d{2}\/\d{2}$/)) {
+    alert('❌ Formato de fecha inválido (MM/AA)');
+    return false;
+  }
+  
+  if (cardData.cvv.length !== 3) {
+    alert('❌ El CVV debe tener 3 dígitos');
+    return false;
+  }
+  
+  return true;
+}
+
+// Función para calcular total del carrito
+function calculateCartTotal() {
+  return cart.reduce((total, item) => total + item.total, 0);
+}
+
+// Función para mostrar éxito de pago
+function showPaymentSuccess() {
+  // Cerrar modales anteriores
+  document.getElementById('cardFormModal').classList.add('hidden');
+  document.getElementById('paymentModal').classList.add('hidden');
+  
+  // Mostrar modal de éxito
+  const successModal = document.getElementById('paymentSuccessModal');
+  successModal.classList.remove('hidden');
+  
+  setTimeout(() => {
+    const inner = successModal.querySelector('div');
+    if (inner) inner.classList.replace('scale-95', 'scale-100');
+  }, 10);
+  
+  // Limpiar carrito
+  cart = [];
+  updateCartUI();
+  
+  // Generar número de pedido
+  const orderNumber = 'PZ' + Date.now().toString().slice(-6);
+  localStorage.setItem('lastOrder', orderNumber);
+}
+
+// Cerrar modales al hacer clic fuera
+['paymentModal', 'cardFormModal', 'paymentSuccessModal'].forEach(id => {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.addEventListener('click', e => {
+      if (e.target.id === id) {
+        modal.classList.add('hidden');
+      }
+    });
+  }
+});
 
 // Actualizar UI según estado de login
 function updateAuthUI() {
@@ -1787,7 +1933,7 @@ document.querySelector('#registerModal form').addEventListener('submit', async (
     }
 });
 
-// ✅ LOGIN DIRECTO (SIN CÓDIGO DE VERIFICACIÓN)
+// LOGIN DIRECTO (SIN CÓDIGO DE VERIFICACIÓN)
 document.querySelector('#loginModal form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -1829,251 +1975,462 @@ document.querySelector('#loginModal form').addEventListener('submit', async (e) 
     }
 });
 
-// ❌ ELIMINADA COMPLETAMENTE: La función de verificación de código
-
-// ❌ ELIMINADA COMPLETAMENTE: El event listener para closeVerifyCode
-
 // Inicializar UI al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     updateAuthUI();
 });
-</script>
 
-<script>
-    // =============================================
-    // MENÚ MÓVIL - VERSIÓN 100% FUNCIONAL
-    // =============================================
+// =============================================
+// MENÚ MÓVIL - VERSIÓN 100% FUNCIONAL
+// =============================================
 
-    // Variable global para el menú móvil
-    let mobileMenu = null;
+// Variable global para el menú móvil
+let mobileMenu = null;
 
-    // Función para inicializar el menú móvil
-    function initMobileMenu() {
-        mobileMenu = document.getElementById('mobileMenu');
+// Función para inicializar el menú móvil
+function initMobileMenu() {
+    mobileMenu = document.getElementById('mobileMenu');
+    
+    if (!mobileMenu) {
+        mobileMenu = document.createElement('div');
+        mobileMenu.id = 'mobileMenu';
+        mobileMenu.className = 'md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg z-50';
         
-        if (!mobileMenu) {
-            mobileMenu = document.createElement('div');
-            mobileMenu.id = 'mobileMenu';
-            mobileMenu.className = 'md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg z-50';
-            
-            mobileMenu.innerHTML = `
-                <div class="flex flex-col space-y-4 p-6">
-                    <button class="mobile-account-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
-                        Cuenta 👤
-                    </button>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#inicio">Inicio</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#menu">Menú</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#nosotros">Nosotros</a>
-                    <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#contacto">Contacto</a>
-                    <button class="mobile-help-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
-                        Ayuda
-                    </button>
-                    
-                    <button class="mobile-cart-btn bg-white bg-opacity-20 text-white px-6 py-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-3 justify-center mt-4 text-lg">
-                        <span>🛒 Carrito</span>
-                        <span class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mobile-cart-count">0</span>
-                    </button>
-                </div>
-            `;
-            
-            document.querySelector('header nav').appendChild(mobileMenu);
-            
-            // Asignar eventos a los botones
-            assignMobileMenuEvents();
-            
-            // Ocultar el menú inicialmente
-            mobileMenu.classList.add('hidden');
-        }
+        mobileMenu.innerHTML = `
+            <div class="flex flex-col space-y-4 p-6">
+                <button class="mobile-account-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
+                    Cuenta 👤
+                </button>
+                <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#inicio">Inicio</a>
+                <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#menu">Menú</a>
+                <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#nosotros">Nosotros</a>
+                <a class="text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg" href="#contacto">Contacto</a>
+                <button class="mobile-help-btn text-white hover:text-orange-200 font-medium transition-colors text-left py-3 text-lg">
+                    Ayuda
+                </button>
+                
+                <button class="mobile-cart-btn bg-white bg-opacity-20 text-white px-6 py-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-30 transition-colors flex items-center space-x-3 justify-center mt-4 text-lg">
+                    <span>🛒 Carrito</span>
+                    <span class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mobile-cart-count">0</span>
+                </button>
+            </div>
+        `;
         
-        return mobileMenu;
+        document.querySelector('header nav').appendChild(mobileMenu);
+        
+        // Asignar eventos a los botones
+        assignMobileMenuEvents();
+        
+        // Ocultar el menú inicialmente
+        mobileMenu.classList.add('hidden');
     }
+    
+    return mobileMenu;
+}
 
-    // Función para asignar eventos del menú móvil
-    function assignMobileMenuEvents() {
-        if (!mobileMenu) return;
-        
-        // Botón cuenta móvil
-        const mobileAccountBtn = mobileMenu.querySelector('.mobile-account-btn');
-        if (mobileAccountBtn) {
-            mobileAccountBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('accountModal').classList.remove('hidden');
-                setTimeout(() => {
-                    const modalContent = document.querySelector('#accountModal > div');
-                    if (modalContent) {
-                        modalContent.classList.replace('scale-95', 'scale-100');
-                    }
-                }, 10);
-                closeMobileMenu();
-            });
-        }
-        
-        // Botón ayuda móvil
-        const mobileHelpBtn = mobileMenu.querySelector('.mobile-help-btn');
-        if (mobileHelpBtn) {
-            mobileHelpBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('helpModal').classList.remove('hidden');
-                closeMobileMenu();
-            });
-        }
-        
-        // Botón carrito móvil
-        const mobileCartBtn = mobileMenu.querySelector('.mobile-cart-btn');
-        if (mobileCartBtn) {
-            mobileCartBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('cartModal').classList.remove('hidden');
-                closeMobileMenu();
-            });
-        }
-        
-        // Enlaces que cierran el menú
-        const menuLinks = mobileMenu.querySelectorAll('a[href]');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                closeMobileMenu();
-            });
-        });
-    }
-
-    // Evento principal para el botón del menú hamburguesa
-    document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
-        e.stopPropagation();
-        
-        // Inicializar el menú si no existe
-        if (!mobileMenu) {
-            mobileMenu = initMobileMenu();
-        }
-        
-        // Actualizar contador del carrito móvil
-        updateMobileCartCount();
-        
-        // Alternar visibilidad del menú
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    // Función para actualizar contador del carrito móvil
-    function updateMobileCartCount() {
-        if (!mobileMenu) return;
-        
-        const mobileCartCount = mobileMenu.querySelector('.mobile-cart-count');
-        const cartCount = document.getElementById('cartCount');
-        if (mobileCartCount && cartCount) {
-            mobileCartCount.textContent = cartCount.textContent;
-        }
-    }
-
-    // Función para cerrar menú móvil
-    function closeMobileMenu() {
-        if (mobileMenu) {
-            mobileMenu.classList.add('hidden');
-        }
-    }
-
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(event) {
-        if (!mobileMenu) return;
-        
-        const menuButton = document.getElementById('mobileMenuButton');
-        const isClickInsideMenu = mobileMenu.contains(event.target);
-        const isClickOnMenuButton = event.target === menuButton || menuButton.contains(event.target);
-        
-        if (!isClickInsideMenu && !isClickOnMenuButton) {
+// Función para asignar eventos del menú móvil
+function assignMobileMenuEvents() {
+    if (!mobileMenu) return;
+    
+    // Botón cuenta móvil
+    const mobileAccountBtn = mobileMenu.querySelector('.mobile-account-btn');
+    if (mobileAccountBtn) {
+        mobileAccountBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('accountModal').classList.remove('hidden');
+            setTimeout(() => {
+                const modalContent = document.querySelector('#accountModal > div');
+                if (modalContent) {
+                    modalContent.classList.replace('scale-95', 'scale-100');
+                }
+            }, 10);
             closeMobileMenu();
-        }
+        });
+    }
+    
+    // Botón ayuda móvil
+    const mobileHelpBtn = mobileMenu.querySelector('.mobile-help-btn');
+    if (mobileHelpBtn) {
+        mobileHelpBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('helpModal').classList.remove('hidden');
+            closeMobileMenu();
+        });
+    }
+    
+    // Botón carrito móvil
+    const mobileCartBtn = mobileMenu.querySelector('.mobile-cart-btn');
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('cartModal').classList.remove('hidden');
+            closeMobileMenu();
+        });
+    }
+    
+    // Enlaces que cierran el menú
+    const menuLinks = mobileMenu.querySelectorAll('a[href]');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            closeMobileMenu();
+        });
     });
+}
 
-    // Prevenir que el menú se cierre al hacer clic dentro
+// Evento principal para el botón del menú hamburguesa
+document.getElementById('mobileMenuButton').addEventListener('click', function(e) {
+    e.stopPropagation();
+    
+    // Inicializar el menú si no existe
+    if (!mobileMenu) {
+        mobileMenu = initMobileMenu();
+    }
+    
+    // Actualizar contador del carrito móvil
+    updateMobileCartCount();
+    
+    // Alternar visibilidad del menú
+    mobileMenu.classList.toggle('hidden');
+});
+
+// Función para actualizar contador del carrito móvil
+function updateMobileCartCount() {
+    if (!mobileMenu) return;
+    
+    const mobileCartCount = mobileMenu.querySelector('.mobile-cart-count');
+    const cartCount = document.getElementById('cartCount');
+    if (mobileCartCount && cartCount) {
+        mobileCartCount.textContent = cartCount.textContent;
+    }
+}
+
+// Función para cerrar menú móvil
+function closeMobileMenu() {
     if (mobileMenu) {
-        mobileMenu.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
+        mobileMenu.classList.add('hidden');
     }
+}
 
-    // =============================================
-    // MODAL DE AYUDA - VERSIÓN CORREGIDA
-    // =============================================
+// Cerrar menú al hacer clic fuera
+document.addEventListener('click', function(event) {
+    if (!mobileMenu) return;
+    
+    const menuButton = document.getElementById('mobileMenuButton');
+    const isClickInsideMenu = mobileMenu.contains(event.target);
+    const isClickOnMenuButton = event.target === menuButton || menuButton.contains(event.target);
+    
+    if (!isClickInsideMenu && !isClickOnMenuButton) {
+        closeMobileMenu();
+    }
+});
 
-    // Event listener para abrir ayuda
-    document.getElementById('helpButton').addEventListener('click', function() {
-        document.getElementById('helpModal').classList.remove('hidden');
+// Prevenir que el menú se cierre al hacer clic dentro
+if (mobileMenu) {
+    mobileMenu.addEventListener('click', function(event) {
+        event.stopPropagation();
     });
+}
 
-    // Event listener para cerrar ayuda
-    document.getElementById('closeHelpModal').addEventListener('click', function() {
+// =============================================
+// MODAL DE AYUDA - VERSIÓN CORREGIDA
+// =============================================
+
+// Event listener para abrir ayuda
+document.getElementById('helpButton').addEventListener('click', function() {
+    document.getElementById('helpModal').classList.remove('hidden');
+});
+
+// Event listener para cerrar ayuda
+document.getElementById('closeHelpModal').addEventListener('click', function() {
+    document.getElementById('helpModal').classList.add('hidden');
+});
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('helpModal').addEventListener('click', function(e) {
+    if (e.target.id === 'helpModal') {
         document.getElementById('helpModal').classList.add('hidden');
-    });
-
-    // Cerrar modal al hacer clic fuera
-    document.getElementById('helpModal').addEventListener('click', function(e) {
-        if (e.target.id === 'helpModal') {
-            document.getElementById('helpModal').classList.add('hidden');
-        }
-    });
-
-    // Cerrar con tecla Escape
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !document.getElementById('helpModal').classList.contains('hidden')) {
-            document.getElementById('helpModal').classList.add('hidden');
-        }
-    });
-
-    // =============================================
-    // INICIALIZACIÓN AL CARGAR LA PÁGINA
-    // =============================================
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Inicializar el menú móvil
-        initMobileMenu();
-        
-        // Actualizar contador del carrito móvil
-        updateMobileCartCount();
-    });
-
-    // =============================================
-    // FUNCIONES DE BÚSQUEDA (mantener igual)
-    // =============================================
-
-    function searchContent() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const cards = document.querySelectorAll('#helpContent .card');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const resultsList = document.getElementById('resultsList');
-        resultsList.innerHTML = '';
-        let found = false;
-
-        cards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            if (text.includes(input) && input.trim() !== '') {
-                const title = card.querySelector('h3').innerText;
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="#" class="text-orange-500 hover:text-orange-600" onclick="scrollToCard('${title}')">${title}</a>`;
-                resultsList.appendChild(li);
-                found = true;
-            }
-        });
-
-        resultsContainer.classList.toggle('hidden', !found);
-        if (!found && input.trim() !== '') {
-            resultsList.innerHTML = '<li class="text-gray-500">No se encontraron resultados.</li>';
-            resultsContainer.classList.remove('hidden');
-        }
     }
+});
 
-    function scrollToCard(title) {
-        const cards = document.querySelectorAll('#helpContent .card');
-        cards.forEach(card => {
-            if (card.querySelector('h3').innerText === title) {
-                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                card.style.backgroundColor = '#fef3cd';
-                setTimeout(() => {
-                    card.style.backgroundColor = '';
-                }, 2000);
-            }
-        });
+// Cerrar con tecla Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !document.getElementById('helpModal').classList.contains('hidden')) {
+        document.getElementById('helpModal').classList.add('hidden');
     }
+});
+
+// =============================================
+// INICIALIZACIÓN AL CARGAR LA PÁGINA
+// =============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar el menú móvil
+    initMobileMenu();
+    
+    // Actualizar contador del carrito móvil
+    updateMobileCartCount();
+});
+
+// =============================================
+// FUNCIONES DE BÚSQUEDA
+// =============================================
+
+function searchContent() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('#helpContent .card');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const resultsList = document.getElementById('resultsList');
+    resultsList.innerHTML = '';
+    let found = false;
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(input) && input.trim() !== '') {
+            const title = card.querySelector('h3').innerText;
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="#" class="text-orange-500 hover:text-orange-600" onclick="scrollToCard('${title}')">${title}</a>`;
+            resultsList.appendChild(li);
+            found = true;
+        }
+    });
+
+    resultsContainer.classList.toggle('hidden', !found);
+    if (!found && input.trim() !== '') {
+        resultsList.innerHTML = '<li class="text-gray-500">No se encontraron resultados.</li>';
+        resultsContainer.classList.remove('hidden');
+    }
+}
+
+function scrollToCard(title) {
+    const cards = document.querySelectorAll('#helpContent .card');
+    cards.forEach(card => {
+        if (card.querySelector('h3').innerText === title) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            card.style.backgroundColor = '#fef3cd';
+            setTimeout(() => {
+                card.style.backgroundColor = '';
+            }, 2000);
+        }
+    });
+}
+
+// =============================================
+// DELIVERY MODAL LOGIC
+// =============================================
+
+// Abrir modal de Delivery Gratis
+document.querySelectorAll('button').forEach(btn => {
+    // Skip buttons that are inside modals (ids ending with 'Modal')
+    if (btn.closest && btn.closest('[id$="Modal"]')) return;
+  if (btn.textContent.includes('Delivery Gratis')) {
+    btn.addEventListener('click', () => {
+      document.getElementById('deliveryModal').classList.remove('hidden');
+      setTimeout(() => {
+        document.querySelector('#deliveryModal > div').classList.replace('scale-95', 'scale-100');
+      }, 10);
+    });
+  }
+});
+
+// Cerrar modal
+document.getElementById('cancelDelivery').addEventListener('click', () => {
+  document.getElementById('deliveryModal').classList.add('hidden');
+});
+
+// Guardar dirección
+const form = document.getElementById('deliveryForm');
+const inputs = ['calle', 'colonia', 'municipio', 'numeroInterior', 'descripcion'];
+
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = JSON.parse(localStorage.getItem('direccionEntrega') || '{}');
+  for (let id of inputs) if (saved[id]) document.getElementById(id).value = saved[id];
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (document.getElementById('guardarDireccion').checked) {
+    const data = {};
+    inputs.forEach(id => data[id] = document.getElementById(id).value);
+    localStorage.setItem('direccionEntrega', JSON.stringify(data));
+    alert('Dirección guardada correctamente ✅');
+  } else {
+    alert('Dirección registrada temporalmente ✅');
+  }
+  document.getElementById('deliveryModal').classList.add('hidden');
+});
+
+// =============================================
+// MODAL LOGIC BÁSICA
+// =============================================
+
+document.getElementById('cartButton').addEventListener('click', function() {
+    document.getElementById('cartModal').classList.remove('hidden');
+});
+
+document.getElementById('closeCart').addEventListener('click', function() {
+    document.getElementById('cartModal').classList.add('hidden');
+});
+
+document.getElementById('cartModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+    }
+});
+
+document.getElementById('friesModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+    }
+});
+
+document.getElementById('drinkModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+    }
+});
+
+document.getElementById('wingsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+        resetWingsModal();
+    }
+});
+
+document.getElementById('breadModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+        resetBreadModal();
+    }
+});
+
+// Account modal logic
+document.getElementById('accountButton').addEventListener('click', () => {
+  const modal = document.getElementById('accountModal');
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.children[0].classList.replace('scale-95', 'scale-100'), 10);
+});
+
+document.getElementById('closeAccountModal').addEventListener('click', () => {
+  const modal = document.getElementById('accountModal');
+  modal.classList.add('hidden');
+});
+
+// Abrir formularios
+document.getElementById('openRegister').addEventListener('click', () => {
+  document.getElementById('accountModal').classList.add('hidden');
+  document.getElementById('registerModal').classList.remove('hidden');
+});
+
+document.getElementById('openLogin').addEventListener('click', () => {
+  document.getElementById('accountModal').classList.add('hidden');
+  document.getElementById('loginModal').classList.remove('hidden');
+});
+
+// Cerrar formularios
+document.getElementById('closeRegister').addEventListener('click', () => {
+  document.getElementById('registerModal').classList.add('hidden');
+});
+
+document.getElementById('closeLogin').addEventListener('click', () => {
+  document.getElementById('loginModal').classList.add('hidden');
+});
+
+// Cerrar si se hace clic fuera del contenido
+['accountModal', 'registerModal', 'loginModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target.id === id) e.target.classList.add('hidden');
+  });
+});
+
+// Conectar botones de refrescos
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent && (btn.textContent.includes('Refresco') || btn.textContent.includes('Coca') || btn.textContent.includes('Fanta') || btn.textContent.includes('Sprite') || btn.textContent.includes('Agua'))) {
+    btn.addEventListener('click', (e) => {
+      openModal('drinkModal');
+    });
+  }
+});
+
+// Conectar los botones de Refrescos Helados con su modal
+document.querySelectorAll('#menu button, section button').forEach(btn => {
+  if (btn.textContent.includes('+ 🛒')) {
+    btn.addEventListener('click', (e) => {
+      const card = e.target.closest('.p-4');
+      const drinkName = card.querySelector('h5')?.textContent.trim() || 'Refresco';
+      document.getElementById('modalDrinkName').textContent = drinkName;
+
+      // Asignar precio base según el refresco
+      let basePrice = 25; // Default
+      if (drinkName.toLowerCase().includes('agua')) basePrice = 15;
+      if (drinkName.toLowerCase().includes('fanta')) basePrice = 25;
+      if (drinkName.toLowerCase().includes('sprite')) basePrice = 25;
+      if (drinkName.toLowerCase().includes('coca')) basePrice = 25;
+
+      // Guardar precio base en dataset
+      document.getElementById('drinkModal').dataset.basePrice = basePrice;
+
+      // Reinicia valores por si quedó de otra bebida
+      document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.checked = r.value === 'pequeño');
+      document.querySelectorAll('input[name="ice"]').forEach(r => r.checked = r.value === 'hielo-normal');
+      document.getElementById('drinkQuantity').textContent = '1';
+
+      // Mostrar precio inicial
+      const totalPriceEl = document.getElementById('drinkTotalPrice');
+      totalPriceEl.textContent = '$' + basePrice.toFixed(2) + ' MXN';
+
+      // Mostrar modal
+      document.getElementById('drinkModal').classList.remove('hidden');
+      setTimeout(() => {
+        document.querySelector('#drinkModal > div').classList.replace('scale-95', 'scale-100');
+      }, 10);
+    });
+  }
+});
+
+// Ajustar el cálculo dinámico de precio en el modal de bebida
+(function(){
+  const modal = document.getElementById('drinkModal');
+  if(!modal) return;
+  const qtyEl = document.getElementById('drinkQuantity');
+  const totalEl = document.getElementById('drinkTotalPrice');
+
+  function calcDrink(){
+    const base = Number(modal.dataset.basePrice || 25);
+    const size = document.querySelector('input[name="drinkSize"]:checked').value;
+    let extra = 0;
+    if(size === 'mediano') extra = 5;
+    if(size === 'grande') extra = 10;
+    const qty = Number(qtyEl.textContent);
+    const total = (base + extra) * qty;
+    totalEl.textContent = '$' + total.toFixed(2) + ' MXN';
+    return total;
+  }
+
+  document.getElementById('increaseDrinkQty').addEventListener('click', () => {
+    qtyEl.textContent = Number(qtyEl.textContent) + 1;
+    calcDrink();
+  });
+  document.getElementById('decreaseDrinkQty').addEventListener('click', () => {
+    const val = Number(qtyEl.textContent);
+    if(val > 1) qtyEl.textContent = val - 1;
+    calcDrink();
+  });
+  document.querySelectorAll('input[name="drinkSize"]').forEach(r => r.addEventListener('change', calcDrink));
+  calcDrink();
+})();
+
+// Mejora: hacer que todos los botones de "Cancelar" cierren su modal correspondiente
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent.trim().toLowerCase() === 'cancelar') {
+    btn.addEventListener('click', () => {
+      const modal = btn.closest('[id$="Modal"]');
+      if (modal) modal.classList.add('hidden');
+    });
+  }
+});
+
+// Mejora: Formato MXN en precios ya manejado en todo el código
+// (Las funciones de formato existentes ya usan pesos, se mantiene fmt() con MXN).
 </script>
-
 </body>
 </html>
