@@ -1,12 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-// ❌ ELIMINADO: import nodemailer from "nodemailer";
 import User from "../models/User.js"; 
 
 const router = express.Router();
-
-// ❌ ELIMINADO COMPLETAMENTE: Configuración de nodemailer
 
 // ✅ REGISTRO SIMPLIFICADO (SIN CORREO)
 router.post("/register", async (req, res) => {
@@ -59,7 +56,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ✅ LOGIN DIRECTO
+// ✅ LOGIN DIRECTO - TOKEN MEJORADO
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -81,12 +78,12 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Contraseña incorrecta" });
     }
 
-    // Generar token
+    // ✅ GENERAR TOKEN MEJORADO - 7 DÍAS EN LUGAR DE 24H
     const token = jwt.sign({ 
       userId: user._id,
       email: user.email 
     }, process.env.JWT_SECRET || "secreto_temporal", {
-      expiresIn: "24h",
+      expiresIn: "7d", 
     });
 
     console.log("✅ Login exitoso para:", email);

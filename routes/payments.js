@@ -4,13 +4,16 @@ import Card from "../models/Card.js";
 
 const router = express.Router();
 
-// Middleware para verificar token
+// ✅ MIDDLEWARE MEJORADO PARA VERIFICAR TOKEN
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   
   if (!token) {
     console.log("❌ Token no proporcionado");
-    return res.status(401).json({ message: 'Token no proporcionado' });
+    return res.status(401).json({ 
+      message: 'Token no proporcionado',
+      code: 'NO_TOKEN'
+    });
   }
 
   try {
@@ -19,8 +22,25 @@ const verifyToken = (req, res, next) => {
     console.log("✅ Token válido para usuario:", req.userId);
     next();
   } catch (error) {
-    console.log("❌ Token inválido:", error.message);
-    return res.status(401).json({ message: 'Token inválido' });
+    console.log("❌ Error con token:", error.message);
+    
+    // ✅ MEJORA: Manejar diferentes tipos de errores de JWT
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ 
+        message: 'Token expirado',
+        code: 'TOKEN_EXPIRED'
+      });
+    } else if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ 
+        message: 'Token inválido',
+        code: 'INVALID_TOKEN'
+      });
+    } else {
+      return res.status(401).json({ 
+        message: 'Error de autenticación',
+        code: 'AUTH_ERROR'
+      });
+    }
   }
 };
 

@@ -1700,8 +1700,12 @@ async function payWithSavedCard() {
 }
 
 // Función para procesar pago con nueva tarjeta
+// ✅ FUNCIÓN MEJORADA PARA PROCESAR PAGO CON NUEVA TARJETA
 async function processCardPayment(e) {
   e.preventDefault();
+  
+  // ✅ VERIFICAR TOKEN ANTES DE CONTINUAR
+  if (!checkToken()) return;
   
   if (!currentUser) {
     alert('❌ Debes iniciar sesión para realizar un pago');
@@ -1746,6 +1750,14 @@ async function processCardPayment(e) {
       
       showPaymentSuccess();
     } else {
+      // ✅ MEJORA: Manejar token expirado específicamente
+      if (result.code === 'TOKEN_EXPIRED') {
+        console.log('🔐 Token expirado, cerrando sesión...');
+        logout();
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        document.getElementById('loginModal').classList.remove('hidden');
+        return;
+      }
       alert(`❌ Error en el pago: ${result.message}`);
     }
   } catch (error) {
@@ -1890,11 +1902,38 @@ function updateAuthUI() {
 
 // Función para cerrar sesión
 function logout() {
-    localStorage.removeItem('currentUser');
-    currentUser = null;
-    updateAuthUI();
-    document.getElementById('accountModal').classList.add('hidden');
-    alert('✅ Sesión cerrada correctamente');
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('savedCard');
+  localStorage.removeItem('direccionEntrega');
+  currentUser = null;
+  updateAuthUI();
+  document.getElementById('accountModal').classList.add('hidden');
+  console.log('✅ Sesión cerrada correctamente');
+}
+
+// ✅ NUEVA FUNCIÓN: Verificar si el token está expirado
+function isTokenExpired() {
+  if (!currentUser || !currentUser.token) return true;
+  
+  try {
+    const payload = JSON.parse(atob(currentUser.token.split('.')[1]));
+    const exp = payload.exp * 1000; // Convertir a milisegundos
+    return Date.now() >= exp;
+  } catch (error) {
+    return true;
+  }
+}
+
+// ✅ NUEVA FUNCIÓN: Verificar el token y redirigir si está expirado
+function checkToken() {
+  if (isTokenExpired()) {
+    console.log('🔐 Token expirado, redirigiendo a login...');
+    logout();
+    alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+    document.getElementById('loginModal').classList.remove('hidden');
+    return false;
+  }
+  return true;
 }
 
 // REGISTRO DE USUARIO
