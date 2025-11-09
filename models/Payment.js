@@ -9,7 +9,12 @@ const paymentSchema = new mongoose.Schema({
     orderNumber: {
         type: String,
         required: true,
-        unique: true
+        default: function() {
+            // ✅ GENERAR orderNumber POR DEFECTO
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `PZ${timestamp}${random}`;
+        }
     },
     amount: {
         type: Number,
@@ -49,19 +54,22 @@ const paymentSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// ✅ HOOK PRE-SAVE CORREGIDO - GENERAR orderNumber ANTES DE VALIDAR
+// ✅ HOOK PRE-SAVE MEJORADO
 paymentSchema.pre('save', function(next) {
-    console.log('🔢 Generando orderNumber...');
+    console.log('🔢 Ejecutando pre-save hook para orderNumber...');
+    
+    // Solo generar si no existe
     if (!this.orderNumber) {
         const timestamp = Date.now().toString().slice(-6);
         const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         this.orderNumber = `PZ${timestamp}${random}`;
-        console.log('✅ OrderNumber generado:', this.orderNumber);
+        console.log('✅ OrderNumber generado en pre-save:', this.orderNumber);
     }
+    
     next();
 });
 
-// ✅ MÉTODO ESTÁTICO PARA GENERAR orderNumber (backup)
+// ✅ MÉTODO ESTÁTICO PARA GENERAR orderNumber
 paymentSchema.statics.generateOrderNumber = function() {
     const timestamp = Date.now().toString().slice(-6);
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
