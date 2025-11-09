@@ -1702,23 +1702,36 @@ async function payWithSavedCard() {
 // Función para procesar pago con nueva tarjeta
 // ✅ FUNCIÓN MEJORADA PARA PROCESAR PAGO CON NUEVA TARJETA
 async function processCardPayment(e) {
-  e.preventDefault();
-  
-  // ✅ VERIFICAR TOKEN ANTES DE CONTINUAR
-  if (!checkToken()) return;
-  
-  if (!currentUser) {
-    alert('❌ Debes iniciar sesión para realizar un pago');
-    return;
-  }
-  
-  const cardData = {
-    cardHolder: document.getElementById('cardName').value.trim(),
-    cardNumber: document.getElementById('cardNumber').value.replace(/\s/g, ''),
-    expiryDate: document.getElementById('cardExp').value.trim(),
-    cvv: document.getElementById('cardCVV').value.trim(),
-    saveCard: document.getElementById('saveCard').checked
-  };
+    e.preventDefault();
+    
+    console.log('🔐 Iniciando proceso de pago...');
+    
+    // ✅ VERIFICAR CHECKBOX MEJORADO
+    const saveCardCheckbox = document.getElementById('saveCard');
+    const saveCard = saveCardCheckbox ? saveCardCheckbox.checked : false;
+    
+    console.log('💾 Estado de saveCard:', saveCard);
+    
+    if (!currentUser) {
+        alert('❌ Debes iniciar sesión para realizar un pago');
+        return;
+    }
+    
+    if (!checkToken()) return;
+
+    const cardData = {
+        cardHolder: document.getElementById('cardName').value.trim(),
+        cardNumber: document.getElementById('cardNumber').value.replace(/\s/g, ''),
+        expiryDate: document.getElementById('cardExp').value.trim(),
+        cvv: document.getElementById('cardCVV').value.trim(),
+        saveCard: saveCard  // ✅ USAR EL VALOR CORRECTO
+    };
+
+    console.log('📤 Datos del formulario:', {
+        cardHolder: cardData.cardHolder,
+        cardNumber: '***' + cardData.cardNumber.slice(-4),
+        saveCard: cardData.saveCard
+    });
   
   // Validaciones básicas
   if (!validateCardData(cardData)) return;

@@ -44,26 +44,28 @@ const paymentSchema = new mongoose.Schema({
         name: String,
         email: String,
         phone: String
-    },
-    deliveryAddress: {
-        street: String,
-        colony: String,
-        municipality: String,
-        interiorNumber: String,
-        description: String
     }
 }, {
     timestamps: true
 });
 
-// Generar número de orden único
-paymentSchema.pre('save', async function(next) {
+// ✅ HOOK PRE-SAVE CORREGIDO - GENERAR orderNumber ANTES DE VALIDAR
+paymentSchema.pre('save', function(next) {
+    console.log('🔢 Generando orderNumber...');
     if (!this.orderNumber) {
         const timestamp = Date.now().toString().slice(-6);
         const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         this.orderNumber = `PZ${timestamp}${random}`;
+        console.log('✅ OrderNumber generado:', this.orderNumber);
     }
     next();
 });
+
+// ✅ MÉTODO ESTÁTICO PARA GENERAR orderNumber (backup)
+paymentSchema.statics.generateOrderNumber = function() {
+    const timestamp = Date.now().toString().slice(-6);
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `PZ${timestamp}${random}`;
+};
 
 export default mongoose.model('Payment', paymentSchema);
