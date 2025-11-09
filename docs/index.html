@@ -2015,6 +2015,113 @@ document.querySelector('#loginModal form').addEventListener('submit', async (e) 
 });
 
 // Inicializar UI al cargar la página
+// ✅ FUNCIÓN ACTUALIZADA - REEMPLAZA LA EXISTENTE
+function updateAuthUI() {
+    const accountButton = document.getElementById('accountButton');
+    const accountModal = document.getElementById('accountModal');
+    
+    if (currentUser) {
+        // Usuario logueado - mostrar nombre
+        accountButton.innerHTML = `👋 ${currentUser.nombre}`;
+        
+        // Modificar el modal de cuenta para usuario logueado
+        accountModal.innerHTML = `
+            <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden transform transition-all duration-500 scale-95">
+                <div class="gradient-bg p-6 text-white text-center">
+                    <h3 class="text-2xl font-bold mb-2">¡Hola ${currentUser.nombre}! 👋</h3>
+                    <p class="text-orange-100">Bienvenido a Federic's Pizza</p>
+                </div>
+                <div class="p-6 text-center space-y-4">
+                    <div class="text-left bg-gray-50 p-4 rounded-lg">
+                        <p><strong>Nombre:</strong> ${currentUser.nombre} ${currentUser.apellidos}</p>
+                        <p><strong>Email:</strong> ${currentUser.email}</p>
+                        <p><strong>Teléfono:</strong> ${currentUser.telefono}</p>
+                    </div>
+                    <button class="w-full bg-orange-500 text-white py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors" id="viewOrders">Mis Pedidos 📋</button>
+                    <button class="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors" id="logoutButton">Cerrar Sesión 🚪</button>
+                    <button class="w-full text-gray-500 mt-4 hover:text-gray-700 transition-colors" id="closeAccountModal">Cerrar</button>
+                </div>
+            </div>
+        `;
+        
+        // Re-asignar event listeners para el nuevo modal
+        document.getElementById('logoutButton').addEventListener('click', logout);
+        document.getElementById('closeAccountModal').addEventListener('click', () => {
+            document.getElementById('accountModal').classList.add('hidden');
+        });
+        
+        // ✅ VERIFICAR TARJETAS GUARDADAS DESPUÉS DEL LOGIN
+        setTimeout(checkSavedCards, 1000); // Pequeño delay para asegurar
+        
+    } else {
+        // Usuario no logueado - mostrar opciones normales
+        accountButton.textContent = 'Cuenta';
+    }
+}
+
+// ✅ NUEVA FUNCIÓN - AÑADE ESTA DESPUÉS DE updateAuthUI()
+async function checkSavedCards() {
+  if (!currentUser) return;
+  
+  try {
+    console.log("🔍 Verificando tarjetas guardadas...");
+    
+    const response = await fetch(`${BACKEND_URL}/api/payments/cards`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}`
+      }
+    });
+    
+    if (response.ok) {
+      const cards = await response.json();
+      const savedCardBtn = document.getElementById('payWithSavedCard');
+      
+      console.log(`💳 Tarjetas encontradas: ${cards.length}`, cards);
+      
+      if (cards.length > 0) {
+        savedCardBtn.classList.remove('hidden');
+        // Guardar la primera tarjeta para uso rápido
+        localStorage.setItem('savedCard', JSON.stringify(cards[0]));
+        console.log("✅ Botón de tarjeta guardada activado");
+        
+        // Actualizar el texto del botón con la tarjeta
+        savedCardBtn.innerHTML = `
+          <span>💳</span>
+          <span>Usar Tarjeta ···· ${cards[0].last4} (${cards[0].brand})</span>
+        `;
+      } else {
+        savedCardBtn.classList.add('hidden');
+        localStorage.removeItem('savedCard');
+        console.log("ℹ️ No hay tarjetas guardadas");
+      }
+    } else {
+      console.error("❌ Error al obtener tarjetas:", response.status);
+    }
+  } catch (error) {
+    console.error("💥 Error de conexión al verificar tarjetas:", error);
+  }
+}
+
+// ✅ ACTUALIZA la función logout existente
+function logout() {
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('savedCard'); // ✅ NUEVA LÍNEA
+  currentUser = null;
+  updateAuthUI();
+  document.getElementById('accountModal').classList.add('hidden');
+  
+  // ✅ OCULTAR BOTÓN DE TARJETA GUARDADA
+  const savedCardBtn = document.getElementById('payWithSavedCard');
+  if (savedCardBtn) {
+    savedCardBtn.classList.add('hidden');
+  }
+  
+  console.log('✅ Sesión cerrada correctamente');
+}
+
+// Inicializar UI al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     updateAuthUI();
 });
