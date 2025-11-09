@@ -1701,16 +1701,11 @@ async function payWithSavedCard() {
 
 // Función para procesar pago con nueva tarjeta
 // ✅ FUNCIÓN MEJORADA PARA PROCESAR PAGO CON NUEVA TARJETA
+// ✅ FUNCIÓN COMPLETAMENTE CORREGIDA - REEMPLAZA LA ACTUAL
 async function processCardPayment(e) {
     e.preventDefault();
     
     console.log('🔐 Iniciando proceso de pago...');
-    
-    // ✅ VERIFICAR CHECKBOX MEJORADO
-    const saveCardCheckbox = document.getElementById('saveCard');
-    const saveCard = saveCardCheckbox ? saveCardCheckbox.checked : false;
-    
-    console.log('💾 Estado de saveCard:', saveCard);
     
     if (!currentUser) {
         alert('❌ Debes iniciar sesión para realizar un pago');
@@ -1719,116 +1714,110 @@ async function processCardPayment(e) {
     
     if (!checkToken()) return;
 
+    // ✅ OBTENER DATOS DEL FORMULARIO CORRECTAMENTE
     const cardData = {
         cardHolder: document.getElementById('cardName').value.trim(),
         cardNumber: document.getElementById('cardNumber').value.replace(/\s/g, ''),
         expiryDate: document.getElementById('cardExp').value.trim(),
-        cvv: document.getElementById('cardCVV').value.trim(),
-        saveCard: saveCard  // ✅ USAR EL VALOR CORRECTO
+        cvv: document.getElementById('cardCVV').value.trim()
     };
 
-    console.log('📤 Datos del formulario:', {
+    // ✅ VERIFICAR CHECKBOX DE FORMA ROBUSTA
+    const saveCardCheckbox = document.getElementById('saveCard');
+    const saveCard = saveCardCheckbox ? saveCardCheckbox.checked : false;
+    
+    console.log('💾 Estado de saveCard:', saveCard);
+    console.log('📤 Datos de tarjeta:', {
         cardHolder: cardData.cardHolder,
         cardNumber: '***' + cardData.cardNumber.slice(-4),
-        saveCard: cardData.saveCard
+        expiryDate: cardData.expiryDate,
+        saveCard: saveCard
     });
   
-  // Validaciones básicas
-  if (!validateCardData(cardData)) return;
-  
-  try {
-    // Procesar pago
-    const paymentData = {
-      cardData: cardData,
-      amount: calculateCartTotal(),
-      items: cart
-    };
+    // ✅ VALIDACIONES MEJORADAS
+    if (!validateCardData(cardData)) return;
     
-    const response = await fetch(`${BACKEND_URL}/api/payments/process`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentUser.token}`
-      },
-      body: JSON.stringify(paymentData)
-    });
-    
-    const result = await response.json();
-    
-    if (response.ok) {
-      // Guardar tarjeta si el usuario lo solicitó
-      if (cardData.saveCard && result.cardSaved) {
-        localStorage.setItem('savedCard', JSON.stringify(result.savedCard));
-      }
-      
-      showPaymentSuccess();
-    } else {
-      // ✅ MEJORA: Manejar token expirado específicamente
-      if (result.code === 'TOKEN_EXPIRED') {
-        console.log('🔐 Token expirado, cerrando sesión...');
-        logout();
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-        document.getElementById('loginModal').classList.remove('hidden');
-        return;
-      }
-      alert(`❌ Error en el pago: ${result.message}`);
+    try {
+        // ✅ PREPARAR DATOS PARA EL BACKEND
+        const paymentData = {
+            cardData: cardData,
+            amount: calculateCartTotal(),
+            items: cart,
+            saveCard: saveCard  // ✅ ENVIAR CORRECTAMENTE
+        };
+        
+        console.log('📤 Enviando pago al backend...', {
+            amount: paymentData.amount,
+            saveCard: paymentData.saveCard,
+            itemsCount: paymentData.items.length
+        });
+        
+        const response = await fetch(`${BACKEND_URL}/api/payments/process`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${currentUser.token}`
+            },
+            body: JSON.stringify(paymentData)
+        });
+        
+        const result = await response.json();
+        
+        console.log('📥 Respuesta del backend:', result);
+        
+        if (response.ok) {
+            // ✅ ACTUALIZAR TARJETAS GUARDADAS SI SE GUARDÓ UNA NUEVA
+            if (saveCard && result.cardSaved) {
+                console.log('✅ Tarjeta guardada exitosamente:', result.savedCard);
+                // Forzar actualización de tarjetas guardadas
+                setTimeout(checkSavedCards, 1000);
+            }
+            
+            showPaymentSuccess();
+        } else {
+            // ✅ MANEJO MEJORADO DE ERRORES
+            if (result.code === 'TOKEN_EXPIRED') {
+                logout();
+                alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+                document.getElementById('loginModal').classList.remove('hidden');
+                return;
+            }
+            alert(`❌ Error en el pago: ${result.message}`);
+        }
+    } catch (error) {
+        console.error('💥 Error en processCardPayment:', error);
+        alert('❌ Error de conexión al procesar el pago');
     }
-  } catch (error) {
-    alert('❌ Error de conexión al procesar el pago');
-    console.error('Error:', error);
-  }
 }
 
-// Función para procesar pago en efectivo
-function processCashPayment() {
-  if (cart.length === 0) {
-    alert('❌ Tu carrito está vacío');
-    return;
-  }
-  
-  localStorage.setItem('metodoPago', 'efectivo');
-  
-  // Mostrar resumen de pedido
-  const total = calculateCartTotal();
-  const orderSummary = `
-    🍕 Pedido confirmado!
-    Total: $${total.toFixed(2)} MXN
-    Método: Pago al recibir
-    ⏰ Tiempo estimado: 30-45 min
-  `;
-  
-  alert(orderSummary);
-  
-  // Limpiar carrito y cerrar modales
-  cart = [];
-  updateCartUI();
-  document.getElementById('paymentModal').classList.add('hidden');
-  document.getElementById('cartModal').classList.add('hidden');
-}
-
-// Función para validar datos de tarjeta
+// ✅ FUNCIÓN DE VALIDACIÓN MEJORADA
 function validateCardData(cardData) {
-  if (cardData.cardHolder.length < 3) {
-    alert('❌ El nombre en la tarjeta debe tener al menos 3 caracteres');
-    return false;
-  }
-  
-  if (cardData.cardNumber.replace(/\D/g, '').length !== 16) {
-    alert('❌ El número de tarjeta debe tener 16 dígitos');
-    return false;
-  }
-  
-  if (!cardData.expiryDate.match(/^\d{2}\/\d{2}$/)) {
-    alert('❌ Formato de fecha inválido (MM/AA)');
-    return false;
-  }
-  
-  if (cardData.cvv.length !== 3) {
-    alert('❌ El CVV debe tener 3 dígitos');
-    return false;
-  }
-  
-  return true;
+    // Validar nombre
+    if (!cardData.cardHolder || cardData.cardHolder.length < 3) {
+        alert('❌ El nombre en la tarjeta debe tener al menos 3 caracteres');
+        return false;
+    }
+    
+    // Validar número de tarjeta (sin espacios)
+    const cleanCardNumber = cardData.cardNumber.replace(/\D/g, '');
+    if (cleanCardNumber.length !== 16) {
+        alert('❌ El número de tarjeta debe tener 16 dígitos');
+        return false;
+    }
+    
+    // Validar fecha de expiración
+    if (!cardData.expiryDate.match(/^\d{2}\/\d{2}$/)) {
+        alert('❌ Formato de fecha inválido (MM/AA)');
+        return false;
+    }
+    
+    // Validar CVV
+    if (!cardData.cvv || cardData.cvv.length !== 3) {
+        alert('❌ El CVV debe tener 3 dígitos');
+        return false;
+    }
+    
+    return true;
 }
 
 // Función para calcular total del carrito
@@ -2073,11 +2062,15 @@ function updateAuthUI() {
 }
 
 // ✅ NUEVA FUNCIÓN - AÑADE ESTA DESPUÉS DE updateAuthUI()
+// ✅ FUNCIÓN MEJORADA PARA VERIFICAR TARJETAS GUARDADAS
 async function checkSavedCards() {
-  if (!currentUser) return;
+  if (!currentUser) {
+    console.log("⚠️ No hay usuario logueado, no se pueden verificar tarjetas");
+    return;
+  }
   
   try {
-    console.log("🔍 Verificando tarjetas guardadas...");
+    console.log("🔍 Verificando tarjetas guardadas para usuario:", currentUser.email);
     
     const response = await fetch(`${BACKEND_URL}/api/payments/cards`, {
       method: 'GET',
@@ -2086,6 +2079,8 @@ async function checkSavedCards() {
         'Authorization': `Bearer ${currentUser.token}`
       }
     });
+    
+    console.log("📥 Respuesta de tarjetas:", response.status);
     
     if (response.ok) {
       const cards = await response.json();
@@ -2102,7 +2097,7 @@ async function checkSavedCards() {
         // Actualizar el texto del botón con la tarjeta
         savedCardBtn.innerHTML = `
           <span>💳</span>
-          <span>Usar Tarjeta ···· ${cards[0].last4} (${cards[0].brand})</span>
+          <span>Usar Tarjeta ···· ${cards[0].last4}</span>
         `;
       } else {
         savedCardBtn.classList.add('hidden');
@@ -2111,11 +2106,38 @@ async function checkSavedCards() {
       }
     } else {
       console.error("❌ Error al obtener tarjetas:", response.status);
+      const errorText = await response.text();
+      console.error("Detalles del error:", errorText);
     }
   } catch (error) {
     console.error("💥 Error de conexión al verificar tarjetas:", error);
   }
 }
+
+// ✅ FUNCIÓN PARA DETECTAR MARCA DE TARJETA EN EL FRONTEND
+function detectCardBrand(cardNumber) {
+    const cleaned = cardNumber.replace(/\D/g, '');
+    
+    if (/^4/.test(cleaned)) return 'Visa';
+    if (/^5[1-5]/.test(cleaned)) return 'MasterCard';
+    if (/^3[47]/.test(cleaned)) return 'American Express';
+    if (/^6(?:011|5)/.test(cleaned)) return 'Discover';
+    
+    return 'Otra';
+}
+
+// ✅ ACTUALIZAR LA INTERFAZ AL TECLEAR EL NÚMERO DE TARJETA
+document.addEventListener('DOMContentLoaded', function() {
+    const cardNumberInput = document.getElementById('cardNumber');
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function() {
+            formatCardNumber(this);
+            // Opcional: mostrar icono de la marca de la tarjeta
+            const brand = detectCardBrand(this.value);
+            console.log('Marca detectada:', brand);
+        });
+    }
+});
 
 // ✅ ACTUALIZA la función logout existente
 function logout() {

@@ -4,6 +4,11 @@ import Card from "../models/Card.js";
 import Payment from "../models/Payment.js";
 import User from "../models/User.js";
 
+
+
+
+    // ... el resto del código permanece igual
+
 const router = express.Router();
 
 // ✅ MIDDLEWARE MEJORADO PARA VERIFICAR TOKEN
@@ -45,26 +50,29 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// ✅ PROCESAR PAGO MEJORADO - AHORA SEGURO Y FUNCIONAL
+
+// ✅ MEJORA EL LOGGING EN EL ENDPOINT DE PROCESAR PAGO
 router.post("/process", verifyToken, async (req, res) => {
   try {
-    console.log("💳 Iniciando proceso de pago...");
-    console.log("Usuario:", req.userId);
-    console.log("Datos recibidos:", {
-      cardData: req.body.cardData ? "Presente" : "Faltante",
+    console.log("💳 ========== INICIANDO PROCESO DE PAGO ==========");
+    console.log("👤 Usuario:", req.userId);
+    console.log("📦 Datos recibidos:", {
+      tieneCardData: !!req.body.cardData,
       amount: req.body.amount,
-      items: req.body.items?.length || 0,
+      itemsCount: req.body.items?.length || 0,
       saveCard: req.body.saveCard,
-      cardId: req.body.cardId // Para pagos con tarjeta guardada
+      cardId: req.body.cardId
     });
 
     const { cardData, amount, items, saveCard, cardId } = req.body;
 
-    // ✅ VALIDACIONES MEJORADAS
-    if (!amount || !items || items.length === 0) {
-      return res.status(400).json({ 
-        success: false,
-        message: "Datos de pago incompletos" 
+    // ✅ LOG DETALLADO DE cardData (sin información sensible)
+    if (cardData) {
+      console.log("📋 CardData recibido:", {
+        cardHolder: cardData.cardHolder,
+        cardNumberLength: cardData.cardNumber ? cardData.cardNumber.length : 0,
+        expiryDate: cardData.expiryDate,
+        cvvLength: cardData.cvv ? cardData.cvv.length : 0
       });
     }
 
