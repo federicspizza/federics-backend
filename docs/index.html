@@ -190,7 +190,7 @@ header nav {
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
   <a href="#menu" class="bg-white text-orange-500 px-4 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm md:text-lg">Ver Menú 📋</a>
   <button class="border-2 border-white text-white px-4 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm md:text-lg">
-                    Delivery Gratis 🚚
+                    Direccion de Entrega 🚚
                 </button>
 </div>
 </div>
@@ -2612,6 +2612,421 @@ document.querySelectorAll('button').forEach(btn => {
 
 // Mejora: Formato MXN en precios ya manejado en todo el código
 // (Las funciones de formato existentes ya usan pesos, se mantiene fmt() con MXN).
+</script>
+
+<script>
+// =============================================
+// SISTEMA DE LÍMITES DE PEDIDOS
+// =============================================
+
+// Límites por categoría de producto
+const ORDER_LIMITS = {
+  pizzas: 5,
+  fries: 5,
+  wings: 5,
+  bread: 5,
+  drinks: 5
+};
+
+// Función para verificar límites antes de agregar al carrito
+function checkOrderLimit(productType, quantityToAdd) {
+  // Contar productos del mismo tipo en el carrito
+  const productCount = cart.reduce((count, item) => {
+    if (item.type === productType) {
+      return count + item.quantity;
+    }
+    return count;
+  }, 0);
+  
+  // Verificar si excede el límite
+  if (productCount + quantityToAdd > ORDER_LIMITS[productType]) {
+    return {
+      allowed: false,
+      currentCount: productCount,
+      limit: ORDER_LIMITS[productType],
+      remaining: ORDER_LIMITS[productType] - productCount
+    };
+  }
+  
+  return {
+    allowed: true,
+    currentCount: productCount,
+    limit: ORDER_LIMITS[productType],
+    remaining: ORDER_LIMITS[productType] - productCount
+  };
+}
+
+// Función para mostrar alerta de límite excedido
+function showLimitAlert(productType, limitInfo) {
+  const productNames = {
+    pizzas: 'pizzas',
+    fries: 'papas',
+    wings: 'alitas',
+    bread: 'panes de ajo',
+    drinks: 'bebidas'
+  };
+  
+  const productName = productNames[productType] || 'productos';
+  
+  alert(`❌ Límite de pedido alcanzado\n\nSolo puedes pedir un máximo de ${limitInfo.limit} ${productName}.\n\nActualmente tienes: ${limitInfo.currentCount} ${productName}\nPuedes agregar: ${limitInfo.remaining} más`);
+}
+
+// =============================================
+// MODIFICACIONES A LOS MODALES EXISTENTES
+// =============================================
+
+// === MODAL DE PIZZA - CON LÍMITE ===
+document.getElementById('pizzaForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const size = document.getElementById('pizzaSize').value;
+  const crust = Array.from(document.getElementsByName('pizzaCrust')).find(r => r.checked).value;
+  const extras = Array.from(document.querySelectorAll('.extra-checkbox:checked')).map(c => c.nextSibling.textContent.trim());
+  const qty = parseInt(document.getElementById('pizzaQuantity').textContent);
+  const total = parseFloat(document.getElementById('pizzaTotalPrice').textContent.replace('$', '').replace(' MXN', ''));
+  
+  // Verificar límite
+  const limitCheck = checkOrderLimit('pizzas', qty);
+  if (!limitCheck.allowed) {
+    showLimitAlert('pizzas', limitCheck);
+    return;
+  }
+  
+  const detail = 'Tamaño: ' + size + ' | Masa: ' + crust + (extras.length ? (' | Extras: ' + extras.join(', ')) : '') + ' | Cantidad: ' + qty;
+  
+  cart.push({ 
+    name: currentPizzaName || 'Pizza', 
+    detail, 
+    total,
+    quantity: qty,
+    type: 'pizzas'
+  });
+  
+  updateCartUI();
+  closeModal('pizzaModal');
+});
+
+// === MODAL DE PAPAS - CON LÍMITE ===
+document.getElementById('addFriesToCart').addEventListener('click', () => {
+  const size = document.querySelector('input[name="friesSize"]:checked').value;
+  const chosenExtras = Array.from(document.querySelectorAll('#friesModal input[type=checkbox]:checked'))
+    .map(c => c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+  const qty = parseInt(document.getElementById('friesQuantity').textContent);
+  const total = parseFloat(document.getElementById('friesTotalPrice').textContent.replace('$', '').replace(' MXN', ''));
+  
+  // Verificar límite
+  const limitCheck = checkOrderLimit('fries', qty);
+  if (!limitCheck.allowed) {
+    showLimitAlert('fries', limitCheck);
+    return;
+  }
+  
+  const detail = 'Tamaño: ' + size + ' | Extras: ' + (chosenExtras.length ? chosenExtras.join(', ') : 'Ninguno') + ' | Cantidad: ' + qty;
+  
+  cart.push({ 
+    name: 'Papas Crujientes', 
+    detail, 
+    total,
+    quantity: qty,
+    type: 'fries'
+  });
+  
+  updateCartUI();
+  closeModal('friesModal');
+});
+
+// === MODAL DE BEBIDAS - CON LÍMITE ===
+document.getElementById('addDrinkToCart').addEventListener('click', () => {
+  const size = document.querySelector('input[name="drinkSize"]:checked').value;
+  const ice = document.querySelector('input[name="ice"]:checked').value;
+  const qty = parseInt(document.getElementById('drinkQuantity').textContent);
+  const total = parseFloat(document.getElementById('drinkTotalPrice').textContent.replace('$', '').replace(' MXN', ''));
+  const drinkName = document.getElementById('modalDrinkName').textContent;
+  
+  // Verificar límite
+  const limitCheck = checkOrderLimit('drinks', qty);
+  if (!limitCheck.allowed) {
+    showLimitAlert('drinks', limitCheck);
+    return;
+  }
+  
+  const detail = 'Tamaño: ' + size + ' | Hielo: ' + ice + ' | Cantidad: ' + qty;
+  
+  cart.push({ 
+    name: drinkName || 'Refresco', 
+    detail, 
+    total,
+    quantity: qty,
+    type: 'drinks'
+  });
+  
+  updateCartUI();
+  closeModal('drinkModal');
+});
+
+// === MODAL DE ALITAS - CON LÍMITE ===
+document.getElementById('addWingsToCart').addEventListener('click', () => {
+  const size = document.querySelector('input[name="wingsSize"]:checked').value;
+  const flavor = document.querySelector('input[name="wingsFlavor"]:checked').value;
+  const extras = Array.from(document.querySelectorAll('#wingsModal input[type=checkbox]:checked'))
+    .map(c => c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+  const qty = parseInt(document.getElementById('wingsQuantity').textContent);
+  const total = parseFloat(document.getElementById('wingsTotalPrice').textContent.replace('$', '').replace(' MXN', ''));
+  
+  // Verificar límite
+  const limitCheck = checkOrderLimit('wings', qty);
+  if (!limitCheck.allowed) {
+    showLimitAlert('wings', limitCheck);
+    return;
+  }
+  
+  const detail = 'Tamaño: ' + size + ' | Sabor: ' + flavor + ' | Extras: ' + (extras.length ? extras.join(', ') : 'Ninguno') + ' | Cantidad: ' + qty;
+  
+  cart.push({ 
+    name: 'Alitas', 
+    detail, 
+    total,
+    quantity: qty,
+    type: 'wings'
+  });
+  
+  updateCartUI();
+  closeModal('wingsModal');
+});
+
+// === MODAL DE PAN DE AJO - CON LÍMITE ===
+document.getElementById('addBreadToCart').addEventListener('click', () => {
+  const pieces = Array.from(document.getElementsByName('breadPieces')).find(r => r.checked).value;
+  const extras = Array.from(document.querySelectorAll('#breadModal input[type=checkbox]:checked'))
+    .map(c => c.nextSibling ? c.nextSibling.textContent.trim() : c.value);
+  const total = parseFloat(document.getElementById('breadTotalPrice').textContent.replace('$', '').replace(' MXN', ''));
+  
+  // Para pan, la cantidad es siempre 1 (por pedido de piezas)
+  const qty = 1;
+  
+  // Verificar límite
+  const limitCheck = checkOrderLimit('bread', qty);
+  if (!limitCheck.allowed) {
+    showLimitAlert('bread', limitCheck);
+    return;
+  }
+  
+  const detail = 'Piezas: ' + pieces + ' | Extras: ' + (extras.length ? extras.join(', ') : 'Ninguno');
+  
+  cart.push({ 
+    name: 'Pan de Ajo', 
+    detail, 
+    total,
+    quantity: qty,
+    type: 'bread'
+  });
+  
+  updateCartUI();
+  closeModal('breadModal');
+});
+
+// =============================================
+// MODIFICACIONES A LOS CONTADORES
+// =============================================
+
+// Función para limitar los incrementadores a 5
+function setupQuantityLimiters() {
+  // Pizza quantity limiter
+  const pizzaIncreaseBtn = document.getElementById('increasePizzaQty');
+  const pizzaDecreaseBtn = document.getElementById('decreasePizzaQty');
+  const pizzaQtyEl = document.getElementById('pizzaQuantity');
+  
+  pizzaIncreaseBtn.addEventListener('click', () => {
+    const currentQty = parseInt(pizzaQtyEl.textContent);
+    if (currentQty < 5) {
+      pizzaQtyEl.textContent = currentQty + 1;
+      // Recalcular precio
+      if (typeof calcPizzaTotal === 'function') calcPizzaTotal();
+    } else {
+      alert('❌ Límite: Máximo 5 pizzas por pedido');
+    }
+  });
+  
+  // Fries quantity limiter
+  const friesIncreaseBtn = document.getElementById('increaseFriesQty');
+  const friesDecreaseBtn = document.getElementById('decreaseFriesQty');
+  const friesQtyEl = document.getElementById('friesQuantity');
+  
+  friesIncreaseBtn.addEventListener('click', () => {
+    const currentQty = parseInt(friesQtyEl.textContent);
+    if (currentQty < 5) {
+      friesQtyEl.textContent = currentQty + 1;
+      // Recalcular precio
+      if (typeof calcFries === 'function') calcFries();
+    } else {
+      alert('❌ Límite: Máximo 5 órdenes de papas por pedido');
+    }
+  });
+  
+  // Drink quantity limiter
+  const drinkIncreaseBtn = document.getElementById('increaseDrinkQty');
+  const drinkDecreaseBtn = document.getElementById('decreaseDrinkQty');
+  const drinkQtyEl = document.getElementById('drinkQuantity');
+  
+  drinkIncreaseBtn.addEventListener('click', () => {
+    const currentQty = parseInt(drinkQtyEl.textContent);
+    if (currentQty < 5) {
+      drinkQtyEl.textContent = currentQty + 1;
+      // Recalcular precio
+      if (typeof calcDrink === 'function') calcDrink();
+    } else {
+      alert('❌ Límite: Máximo 5 bebidas por pedido');
+    }
+  });
+  
+  // Wings quantity limiter
+  const wingsIncreaseBtn = document.getElementById('increaseWingsQty');
+  const wingsDecreaseBtn = document.getElementById('decreaseWingsQty');
+  const wingsQtyEl = document.getElementById('wingsQuantity');
+  
+  wingsIncreaseBtn.addEventListener('click', () => {
+    const currentQty = parseInt(wingsQtyEl.textContent);
+    if (currentQty < 5) {
+      wingsQtyEl.textContent = currentQty + 1;
+      // Recalcular precio
+      if (typeof calcWings === 'function') calcWings();
+    } else {
+      alert('❌ Límite: Máximo 5 órdenes de alitas por pedido');
+    }
+  });
+}
+
+// =============================================
+// ACTUALIZAR LA FUNCIÓN updateCartUI
+// =============================================
+
+// Reemplazar la función updateCartUI existente con esta versión mejorada
+function updateCartUI() {
+  const cartItems = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const cartCountEl = document.getElementById('cartCount');
+  const cartSummary = document.getElementById('cartSummary');
+  const mobileCartCount = document.getElementById('mobileCartCount');
+
+  // Actualizar contador móvil
+  if (mobileCartCount) {
+    mobileCartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+  }
+  
+  cartItems.innerHTML = '';
+  let total = 0;
+  let totalItems = 0;
+  
+  cart.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-start bg-gray-50 p-3 rounded-lg shadow-sm';
+    
+    const left = document.createElement('div');
+    left.innerHTML = `
+      <div class="font-semibold text-gray-800">${item.name}</div>
+      <div class="text-sm text-gray-600">${item.detail}</div>
+      <div class="text-xs text-orange-500 mt-1">Cantidad: ${item.quantity}</div>
+    `;
+    
+    const right = document.createElement('div');
+    right.className = 'text-right';
+    right.innerHTML = `
+      <div class="font-bold text-orange-500">${fmt(item.total)}</div>
+      <div class="text-sm">
+        <button data-idx="${idx}" class="removeItem text-xs text-gray-500 hover:text-red-500">Eliminar</button>
+      </div>
+    `;
+    
+    div.appendChild(left);
+    div.appendChild(right);
+    cartItems.appendChild(div);
+    
+    total += item.total;
+    totalItems += item.quantity;
+  });
+  
+  if (cart.length > 0) {
+    cartSummary.classList.remove('hidden');
+    document.getElementById('emptyCart').classList.add('hidden');
+  } else {
+    cartSummary.classList.add('hidden');
+    document.getElementById('emptyCart').classList.remove('hidden');
+  }
+  
+  cartTotalEl.textContent = fmt(total);
+  cartCountEl.textContent = totalItems;
+  
+  // Attach remove handlers
+  document.querySelectorAll('.removeItem').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const i = Number(e.target.getAttribute('data-idx'));
+      cart.splice(i, 1);
+      updateCartUI();
+    });
+  });
+}
+
+// =============================================
+// INICIALIZAR AL CARGAR LA PÁGINA
+// =============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Configurar limitadores de cantidad
+  setupQuantityLimiters();
+  
+  // Actualizar UI del carrito
+  updateCartUI();
+});
+
+// =============================================
+// ACTUALIZAR LOS BOTONES DE AGREGAR DIRECTOS
+// =============================================
+
+// Modificar la función que maneja los botones "Agregar" directos
+document.querySelectorAll('button').forEach(btn => {
+  if (btn.textContent && btn.textContent.includes('Agregar') && !btn.closest('[id$="Modal"]')) {
+    btn.addEventListener('click', (e) => {
+      // Encontrar el nombre del producto
+      let node = e.target;
+      let productName = '';
+      let productType = '';
+      
+      while(node && node !== document.body){
+        const h4 = node.querySelector && (node.querySelector('h4') || node.querySelector('h5') || node.querySelector('h3'));
+        if(h4){
+          productName = h4.textContent.trim();
+          const lower = productName.toLowerCase();
+          
+          // Determinar el tipo de producto
+          if(lower.includes('papa') || lower.includes('papas')) {
+            productType = 'fries';
+          } else if(lower.includes('alitas') || lower.includes('alita')) {
+            productType = 'wings';
+          } else if(lower.includes('pan') || lower.includes('ajo')) {
+            productType = 'bread';
+          } else if(lower.includes('refresco') || lower.includes('coca') || lower.includes('sprite') || lower.includes('fanta') || lower.includes('agua')) {
+            productType = 'drinks';
+          } else {
+            productType = 'pizzas';
+          }
+          break;
+        }
+        node = node.parentNode;
+      }
+      
+      // Verificar límite antes de abrir el modal
+      const limitCheck = checkOrderLimit(productType, 1);
+      if (!limitCheck.allowed) {
+        showLimitAlert(productType, limitCheck);
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      
+      // Continuar con el flujo normal si está dentro del límite
+    });
+  }
+});
 </script>
 </body>
 </html>
